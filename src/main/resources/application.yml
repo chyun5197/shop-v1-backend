@@ -12,3 +12,6 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
     show-sql: true
+jwt:
+  issuer: chyun5197@gmail.com
+  secret-key: shop-clone-hyun

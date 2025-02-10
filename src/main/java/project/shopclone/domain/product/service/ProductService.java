@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import project.shopclone.domain.product.entity.Product;
-import project.shopclone.domain.product.service.response.ProductPageResponse;
-import project.shopclone.domain.product.service.response.ProductResponse;
+import project.shopclone.domain.product.repository.BrandRepository;
+import project.shopclone.domain.product.service.response.*;
 import project.shopclone.domain.product.repository.ProductRepository;
-import project.shopclone.domain.product.service.response.ProductResponseTmp;
-import project.shopclone.domain.product.service.response.ProductThumbResponse;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,19 +17,19 @@ import java.util.List;
 @Service
 public class ProductService {
     private final ProductRepository productRepository;
+    private final BrandRepository brandRepository;
 
-    public ProductResponse getProduct(Long id) {
-        Product product = productRepository.findById(id).get();
-//        Product product = productRepository.getProductById(id);
-//        log.info(product.getName());
-        return new ProductResponse(product);
+    // 브랜드 정보 조회
+    public BrandResponse getBrand(Integer cate) {
+        return new BrandResponse(brandRepository.findByCateNo(cate));
     }
 
-//    public ProductResponseTmp getProductTmp(Long id) {
-//        Product product = productRepository.getProductById(id);
-//        return new ProductResponseTmp(product);
-//    }
+    // 상세 조회
+    public ProductResponse getProduct(Long id) {
+        return new ProductResponse(productRepository.findById(id).get());
+    }
 
+    // 브랜드별 리스트 조회
     public ProductPageResponse readAllBrand(String brand, Long page, Long pageSize, String sorting){
         List<ProductThumbResponse> productThumbResponseList;
         if(sorting.equals("new")){
@@ -64,4 +62,6 @@ public class ProductService {
                 .map(ProductResponse::new)
                 .toList();
     }
+
+
 }

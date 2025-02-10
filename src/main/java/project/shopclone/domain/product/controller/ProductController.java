@@ -3,6 +3,7 @@ package project.shopclone.domain.product.controller;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.Parameter;
 import org.springframework.web.bind.annotation.*;
+import project.shopclone.domain.product.service.response.BrandResponse;
 import project.shopclone.domain.product.service.response.ProductPageResponse;
 import project.shopclone.domain.product.service.response.ProductResponse;
 import project.shopclone.domain.product.service.ProductService;
@@ -16,10 +17,16 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping("/test")
-    public String test() {
-        return "test 확인";
+//    @GetMapping("/test")
+//    public String test() {
+//        return "test 확인";
+//    }
+
+    @GetMapping("/brand/{cate}")
+    public BrandResponse getBrand(@PathVariable Integer cate) {
+        return productService.getBrand(cate);
     }
+
 
     @GetMapping("/detail/{id}")
     public ProductResponse getProduct(@PathVariable Long id) {
@@ -37,12 +44,12 @@ public class ProductController {
 //        return productService.getProductTmp(id);
 //    }
 
-    @GetMapping
+    @GetMapping("/list")
     public ProductPageResponse readAllBrand(
             @RequestParam("brand") String brand,
             @RequestParam("page") Long page,
             @RequestParam("pageSize") Long pageSize,
-            @RequestParam(value="sorting", required = false) String sorting
+            @RequestParam("sorting") String sorting
     ){
         return productService.readAllBrand(brand, page, pageSize, sorting);
     }

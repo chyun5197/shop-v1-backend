@@ -3,6 +3,9 @@ package project.shopclone.domain.product.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Table(name="product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -34,6 +37,10 @@ public class Product {
     private String country;         // 원산지
     private Integer releaseDate;    // 출시 연도
 
+    // 상세 이미지
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ProductImage> prdouctImageList = new ArrayList<>();
+
     @Builder
     public Product(Integer no, String category, String brand, String series, String name, Integer price, Integer originPrice, Integer discountRate, String image, String description, String model, String country, Integer releaseDate) {
         this.no = no;
@@ -50,4 +57,5 @@ public class Product {
         this.country = country;
         this.releaseDate = releaseDate;
     }
+
 }
