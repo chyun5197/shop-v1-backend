@@ -1,4 +1,4 @@
-package project.shopclone.domain.user;
+package project.shopclone.domain.user.service.request;
 
 import lombok.Getter;
 import lombok.Setter;

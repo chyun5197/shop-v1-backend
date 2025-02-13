@@ -1,15 +1,17 @@
-package project.shopclone.global.jwt;
+package project.shopclone.global.jwt.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import project.shopclone.domain.user.AuthUser;
+import project.shopclone.global.jwt.JwtProperties;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -43,7 +45,8 @@ public class TokenProvider {
                 .compact();
     }
 
-    // JWT 토큰 유효성 검증
+    // (캐싱) JWT 토큰 유효성 검증
+//    @Cacheable(cacheNames = "isValidToken", key="'validToken:' + #token")
     public boolean validToken(String token){
         try{
             Jwts.parser()

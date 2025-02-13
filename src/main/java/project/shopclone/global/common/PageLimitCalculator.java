@@ -1,4 +1,4 @@
-package project.shopclone.domain.product.service;
+package project.shopclone.global.common;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

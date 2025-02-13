@@ -22,6 +22,8 @@ public class Product {
     private String brand;           // 중분류 fender, gibson, prs..
     private String series;          // 소분류 (현재 할당X)
 
+    private Integer cateNo;          // 카테고리 넘버
+
     // heading area
     private String name;            // 제목: 모델명 + 옵션 + (new/old) + 시리얼넘버  [세일 멘트 제외함]
     private Integer price;          // 판매가: 예약중인 상품은 제외

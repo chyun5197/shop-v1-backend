@@ -7,8 +7,8 @@ import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.BrandRepository;
 import project.shopclone.domain.product.service.response.*;
 import project.shopclone.domain.product.repository.ProductRepository;
+import project.shopclone.global.common.PageLimitCalculator;
 
-import java.util.Collections;
 import java.util.List;
 
 
@@ -51,7 +51,7 @@ public class ProductService {
                         brand,
                         PageLimitCalculator.calculatePageLimit(page, pageSize, 5L)
                 ),
-                productRepository.countAll()
+                productRepository.countByBrand(brand)
         );
     }
 

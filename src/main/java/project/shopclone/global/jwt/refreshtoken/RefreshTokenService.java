@@ -4,7 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import project.shopclone.global.jwt.TokenProvider;
+import project.shopclone.global.jwt.service.TokenProvider;
 
 @RequiredArgsConstructor
 @Service
@@ -25,6 +25,6 @@ public class RefreshTokenService {
         Long userId = tokenProvider.getAuthUserId(token);
 
         // 삭제는 리프레시 토큰을.
-        refreshTokenRepository.deleteByMemberId(userId);
+//        refreshTokenRepository.deleteByMemberId(userId);
     }
 }

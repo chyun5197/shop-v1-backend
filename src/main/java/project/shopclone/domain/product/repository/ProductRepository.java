@@ -32,7 +32,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                     "from (" +
                     "   select id from product" +
                     "   where brand = :brand " +
-                    "   order by p.price asc " +
+                    "   order by price asc " +
                     "   limit :limit offset :offset " +
                     ") t left join product on t.id = product.id",
             nativeQuery = true
@@ -50,7 +50,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                     "from (" +
                     "   select id from product" +
                     "   where brand = :brand " +
-                    "   order by p.price desc " +
+                    "   order by price desc " +
                     "   limit :limit offset :offset " +
                     ") t left join product on t.id = product.id",
             nativeQuery = true
@@ -62,6 +62,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("sorting") String sorting
     );
 
+    // 페이지수를 알기 위한 카운트
     @Query(
             value = "select count(*) from (" +
                     "   select id from product where brand = :brand limit :limit " +
@@ -72,6 +73,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("brand") String brand,
             @Param("limit") Long limit
     );
+
+    // 브랜드 등록된 상품 개수
+    Integer countByBrand(String brand);
 
 //    @Query(value = "select p from Product p where p.id = :id")
 //    Product getProductById(@Param("id") Long id);

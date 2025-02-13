@@ -1,4 +1,4 @@
-package project.shopclone.domain.product.crawling;
+package project.shopclone.domain.product.service;
 
 import lombok.RequiredArgsConstructor;
 import org.openqa.selenium.By;
@@ -9,7 +9,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
 import project.shopclone.domain.product.entity.Brand;
 import project.shopclone.domain.product.entity.Product;
-import project.shopclone.domain.product.entity.ProductImage;
 import project.shopclone.domain.product.repository.BrandRepository;
 import project.shopclone.domain.product.repository.ProductImageRepository;
 import project.shopclone.domain.product.repository.ProductRepository;
@@ -19,7 +18,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class CrawlingService {
+public class Crawling {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
     private final ProductImageRepository productImageRepository;
@@ -142,9 +141,12 @@ public class CrawlingService {
             name = name.split("]")[1];
         }
         name = name.strip();
+
         String priceStr = driver.findElement(By.cssSelector(".quantity_price")).getText()
                 .replaceAll(",", "").replace("원", "");
-        if (priceStr.contains("예약중")){ // 예약중인 상품은 건너뜀
+        if (priceStr.isEmpty()){
+            return;
+        }else if(priceStr.contains("예약중")){ // 예약중인 상품은 건너뜀
             return;
         }
         price = Integer.valueOf(priceStr);

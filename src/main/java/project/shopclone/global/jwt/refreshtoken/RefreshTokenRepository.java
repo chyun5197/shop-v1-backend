@@ -1,13 +1,11 @@
 package project.shopclone.global.jwt.refreshtoken;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long> {
-    RefreshToken findByAuthuserId(Long authuserId);
-    Optional<RefreshToken> findByMemberId(Long memberId);
+public interface RefreshTokenRepository extends CrudRepository<RefreshToken, String> {
     Optional<RefreshToken> findByRefreshToken(String refreshToken);
-    void deleteByMemberId(Long memberId);
 }

@@ -1,4 +1,4 @@
-package project.shopclone.domain.user;
+package project.shopclone.domain.user.service.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,5 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AuthUserLoginResponse {
     private String email;
-    private String token;
+    private String refreshToken;
+    private String accessToken;
 }

@@ -1,10 +1,12 @@
-package project.shopclone.domain.user;
+package project.shopclone.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import project.shopclone.domain.user.AuthUser;
+import project.shopclone.domain.user.AuthUserRepository;
 
 @RequiredArgsConstructor
 @Service

@@ -15,9 +15,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import project.shopclone.domain.user.AuthUserDetailService;
+import project.shopclone.domain.user.service.AuthUserDetailService;
 import project.shopclone.global.jwt.TokenAuthenticationFilter;
-import project.shopclone.global.jwt.TokenProvider;
+import project.shopclone.global.jwt.service.TokenProvider;
 
 @Configuration
 @EnableWebSecurity
@@ -50,7 +50,7 @@ public class WebSecurityConfig {
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth //인증, 인가 설정
                         .requestMatchers( // 인증 필요
-                                "/api/user/logout", "/api/cart/**", "/api/wish/**", "/api/member/**"
+                                 "/api/cart/**", "/api/wish/**", "/api/member/**"
 //                                new AntPathRequestMatcher("/signup")
                         ).authenticated()
                         .anyRequest().permitAll()) // 그외 api는 인증없이 통과

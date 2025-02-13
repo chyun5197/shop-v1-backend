@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import project.shopclone.domain.member.Member;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,11 +22,14 @@ public class AuthUser implements UserDetails {
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true) // unique 중복X
     private String email;
 
     @Column(name = "password")
     private String password;
+
+//    @OneToOne(mappedBy = "auth_user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Member member;
 
     @Builder
     public AuthUser(String email, String password) {

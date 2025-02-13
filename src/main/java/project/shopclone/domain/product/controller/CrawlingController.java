@@ -1,10 +1,11 @@
-package project.shopclone.domain.product.crawling;
+package project.shopclone.domain.product.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import project.shopclone.domain.product.service.Crawling;
 import project.shopclone.domain.product.entity.Brand;
-import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.BrandRepository;
 import project.shopclone.domain.product.repository.ProductRepository;
 
@@ -13,7 +14,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class CrawlingController {
-    private final CrawlingService productService;
+    @Value("${data.crawling.pw}")
+    private String pw;
+
+    private final Crawling crawling;
     private final BrandRepository brandRepository;
     private final ProductRepository productRepository;
 
@@ -25,11 +29,13 @@ public class CrawlingController {
     public String crawl() {
         List<Brand> brands = brandRepository.findAll();
         for (Brand brand : brands){
-            if (brand.getId() < 94 ){
+            if (brand.getId()<128){
                 continue;
             }
-            if (brand.getId()>=106) break;
-            productService.crawlingPages(brand.getCateNo(), brand.getBrand(), brand.getCategory());
+            if (brand.getCategory().equals("Bass 2")) {
+                break;
+            }
+            crawling.crawlingPages(brand.getCateNo(), brand.getBrand(), brand.getCategory());
         }
         return "성공";
     }
@@ -45,13 +51,13 @@ public class CrawlingController {
 
     @GetMapping("/crawling/brand")
     public String crawlB() {
-        productService.crawlingCateAndBrand();
+        crawling.crawlingCateAndBrand();
         return "성공";
     }
 
 //    @GetMapping("/crawling/images")
 //    public String crawlC() {
-//        productService.crawlingOne();
+//        crawling.crawlingOne();
 //        return "성공";
 //    }
 
