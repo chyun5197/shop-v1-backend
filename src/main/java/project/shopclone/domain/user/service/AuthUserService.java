@@ -1,9 +1,6 @@
 package project.shopclone.domain.user.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,8 +9,6 @@ import project.shopclone.domain.member.MemberService;
 import project.shopclone.domain.user.AuthUser;
 import project.shopclone.domain.user.AuthUserRepository;
 import project.shopclone.domain.user.service.request.AuthUserAddRequest;
-import project.shopclone.global.jwt.refreshtoken.RefreshToken;
-import project.shopclone.global.jwt.refreshtoken.RefreshTokenService;
 
 @RequiredArgsConstructor
 @Service
@@ -35,7 +30,7 @@ public class AuthUserService {
         authUserRepository.save(authUser);
 
         // Member 생성
-        Member member = memberService.save(authUser);
+        Member member = memberService.save(authUser, authUserAddRequest);
     }
 
     public AuthUser findById(Long id) {

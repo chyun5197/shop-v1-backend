@@ -7,6 +7,7 @@ import project.shopclone.domain.cart.repository.CartRepository;
 import project.shopclone.domain.cart.entity.Cart;
 import project.shopclone.domain.user.AuthUser;
 import project.shopclone.domain.user.AuthUserRepository;
+import project.shopclone.domain.user.service.request.AuthUserAddRequest;
 import project.shopclone.global.jwt.service.TokenProvider;
 
 @RequiredArgsConstructor
@@ -19,11 +20,14 @@ public class MemberService {
 
     // 처음 정보 저장
     @Transactional
-    public Member save(AuthUser authUser) {
+    public Member save(AuthUser authUser, AuthUserAddRequest authUserAddRequest) {
         // 멤버 생성
         Member member = memberRepository.save(Member.builder()
                 .email(authUser.getEmail())
                 .authUser(authUser)
+                .name(authUserAddRequest.getName())
+                .phone(authUserAddRequest.getPhone())
+                .address(authUserAddRequest.getAddress())
                 .build());
 
         // 카트 생성
