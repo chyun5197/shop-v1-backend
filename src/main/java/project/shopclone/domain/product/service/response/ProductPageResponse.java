@@ -12,7 +12,8 @@ public class ProductPageResponse {
     private Long productCount;
     private Integer totalCount;
 
-    public static ProductPageResponse of(List<ProductThumbResponse> productThumbs, Long productCount, Integer totalCount) {
+    public static ProductPageResponse of(List<ProductThumbResponse> productThumbs, Long productCount, Integer totalCount
+    ) {
         ProductPageResponse response = new ProductPageResponse();
         response.productThumbs = productThumbs;
         response.productCount = productCount;

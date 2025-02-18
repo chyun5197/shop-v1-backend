@@ -3,6 +3,7 @@ package project.shopclone.domain.product.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import project.shopclone.domain.product.entity.Brand;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.BrandRepository;
 import project.shopclone.domain.product.service.response.*;
@@ -30,28 +31,29 @@ public class ProductService {
     }
 
     // 브랜드별 리스트 조회
-    public ProductPageResponse readAllBrand(String brand, Long page, Long pageSize, String sorting){
+    public ProductPageResponse readAllBrand(Integer cateNo, Long page, Long pageSize, String sorting){
         List<ProductThumbResponse> productThumbResponseList;
         if(sorting.equals("new")){
-            productThumbResponseList = productRepository.findAllBrand(brand, (page - 1) * pageSize, pageSize).stream()
+            productThumbResponseList = productRepository.findAllBrand(cateNo, (page - 1) * pageSize, pageSize).stream()
                     .map(ProductThumbResponse::from)
                     .toList();
         }else if(sorting.equals("asc")){// 오름차순(낮은가격)
-            productThumbResponseList = productRepository.findAllBrand(brand, (page - 1) * pageSize, pageSize, sorting).stream()
+            productThumbResponseList = productRepository.findAllBrand(cateNo, (page - 1) * pageSize, pageSize, sorting).stream()
                     .map(ProductThumbResponse::from)
                     .toList();
         }else {
-            productThumbResponseList = productRepository.findAllBrandDesc(brand, (page - 1) * pageSize, pageSize, sorting).stream()
+            productThumbResponseList = productRepository.findAllBrandDesc(cateNo, (page - 1) * pageSize, pageSize, sorting).stream()
                     .map(ProductThumbResponse::from)
                     .toList();
         }
+
         return ProductPageResponse.of(
                 productThumbResponseList,
                 productRepository.count(
-                        brand,
+                        cateNo,
                         PageLimitCalculator.calculatePageLimit(page, pageSize, 5L)
                 ),
-                productRepository.countByBrand(brand)
+                productRepository.countByCateNo(cateNo)
         );
     }
 

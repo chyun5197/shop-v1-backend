@@ -60,4 +60,8 @@ public class Product {
         this.releaseDate = releaseDate;
     }
 
+    public void updateCateNo(Integer cateNo) {
+        this.cateNo = cateNo;
+    }
+
 }

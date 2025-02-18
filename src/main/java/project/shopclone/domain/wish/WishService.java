@@ -1,4 +1,4 @@
-package project.shopclone.domain.wish.service;
+package project.shopclone.domain.wish;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,9 +9,6 @@ import project.shopclone.domain.member.Member;
 import project.shopclone.domain.member.MemberService;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.ProductRepository;
-import project.shopclone.domain.wish.Wish;
-import project.shopclone.domain.wish.WishRepository;
-import project.shopclone.domain.wish.service.response.WishResponse;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -47,12 +47,12 @@ public class ProductController {
     @GetMapping("/list")
     public ProductPageResponse readAllBrand(
 //            @RequestParam("brand") String brand,
-            @RequestParam("brand") String brand,
+            @RequestParam("cate") Integer cateNo,
             @RequestParam("page") Long page,
             @RequestParam("pageSize") Long pageSize,
             @RequestParam("sorting") String sorting
 //            @RequestParam("category") String category
     ){
-        return productService.readAllBrand(brand, page, pageSize, sorting);
+        return productService.readAllBrand(cateNo, page, pageSize, sorting);
     }
 }

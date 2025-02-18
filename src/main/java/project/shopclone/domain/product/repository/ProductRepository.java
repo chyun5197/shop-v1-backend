@@ -14,14 +14,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             value = "select product.* " +
                     "from (" +
                     "   select id from product" +
-                    "   where brand = :brand " +
+                    "   where cate_no = :cateNo " +
                     "   order by release_date desc " +
                     "   limit :limit offset :offset " +
                     ") t left join product on t.id = product.id",
             nativeQuery = true
     )
     List<Product> findAllBrand(
-            @Param("brand") String brand,
+            @Param("cateNo") Integer cateNo,
             @Param("offset") Long offset,
             @Param("limit") Long limit
     );
@@ -31,14 +31,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             value = "select product.* " +
                     "from (" +
                     "   select id from product" +
-                    "   where brand = :brand " +
+                    "   where cate_no = :cateNo " +
                     "   order by price asc " +
                     "   limit :limit offset :offset " +
                     ") t left join product on t.id = product.id",
             nativeQuery = true
     )
     List<Product> findAllBrand(
-            @Param("brand") String brand,
+            @Param("cateNo") Integer cateNo,
             @Param("offset") Long offset,
             @Param("limit") Long limit,
             @Param("sorting") String sorting
@@ -49,14 +49,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             value = "select product.* " +
                     "from (" +
                     "   select id from product" +
-                    "   where brand = :brand " +
+                    "   where cate_no = :cateNo " +
                     "   order by price desc " +
                     "   limit :limit offset :offset " +
                     ") t left join product on t.id = product.id",
             nativeQuery = true
     )
     List<Product> findAllBrandDesc(
-            @Param("brand") String brand,
+            @Param("cateNo") Integer cateNo,
             @Param("offset") Long offset,
             @Param("limit") Long limit,
             @Param("sorting") String sorting
@@ -65,17 +65,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // 페이지수를 알기 위한 카운트
     @Query(
             value = "select count(*) from (" +
-                    "   select id from product where brand = :brand limit :limit " +
+                    "   select id from product where cate_no = :cateNo limit :limit " +
                     ") t",
             nativeQuery = true
     )
     Long count(
-            @Param("brand") String brand,
+            @Param("cateNo") Integer cateNo,
             @Param("limit") Long limit
     );
 
-    // 브랜드 등록된 상품 개수
-    Integer countByBrand(String brand);
+    // 분류번호 등록된 상품 개수
+    Integer countByCateNo(Integer cateNo);
 
 //    @Query(value = "select p from Product p where p.id = :id")
 //    Product getProductById(@Param("id") Long id);
@@ -88,5 +88,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("select count(*) from Product ")
     Integer countAll();
 
-    List<Product> findAllByBrand(String brand);
+    List<Product> findAllByBrandAndCategory(String brand, String category);
+    List<Product> findAllByCateNo(Integer cateNo);
 }

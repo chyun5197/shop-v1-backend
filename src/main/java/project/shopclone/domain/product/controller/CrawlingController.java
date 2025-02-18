@@ -36,8 +36,23 @@ public class CrawlingController {
                 break;
             }
             crawling.crawlingPages(brand.getCateNo(), brand.getBrand(), brand.getCategory());
+            // 분류번호 작업
+//            crawling.cateNumbering(brand.getCateNo(), brand.getBrand(), brand.getCategory());
         }
         return "성공";
+    }
+
+    @GetMapping("/numbering")
+    public void numbering() {
+        List<Brand> brands = brandRepository.findAll();
+        for (Brand brand : brands){
+            if (brand.getCategory().equals("Bass 2")) {
+                break;
+            }
+
+            // 분류번호 작업
+            crawling.cateNumbering(brand.getCateNo(), brand.getBrand(), brand.getCategory());
+        }
     }
 
 //    @GetMapping("/delete")

@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.shopclone.domain.product.entity.Brand;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.BrandRepository;
@@ -240,4 +241,15 @@ public class Crawling {
         return driver;
     }
 
+    // 분류번호 작업
+    @Transactional
+    public void cateNumbering(Integer cateNo, String brand, String category) {
+        List<Product> productList = productRepository.findAllByBrandAndCategory(brand, category);
+        System.out.println("brand = " + brand + ", category = " + category + ", cateNo = " + cateNo + ", productList.size() = " + productList.size());
+        for(Product product : productList){
+            product.updateCateNo(cateNo);
+//            System.out.println("product.getCateNo() = " + product.getCateNo());
+        }
+        System.out.println(productRepository.findAllByCateNo(cateNo).size());
+    }
 }

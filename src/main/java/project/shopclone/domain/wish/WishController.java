@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.shopclone.domain.wish.service.WishService;
-import project.shopclone.domain.wish.service.response.WishResponse;
 
 import java.util.List;
 

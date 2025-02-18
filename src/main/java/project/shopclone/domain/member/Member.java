@@ -2,8 +2,6 @@ package project.shopclone.domain.member;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import project.shopclone.domain.cart.entity.CartItem;
 import project.shopclone.domain.user.AuthUser;
 import project.shopclone.domain.wish.Wish;
 
