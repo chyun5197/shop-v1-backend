@@ -23,7 +23,7 @@ services:
        - ./data/certbot/www:/var/www/certbot
      ports:
        - 80:80
-       - 443:433
+       - 443:443
      environment:
        - TZ=Asia/Seoul
      depends_on: # 빌드 순서는 api-server부터 시작
@@ -68,6 +68,12 @@ http {
 
 
     server {
+        map $http_origin $allowed_origin {
+        default "";
+        "http://localhost:5174" $http_origin;
+        "https://www.hyun-clone.shop" $http_origin;
+        }
+
         listen 443 ssl;
         server_name api.hyun-clone.shop;
 
@@ -79,13 +85,14 @@ http {
         # 모든 경로('/')에 대한 요청을 받아들이는 location 블록
         location / {
             #CORS 헤더 추가
-            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Allow-Origin' $allowed_origin always;
+            add_header 'Access-Control-Allow-Credentials' 'true';  # 쿠키 적용하기 위함
             add_header 'Access-Control-Allow-Methods' 'GET, POST, DELETE, PATCH, PUT' always;
             add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type' always;
 
             # OPTIONS 요청 처리
             if ($request_method = 'OPTIONS') {
-                    add_header 'Access-Control-Allow-Origin' '*';
+                    add_header 'Access-Control-Allow-Origin' $allowed_origin always;
                     add_header 'Access-Control-Allow-Methods' 'GET, POST, DELETE, PATCH, PUT, OPTIONS';
                     add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type';
                     add_header 'Content-Length' '0';

@@ -60,7 +60,7 @@ public class WebSecurityConfig {
 //                -> (이전 폼로그인에서는 off) 로그인 성공시 /login 컨트롤러에서 사용자 아이디를 Authentication로부터 꺼내와서 토큰 만들도록 짜놓았기 때문
 //                => (현재 폼로그인에서는 on) 컨트롤러에서는 Authentication 미사용하고 필터체인에서 /login/{authentication.getName()} 파라미터로 보내주는걸로 해결.
 //                -> !소셜로그인 구현했을때는 구글(카카오)에서 사용자 정보(이메일)을 받아온걸로 토큰 만드니까 Authentication가 필요 없었음
-                .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth //인증, 인가 설정
                         .requestMatchers( // 인증 필요
