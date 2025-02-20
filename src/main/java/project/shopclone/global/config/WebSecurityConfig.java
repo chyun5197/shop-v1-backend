@@ -89,7 +89,7 @@ public class WebSecurityConfig {
 //                                                System.out.println("exception: "+ exception);
 //                                                System.out.println("상태코드: " +response.getStatus());
 
-//                                                System.out.println("실패 메세지: " + exception.getMessage());
+                                                System.out.println("로그인 실패 메세지: " + exception.getMessage());
                                                 response.sendError(HttpStatus.UNAUTHORIZED.value(), exception.getMessage());
 //                                                response.sendRedirect("/api/user/unauthorized"); // 아이디/비번 어떤게 틀렸는지까지 보내고 싶다면 추가 작성
                                             }
