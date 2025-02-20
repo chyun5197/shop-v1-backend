@@ -71,7 +71,8 @@ public class AuthUserController {
         // 로컬 환경과 달리 서버 환경에서는 이 시점에서 authentication의 값이 null. (loadUserByUsername에서는 잘 리턴함)
         // 실패지점 추측으로 서버 환경에서는 1. SecurityContext에 사용자정보를 처음부터 저장을 안하거나(마치 SessionCreationPolicy.STATELESS)
         // 2. 필터체인 실행과 api 실행이 각각 별개 실행으로 간주해서 SecurityContext 정보가 계속 이어지지 않거나
-        // => 해결책으로 필터체인에서 successHandler 객체 생성으로
+        // => 코드로 확인해보니 2번이 맞다.
+        // => 해결책: 필터체인에서 successHandler 객체에서 SecurityContext값을 여기 api로 param값(id)으로 보내와서 사용
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         System.out.println("(loginSuccess)authentication.getName(): " + email);

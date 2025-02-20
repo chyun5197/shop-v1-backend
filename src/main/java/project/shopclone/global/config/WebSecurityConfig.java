@@ -55,11 +55,11 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // csrf 해제
                 .httpBasic(AbstractHttpConfigurer::disable) // 기본 인증 로그인 비활성화 (토큰 방식으로 대체하려면 사용)
 //                .formLogin(AbstractHttpConfigurer::disable) // 폼로그인 비활성화 기능
-//                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                -> sessionManagement는 인증 정보를 SecurityContextHolder(Authentication활용)에 저장해놓을지 말지. STATELESS면 인증 정보 저장X
-//                -> 현재의 폼로그인에서는 off
-//                -> 로그인 성공시 /login 컨트롤러에서 사용자 아이디를 SecurityContextHolder로부터 꺼내와서 토큰 만들도록 짜놓았기 때문
-//                -> !소셜로그인 구현했을때는 구글(카카오)에서 사용자 정보(이메일)을 받아온걸로 토큰 만드니까 SecurityContextHolder가 필요 없었음
+                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                -> sessionManagement는 인증 정보를 SecurityContextHolder(Authentication활용)에 저장해서 기억할지 말지. STATELESS면 인증 정보 저장X
+//                -> (이전 폼로그인에서는 off) 로그인 성공시 /login 컨트롤러에서 사용자 아이디를 Authentication로부터 꺼내와서 토큰 만들도록 짜놓았기 때문
+//                => (현재 폼로그인에서는 on) 컨트롤러에서는 Authentication 미사용하고 필터체인에서 /login/{authentication.getName()} 파라미터로 보내주는걸로 해결.
+//                -> !소셜로그인 구현했을때는 구글(카카오)에서 사용자 정보(이메일)을 받아온걸로 토큰 만드니까 Authentication가 필요 없었음
                 .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth //인증, 인가 설정
