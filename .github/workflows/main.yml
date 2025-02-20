@@ -60,7 +60,7 @@ jobs:
       - name: Push to DockerHub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/shop
 
-      # EC2 접속 및 도커 명령
+      # EC2 접속 및 도커 명령 | 액션으로 pull까지만 진행
       - name: Docker Image Pull & Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
