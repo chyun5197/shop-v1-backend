@@ -1,0 +1,186 @@
+[최종]EC2에 작성해놓은 파일들
+
+====== EC2의 docker-compose.yml ======
+version: '3'
+
+services:
+   api-server:
+     container_name: shopclone
+     image: chyun257634/shop
+     ports:
+       - 9000:9000
+     environment:
+       - TZ=Asia/Seoul
+     networks:
+       - shop_net
+
+   nginx:
+     container_name: nginx
+     image: nginx:latest
+     volumes:
+       - ./nginx.conf:/etc/nginx/nginx.conf # 왼쪽이 로컬 경로, 오른쪽이 도커 컨테이너 내부 경로
+       - ./data/certbot/conf:/etc/letsencrypt
+       - ./data/certbot/www:/var/www/certbot
+     ports:
+       - 80:80
+       - 443:433
+     environment:
+       - TZ=Asia/Seoul
+     depends_on: # 빌드 순서는 api-server부터 시작
+       - api-server
+     networks:
+       - shop_net
+     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+
+   certbot:
+     image: certbot/certbot
+     volumes:
+       - ./data/certbot/conf:/etc/letsencrypt
+       - ./data/certbot/www:/var/www/certbot
+     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+     environment:
+       - TZ=Asia/Seoul
+     networks:
+       - shop_net
+
+ networks:
+   shop_net:
+
+====== EC2의 nginx.conf ======
+events {
+    worker_connections  1024;
+}
+
+http {
+    server {
+         listen 80;  # 포트 80에서 들어오는 HTTP 요청을 수신할 것
+         server_name api.hyun-clone.shop; # 'api.hyun-clone.shop' 도메인으로 들어오는 요청을 처리할 것
+         location /.well-known/acme-challenge/ {
+                 allow all;
+                 root /var/www/certbot; # Certbot을 통해 Let's Encrypt 인증서를 발급받을 때 사용하는 경로
+         }
+
+         # 모든 경로('/')에 대한 요청을 받아들이는 location 블록
+         location / {
+            return 301 https://$host$request_uri; # 모든 HTTP 요청을 HTTPS로 리다이렉션
+        }
+    }
+
+
+    server {
+        listen 443 ssl;
+        server_name api.hyun-clone.shop;
+
+        ssl_certificate /etc/letsencrypt/live/api.hyun-clone.shop/fullchain.pem; # SSL/TLS 인증서 경로
+        ssl_certificate_key /etc/letsencrypt/live/api.hyun-clone.shop/privkey.pem; # SSL/TLS 개인 키 경로
+        include /etc/letsencrypt/options-ssl-nginx.conf; # Let's Encrypt에서 제공하는 Nginx SSL 옵션
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+        # 모든 경로('/')에 대한 요청을 받아들이는 location 블록
+        location / {
+            #CORS 헤더 추가
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, DELETE, PATCH, PUT' always;
+            add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type' always;
+
+            # OPTIONS 요청 처리
+            if ($request_method = 'OPTIONS') {
+                    add_header 'Access-Control-Allow-Origin' '*';
+                    add_header 'Access-Control-Allow-Methods' 'GET, POST, DELETE, PATCH, PUT, OPTIONS';
+                    add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type';
+                    add_header 'Content-Length' '0';
+                    add_header 'Content-Type' 'text/plain charset=UTF-8';
+                    add_header 'Access-Control-Max-Age' 1728000;
+                    return 204;
+
+            }
+
+            proxy_pass  http://shopclone:9000; # NGINX가 받은 모든 요청을 'http://도커컨테이너이름:포트번호'으로 프록시하여 처리하도록 지시
+            proxy_set_header    Host                $http_host; # 프록시된 요청에 'Host' 헤더를 추가하여 백엔드 서버에 전달
+            proxy_set_header    X-Real-IP           $remote_addr; # 프록시된 요청에 클라이언트의 실제 IP 주소를 'X-Real-IP' 헤더에 추가하여 백엔드 서버에 전달
+            proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for; # 프록시된 요청에 클라이언트의 원래 IP 주소를 'X-Forwarded-For' 헤더에 추가하여 백엔드 서버에 전달
+        }
+    }
+}
+
+======EC2의 init-letsencrypt.sh======
+#!/bin/bash
+
+if ! [ -x "$(command -v docker compose)" ]; then
+  echo 'Error: docker compose is not installed.' >&2
+  exit 1
+fi
+
+domains=(api.hyun-clone.shop)
+rsa_key_size=4096
+data_path="./data/certbot"
+email="chyun5197@gmail.com" # Adding a valid address is strongly recommended
+staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
+
+if [ -d "$data_path" ]; then
+  read -p "Existing data found for $domains. Continue and replace existing certificate? (y/N) " decision
+  if [ "$decision" != "Y" ] && [ "$decision" != "y" ]; then
+    exit
+  fi
+fi
+
+
+if [ ! -e "$data_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$data_path/conf/ssl-dhparams.pem" ]; then
+  echo "### Downloading recommended TLS parameters ..."
+  mkdir -p "$data_path/conf"
+  curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf > "$data_path/conf/options-ssl-nginx.conf"
+  curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/certbot/ssl-dhparams.pem > "$data_path/conf/ssl-dhparams.pem"
+  echo
+fi
+
+echo "### Creating dummy certificate for $domains ..."
+path="/etc/letsencrypt/live/$domains"
+mkdir -p "$data_path/conf/live/$domains"
+docker compose run --rm --entrypoint "\
+  openssl req -x509 -nodes -newkey rsa:$rsa_key_size -days 1\
+    -keyout '$path/privkey.pem' \
+    -out '$path/fullchain.pem' \
+    -subj '/CN=localhost'" certbot
+echo
+
+
+echo "### Starting nginx ..."
+docker compose up --force-recreate -d nginx
+echo
+
+echo "### Deleting dummy certificate for $domains ..."
+docker compose run --rm --entrypoint "\
+  rm -Rf /etc/letsencrypt/live/$domains && \
+  rm -Rf /etc/letsencrypt/archive/$domains && \
+  rm -Rf /etc/letsencrypt/renewal/$domains.conf" certbot
+echo
+
+
+echo "### Requesting Let's Encrypt certificate for $domains ..."
+#Join $domains to -d args
+domain_args=""
+for domain in "${domains[@]}"; do
+  domain_args="$domain_args -d $domain"
+done
+
+# Select appropriate email arg
+case "$email" in
+  "") email_arg="--register-unsafely-without-email" ;;
+  *) email_arg="--email $email" ;;
+esac
+
+# Enable staging mode if needed
+if [ $staging != "0" ]; then staging_arg="--staging"; fi
+
+docker compose run --rm --entrypoint "\
+  certbot certonly --webroot -w /var/www/certbot \
+    $staging_arg \
+    $email_arg \
+    $domain_args \
+    --rsa-key-size $rsa_key_size \
+    --agree-tos \
+    --force-renewal" certbot
+echo
+
+echo "### Reloading nginx ..."
+docker compose exec nginx nginx -s reload
