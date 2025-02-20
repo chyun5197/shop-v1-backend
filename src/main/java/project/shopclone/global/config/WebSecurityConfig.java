@@ -88,9 +88,9 @@ public class WebSecurityConfig {
                                                 // loadUserByUsername()에서 UsernameNotFoundException 아이디
                                                 // 상태코드 다르게 보내서 리액트에서 error.status로 경우 나눠어서 찾기 가능
 //                                                System.out.println("exception: "+ exception);
-//                                                System.out.println("실패 메세지: " + exception.getMessage());
 //                                                System.out.println("상태코드: " +response.getStatus());
 
+//                                                System.out.println("실패 메세지: " + exception.getMessage());
                                                 response.sendError(HttpStatus.UNAUTHORIZED.value(), exception.getMessage());
 //                                                response.sendRedirect("/api/user/unauthorized"); // 아이디/비번 어떤게 틀렸는지까지 보내고 싶다면 추가 작성
                                             }

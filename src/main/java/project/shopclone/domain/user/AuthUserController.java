@@ -61,21 +61,15 @@ public class AuthUserController {
 
     // 로그인 성공시 동작할 메서드. 브라우저에 리프레시, 액세스 토큰 모두 전달
     @GetMapping("/login")
-    public ResponseEntity<AuthUserLoginResponse> loginSuccessAuthentication(HttpServletRequest request) {
+    public ResponseEntity<AuthUserLoginResponse> loginSuccessAuthentication() {
+        // 로컬 실행과 달리 서버 실행에서는 여기서 authentication의 값이 null.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-
-        System.out.println("request = " + request);
-        System.out.println("request = " + request.getMethod());
-        System.out.println("request = " + request.getQueryString());
-        System.out.println("request = " + request.getContentType());
-        System.out.println("request = " + request.getParameter("email"));
-        System.out.println("request = " + request.getAttribute("email"));
-        System.out.println("request = " + request.getAttribute("input"));
-
         System.out.println("(실행2)authentication.getName()의 아이디: " + email);
-//        System.out.println("유저 권한: " + authentication.getAuthorities());
-//        System.out.println("authentication.getCredentials() = " + authentication.getCredentials());
+        System.out.println("(실행2)authentication.getPrincipal(): " + authentication.getPrincipal());
+
+
+//        System.out.println("@PathVariable email = " + email);
 
         AuthUser authuser = authUserRepository.findByEmail(email);
 
