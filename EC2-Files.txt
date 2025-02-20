@@ -43,8 +43,8 @@ services:
      networks:
        - shop_net
 
- networks:
-   shop_net:
+networks:
+  shop_net:
 
 ====== EC2의 nginx.conf ======
 events {
