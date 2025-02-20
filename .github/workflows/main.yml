@@ -1,4 +1,4 @@
-name: Shop-Clone CI/CD using Github Actions & Docker
+name: Shop-Clone CI/CD using Github Actions & Docker..
 
 on:
   push:
