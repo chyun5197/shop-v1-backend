@@ -62,16 +62,21 @@ public class AuthUserController {
     }
 
     // 로그인 성공시 동작할 메서드. 브라우저에 리프레시, 액세스 토큰 모두 전달
-    @GetMapping("/login")
+    @GetMapping("/login/{id}")
     public ResponseEntity<AuthUserLoginResponse> loginSuccessAuthentication(
+            @PathVariable String id,
             HttpServletRequest request
     ) {
 
-        // 로컬 실행과 달리 서버 실행에서는 여기서 authentication의 값이 null.
+        // 로컬 환경과 달리 서버 환경에서는 이 시점에서 authentication의 값이 null. (loadUserByUsername에서는 잘 리턴함)
+        // 실패지점 추측으로 서버 환경에서는 1. SecurityContext에 사용자정보를 처음부터 저장을 안하거나(마치 SessionCreationPolicy.STATELESS)
+        // 2. 필터체인 실행과 api 실행이 각각 별개 실행으로 간주해서 SecurityContext 정보가 계속 이어지지 않거나
+        // => 해결책으로 필터체인에서 successHandler 객체 생성으로
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        System.out.println("(실행2)authentication.getName()의 아이디: " + email);
+        System.out.println("(loginSuccess)authentication.getName(): " + email);
 
+        System.out.println("(loginSuccess)id = " + id);
         System.out.println("request.getRequestURL() = " + request.getRequestURL());
         System.out.println("request.getRequestURI() = " + request.getRequestURI());
 
@@ -84,7 +89,8 @@ public class AuthUserController {
 
 //        System.out.println("@PathVariable email = " + email);
 
-        AuthUser authuser = authUserRepository.findByEmail(email);
+//        AuthUser authuser = authUserRepository.findByEmail(email);
+        AuthUser authuser = authUserRepository.findByEmail(id);
 
         // 로그인할때 리프레시 토큰과 액세스 토큰 생성
         String refreshToken = tokenService.createNewRefreshToken(authuser);

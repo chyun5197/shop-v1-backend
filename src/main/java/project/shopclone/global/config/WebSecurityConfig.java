@@ -78,7 +78,7 @@ public class WebSecurityConfig {
                                 // defaultSuccessUrl 와 successHandler 중 하나만 선택 (둘 다 작성하면 핸들러를 실행)
                                 // 1) defaultSuccessUrl: 작성한 url 실행 (스프링 api 컨트롤러 실행 가능 or 리액트주소/경로 페이지 라우팅 가능)
                                 // 2) successHandler : 클래스 구현해서 사용가능 + url 실행 (sendRedirect()가 url 실행) ~ 소셜 로그인 구현했을때 사용함(OAuth2SuccessHandler.class)
-                                .defaultSuccessUrl("/api/user/login") // 인증이 성공하였을 때 이동할 url
+//                                .defaultSuccessUrl("/api/user/login") // 인증이 성공하였을 때 이동할 url
                                 .failureHandler( // defaultFailureUrl은 따로 없음
                                         new AuthenticationFailureHandler() {
                                             @Override
@@ -96,15 +96,15 @@ public class WebSecurityConfig {
                                             }
                                         }
                                 )
-//                                .successHandler(
-//                                        new AuthenticationSuccessHandler() {
-//                                            @Override
-//                                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//                                                System.out.println("authentication : " + authentication.getName());
-////                                                response.sendRedirect("/"); // 인증이 성공한 후에는 root로 이동
-//                                            }
-//                                        }
-//                                )
+                                .successHandler(
+                                        new AuthenticationSuccessHandler() {
+                                            @Override
+                                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                                                System.out.println("(필터체인)authentication : " + authentication.getName());
+                                                response.sendRedirect("/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
+                                            }
+                                        }
+                                )
                 )
                 .logout(logout -> logout // 로그아웃 설정
 //                        .logoutSuccessUrl("/") // 로그아웃 시 이동 URL
