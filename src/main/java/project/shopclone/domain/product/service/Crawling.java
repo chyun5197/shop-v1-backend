@@ -147,7 +147,7 @@ public class Crawling {
                 .replaceAll(",", "").replace("원", "");
         if (priceStr.isEmpty()){
             return;
-        }else if(priceStr.contains("예약중")){ // 예약중인 상품은 건너뜀
+        }else if(priceStr.contains("예약중") || priceStr.contains("할인가")){ // 예약중인 상품은 건너뜀
             return;
         }
         price = Integer.valueOf(priceStr);

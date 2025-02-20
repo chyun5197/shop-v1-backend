@@ -3,7 +3,6 @@ package project.shopclone.domain.product.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import project.shopclone.domain.product.entity.Brand;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.BrandRepository;
 import project.shopclone.domain.product.service.response.*;

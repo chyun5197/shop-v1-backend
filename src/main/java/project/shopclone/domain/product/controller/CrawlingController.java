@@ -29,11 +29,8 @@ public class CrawlingController {
     public String crawl() {
         List<Brand> brands = brandRepository.findAll();
         for (Brand brand : brands){
-            if (brand.getId()<128){
+            if (brand.getId()<169){
                 continue;
-            }
-            if (brand.getCategory().equals("Bass 2")) {
-                break;
             }
             crawling.crawlingPages(brand.getCateNo(), brand.getBrand(), brand.getCategory());
             // 분류번호 작업
