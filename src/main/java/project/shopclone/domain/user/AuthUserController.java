@@ -21,6 +21,8 @@ import project.shopclone.global.jwt.service.TokenProvider;
 import project.shopclone.global.jwt.service.TokenService;
 import project.shopclone.global.jwt.refreshtoken.RefreshTokenRepository;
 
+import java.util.Enumeration;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -61,13 +63,24 @@ public class AuthUserController {
 
     // 로그인 성공시 동작할 메서드. 브라우저에 리프레시, 액세스 토큰 모두 전달
     @GetMapping("/login")
-    public ResponseEntity<AuthUserLoginResponse> loginSuccessAuthentication() {
+    public ResponseEntity<AuthUserLoginResponse> loginSuccessAuthentication(
+            HttpServletRequest request
+    ) {
+
         // 로컬 실행과 달리 서버 실행에서는 여기서 authentication의 값이 null.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         System.out.println("(실행2)authentication.getName()의 아이디: " + email);
-        System.out.println("(실행2)authentication.getPrincipal(): " + authentication.getPrincipal());
 
+        System.out.println("request.getRequestURL() = " + request.getRequestURL());
+        System.out.println("request.getRequestURI() = " + request.getRequestURI());
+
+        System.out.println("request.getParameterNames() = " + request.getParameterNames());
+        Enumeration<String> paramKeys = request.getParameterNames();
+        while (paramKeys.hasMoreElements()) {
+            String key = paramKeys.nextElement();
+            System.out.println(key+":"+request.getParameter(key));
+        }
 
 //        System.out.println("@PathVariable email = " + email);
 
