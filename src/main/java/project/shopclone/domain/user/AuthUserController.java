@@ -75,13 +75,13 @@ public class AuthUserController {
         // => 해결책: 필터체인에서 successHandler 객체에서 SecurityContext값을 여기 api로 param값(id)으로 보내와서 사용
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        System.out.println("(loginSuccess)authentication.getName(): " + email);
+//        System.out.println("(loginSuccess)authentication.getName(): " + email);
 
-        System.out.println("(loginSuccess)id = " + id);
-        System.out.println("request.getRequestURL() = " + request.getRequestURL());
-        System.out.println("request.getRequestURI() = " + request.getRequestURI());
+//        System.out.println("(loginSuccess)id = " + id);
+//        System.out.println("request.getRequestURL() = " + request.getRequestURL());
+//        System.out.println("request.getRequestURI() = " + request.getRequestURI());
 
-        System.out.println("request.getParameterNames() = " + request.getParameterNames());
+//        System.out.println("request.getParameterNames() = " + request.getParameterNames());
         Enumeration<String> paramKeys = request.getParameterNames();
         while (paramKeys.hasMoreElements()) {
             String key = paramKeys.nextElement();

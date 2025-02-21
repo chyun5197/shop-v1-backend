@@ -1,5 +1,6 @@
 package project.shopclone.domain.cart.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,8 @@ public class CartController {
     public ResponseEntity<Void> createCartItem(
             @RequestHeader("Authorization") String token,
             @PathVariable Long productId,
-            @RequestParam(value = "count", required = false) Integer count) {
+            @RequestParam(value = "count", required = false) Integer count,
+    HttpServletResponse response) {
 //        System.out.println("개수 = " + count);
         count = count == null ? 1 : count;
         return cartService.createCartItem(token, productId, count);

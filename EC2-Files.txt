@@ -86,13 +86,14 @@ http {
         location / {
             #CORS 헤더 추가
             add_header 'Access-Control-Allow-Origin' $allowed_origin always;
-            add_header 'Access-Control-Allow-Credentials' 'true';  # 쿠키 적용하기 위함
+            add_header 'Access-Control-Allow-Credentials' true always;   # 쿠키 적용할때도 필요
             add_header 'Access-Control-Allow-Methods' 'GET, POST, DELETE, PATCH, PUT' always;
             add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type' always;
 
             # OPTIONS 요청 처리
             if ($request_method = 'OPTIONS') {
                     add_header 'Access-Control-Allow-Origin' $allowed_origin always;
+                    add_header 'Access-Control-Allow-Credentials' true always;
                     add_header 'Access-Control-Allow-Methods' 'GET, POST, DELETE, PATCH, PUT, OPTIONS';
                     add_header 'Access-Control-Allow-Headers' 'Authorization,Content-Type';
                     add_header 'Content-Length' '0';
