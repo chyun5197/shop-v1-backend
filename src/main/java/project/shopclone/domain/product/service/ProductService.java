@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.BrandRepository;
+import project.shopclone.domain.product.repository.ProductCustomRepositoryImpl;
 import project.shopclone.domain.product.service.response.*;
 import project.shopclone.domain.product.repository.ProductRepository;
 import project.shopclone.global.common.PageLimitCalculator;
@@ -18,6 +19,7 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
+    private final ProductCustomRepositoryImpl productCustomRepositoryImpl;
 
     // 브랜드 정보 조회
     public BrandResponse getBrand(Integer cate) {
@@ -64,5 +66,16 @@ public class ProductService {
                 .toList();
     }
 
+    // 검색
+    public ProductPageResponse search(String keyword, String category, String brand, String sorting, Integer start, Integer end, Long page, Long pageSize) {
+        List<ProductThumbResponse> productThumbResponseList = productCustomRepositoryImpl.searchAll(keyword, category, brand, sorting, start, end, page, pageSize)
+                .stream().map(ProductThumbResponse::from).toList();
+
+        return ProductPageResponse.of(
+                productThumbResponseList,
+                0L, // 리액트에서 사용 안함
+                productThumbResponseList.size()
+        );
+    }
 
 }

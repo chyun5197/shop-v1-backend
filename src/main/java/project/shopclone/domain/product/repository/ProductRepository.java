@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
     // 한 브랜드 모든 상품 최신순
+    // 서브쿼리의 인덱스로 찾는 시간 단축(limit 보완)
     @Query(
             value = "select product.* " +
                     "from (" +
