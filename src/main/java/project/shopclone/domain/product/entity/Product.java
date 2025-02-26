@@ -18,8 +18,8 @@ public class Product {
 
     // 상위에서 할당
     private Integer no;             // 원본사이트에서의 상품번호
-    private String category;        // 대분류 g1, g2, b1..
-    private String brand;           // 중분류 fender, gibson, prs..
+    private String category;        // 대분류 Guitars 1, 2..
+    private String brand;           // 중분류 Fender, Gibson..
     private String series;          // 소분류 (현재 할당X)
 
     private Integer cateNo;          // 카테고리 넘버
@@ -29,7 +29,8 @@ public class Product {
     private Integer price;          // 판매가: 예약중인 상품은 제외
     private Integer originPrice;    // 원가: 없는 경우 null
     private Integer discountRate;   // 할인율: 없는 경우 null
-    private String image;           // 현재는 원본 사이트의 url
+    private String image;           // 원본 사이트의 url
+    private String cdnImage;        // (사용)도메인 cdn url
 
     // 본문 (현재 할당X)
     private String description;     // 본문 설명
@@ -62,6 +63,10 @@ public class Product {
 
     public void updateCateNo(Integer cateNo) {
         this.cateNo = cateNo;
+    }
+
+    public void updateCdnUrl(String cdnImage){
+        this.cdnImage = cdnImage;
     }
 
 }

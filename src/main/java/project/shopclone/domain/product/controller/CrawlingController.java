@@ -9,12 +9,14 @@ import project.shopclone.domain.product.service.Crawling;
 import project.shopclone.domain.product.entity.Brand;
 import project.shopclone.domain.product.repository.BrandRepository;
 import project.shopclone.domain.product.repository.ProductRepository;
+import project.shopclone.domain.product.service.ProductImageService;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
 public class CrawlingController {
+    private final ProductImageService productImageService;
     @Value("${data.crawling.pw}")
     private String pw;
 
@@ -58,21 +60,29 @@ public class CrawlingController {
         return "성공";
     }
 
-//    @GetMapping("/delete")
-//    public void del(){
-//        List<Product> products = productRepository.findAllByBrand("PRS");
-//        productRepository.deleteAll(products);
-//
-//    }
 
-    // 상품 상세 이미지 저장
-
-    @GetMapping("/crawling/brand")
-    public String crawlB() {
+    @GetMapping("/crawling/brand/{password}")
+    public String crawlB(@PathVariable String password) {
+        if (!password.equals(pw)) {
+            return "접근 불가";
+        }
         crawling.crawlingCateAndBrand();
         return "성공";
     }
 
+    // 이미지 S3에 업로드 및 Cloudfront Url로 저장
+    @GetMapping("/image/save/{password}")
+    public String saveImage(@PathVariable String password) {
+        if (!password.equals(pw)) {
+            return "접근 불가";
+        }
+        productImageService.imageConvertAndSaveS3();
+        return "성공";
+    }
+
+
+
+    // 상품 상세 이미지 저장
 //    @GetMapping("/crawling/images")
 //    public String crawlC() {
 //        crawling.crawlingOne();

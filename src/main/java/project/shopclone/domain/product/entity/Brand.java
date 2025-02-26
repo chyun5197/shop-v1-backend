@@ -15,7 +15,9 @@ public class Brand {
     private String brand;
     private String category;
     private String image;
+
     private Integer cateNo;  // 원본사이트 cate_no = 브랜드 넘버
+
 
     @Builder
     public Brand(String brand, String category, String image, Integer cateNo) {
