@@ -70,7 +70,7 @@ public class CrawlingController {
         return "성공";
     }
 
-    // 이미지 S3에 업로드 및 Cloudfront Url로 저장
+    // 이미지 S3에 업로드 및 Cloudfront CNAME Url로 저장
     @GetMapping("/image/save/{password}")
     public String saveImage(@PathVariable String password) {
         if (!password.equals(pw)) {
