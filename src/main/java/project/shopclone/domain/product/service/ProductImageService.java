@@ -2,6 +2,7 @@ package project.shopclone.domain.product.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.ProductRepository;
@@ -23,8 +24,8 @@ public class ProductImageService {
     private final S3Service s3Service;
 
     // 원본사이트의 이미지 url -> 이미지로 변환 -> S3에 저장
+    @Transactional
     public void imageConvertAndSaveS3()  {
-//        Product product = productRepository.findById(366L).get();
         List<Product> productList =  productRepository.findAll(); // DB 모든 Product 대상
         for (Product product : productList) {
             String imageOriginUrl = product.getImage();
