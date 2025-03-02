@@ -1,6 +1,6 @@
 # 쇼핑몰 클론 프로젝트
 [프로젝트 바로가기](http://hyun-clone.shop)
-<img width="1438" alt="캡처 fender" src="https://github.com/user-attachments/assets/3755d4ef-c450-4633-ba2e-f03768e4d0ee" />
+<img width="1459" alt="프로젝트 소개" src="https://github.com/user-attachments/assets/b69ddf9f-0b61-47c8-86ec-808b53d70ba9" />
 
 #### 프로젝트 vs 원본 사이트
 <img width="2048" alt="비교캡처 조회" src="https://github.com/user-attachments/assets/08a2b4f3-a7ee-4681-984a-3bd5be502231" /><br>
