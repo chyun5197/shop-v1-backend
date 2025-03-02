@@ -9,7 +9,7 @@
 
 ---
 
-## 개요
+## 📃 개요
 ### 소개
 - 온라인 쇼핑몰 '뮤직포스'를 클론한 개인 프로젝트 <br>
 
@@ -65,14 +65,14 @@
 
 ---
 
-## 서버 아키텍처
+## 🔨 서버 아키텍처
 <img width="1153" alt="SA" src="https://github.com/user-attachments/assets/218c13d5-0b5b-478d-97fa-7e4e69f2a017" />
 
-## ERD 설계
+## 📊 ERD 설계
 <img width="860" alt="ERD" src="https://github.com/user-attachments/assets/93141604-96d4-4bbb-9e91-550c527cb7a1" />
 
 ---
-## 트러블 슈팅
+## :link: 트러블 슈팅
 **[nginx redirect]** SSL을 연결하면서 발생한 302 CORS 에러: <br>
 **[nginx load-balance]** 서버 호스트 포트번호로 로드밸런싱이 안되는 문제: 
 
