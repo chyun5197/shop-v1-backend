@@ -11,16 +11,21 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     // 한 브랜드 모든 상품 최신순
     // 서브쿼리의 인덱스로 찾는 시간 단축(limit 보완)
-    @Query(
-            value = "select product.* " +
-                    "from (" +
-                    "   select id from product" +
-                    "   where cate_no = :cateNo " +
-                    "   order by release_date desc " +
-                    "   limit :limit offset :offset " +
-                    ") t left join product on t.id = product.id",
-            nativeQuery = true
-    )
+//    @Query(
+//            value = "select product.* " +
+//                    "from (" +
+//                    "   select id from product" +
+//                    "   where cate_no = :cateNo " +
+//                    "   order by release_date desc " +
+//                    "   limit :limit offset :offset " +
+//                    ") t left join product on t.id = product.id",
+//            nativeQuery = true
+//    )
+    @Query("select p " +
+            "from Product p " +
+            "where p.cateNo = :cateNo " +
+            "order by p.releaseDate desc " +
+            "limit :limit offset :offset ")
     List<Product> findAllBrand(
             @Param("cateNo") Integer cateNo,
             @Param("offset") Long offset,
@@ -28,16 +33,21 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     );
 
     // 한 브랜드 모든 상품 낮은가격순
-    @Query(
-            value = "select product.* " +
-                    "from (" +
-                    "   select id from product" +
-                    "   where cate_no = :cateNo " +
-                    "   order by price asc " +
-                    "   limit :limit offset :offset " +
-                    ") t left join product on t.id = product.id",
-            nativeQuery = true
-    )
+//    @Query(
+//            value = "select product.* " +
+//                    "from (" +
+//                    "   select id from product" +
+//                    "   where cate_no = :cateNo " +
+//                    "   order by price asc " +
+//                    "   limit :limit offset :offset " +
+//                    ") t left join product on t.id = product.id",
+//            nativeQuery = true
+//    )
+    @Query("select p " +
+        "from Product p " +
+        "where p.cateNo = :cateNo " +
+        "order by p.price asc " +
+        "limit :limit offset :offset ")
     List<Product> findAllBrand(
             @Param("cateNo") Integer cateNo,
             @Param("offset") Long offset,
@@ -82,7 +92,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //    Product getProductById(@Param("id") Long id);
 
     // 임시
-    @Query(value = "select p from Product p order by p.releaseDate desc limit 35 offset 0")
+    @Query("select p from Product p order by p.releaseDate desc limit 35 offset 0")
     List<Product> getProductTmp();
 
     // 한 브랜드 상품 개수 (쑤정해야)

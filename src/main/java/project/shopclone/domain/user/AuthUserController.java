@@ -82,11 +82,11 @@ public class AuthUserController {
 //        System.out.println("request.getRequestURI() = " + request.getRequestURI());
 
 //        System.out.println("request.getParameterNames() = " + request.getParameterNames());
-        Enumeration<String> paramKeys = request.getParameterNames();
-        while (paramKeys.hasMoreElements()) {
-            String key = paramKeys.nextElement();
-            System.out.println(key+":"+request.getParameter(key));
-        }
+//        Enumeration<String> paramKeys = request.getParameterNames();
+//        while (paramKeys.hasMoreElements()) {
+//            String key = paramKeys.nextElement();
+//            System.out.println(key+":"+request.getParameter(key));
+//        }
 
 //        System.out.println("@PathVariable email = " + email);
 
