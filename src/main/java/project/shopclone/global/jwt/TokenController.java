@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import project.shopclone.domain.user.AuthUser;
+import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.global.jwt.accesstoken.AccessTokenCreateRequest;
 import project.shopclone.global.jwt.accesstoken.AccessTokenCreateResponse;
 import project.shopclone.global.jwt.service.TokenService;

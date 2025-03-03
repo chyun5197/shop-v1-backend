@@ -3,11 +3,8 @@ package project.shopclone.global.jwt.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import project.shopclone.domain.user.AuthUser;
-import project.shopclone.domain.user.service.AuthUserService;
+import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.global.jwt.refreshtoken.RefreshTokenService;
-
-import java.time.Duration;
 
 import static project.shopclone.global.common.TokenDuration.ACCESS_TOKEN_DURATION;
 import static project.shopclone.global.common.TokenDuration.REFRESH_TOKEN_DURATION;

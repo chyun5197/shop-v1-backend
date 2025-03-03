@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import project.shopclone.domain.user.AuthUser;
-import project.shopclone.domain.user.AuthUserRepository;
+import project.shopclone.domain.user.entity.AuthUser;
+import project.shopclone.domain.user.repository.AuthUserRepository;
 
 @RequiredArgsConstructor
 @Service

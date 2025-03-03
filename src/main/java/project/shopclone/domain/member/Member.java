@@ -2,7 +2,7 @@ package project.shopclone.domain.member;
 
 import jakarta.persistence.*;
 import lombok.*;
-import project.shopclone.domain.user.AuthUser;
+import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.domain.wish.Wish;
 
 import java.util.List;

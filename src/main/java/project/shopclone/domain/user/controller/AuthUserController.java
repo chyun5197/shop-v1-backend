@@ -1,6 +1,5 @@
-package project.shopclone.domain.user;
+package project.shopclone.domain.user.controller;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -8,20 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
+import project.shopclone.domain.user.repository.AuthUserRepository;
+import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.domain.user.service.request.AuthUserAddRequest;
 import project.shopclone.domain.user.service.response.AuthUserLoginResponse;
 import project.shopclone.domain.user.service.AuthUserService;
 import project.shopclone.global.jwt.refreshtoken.RefreshToken;
-import project.shopclone.global.jwt.refreshtoken.RefreshTokenService;
-import project.shopclone.global.jwt.service.TokenProvider;
 import project.shopclone.global.jwt.service.TokenService;
 import project.shopclone.global.jwt.refreshtoken.RefreshTokenRepository;
-
-import java.util.Enumeration;
 
 
 @Slf4j

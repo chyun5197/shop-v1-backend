@@ -1,4 +1,4 @@
-package project.shopclone.domain.user;
+package project.shopclone.domain.user.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import project.shopclone.domain.member.Member;
 
 import java.util.Collection;
 import java.util.List;

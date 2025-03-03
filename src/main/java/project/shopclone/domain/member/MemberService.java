@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.shopclone.domain.cart.repository.CartRepository;
 import project.shopclone.domain.cart.entity.Cart;
-import project.shopclone.domain.user.AuthUser;
-import project.shopclone.domain.user.AuthUserRepository;
+import project.shopclone.domain.user.entity.AuthUser;
+import project.shopclone.domain.user.repository.AuthUserRepository;
 import project.shopclone.domain.user.service.request.AuthUserAddRequest;
 import project.shopclone.global.jwt.service.TokenProvider;
 

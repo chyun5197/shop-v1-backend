@@ -5,12 +5,11 @@ import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
-import project.shopclone.domain.user.AuthUser;
+import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.global.jwt.JwtProperties;
 
 import java.time.Duration;
