@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 //            "order by p.releaseDate desc " +
 //            "limit :limit offset :offset ")
     // 한 브랜드 모든 상품 최신순
-    // 서브쿼리의 인덱스로 찾는 시간 단축(limit 보완)
+    // 서브쿼리의 인덱스로 찾는 시간 단축
     @Query(
             value = "select product.* " +
                     "from (" +
@@ -88,6 +88,34 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "order by p.wishCount desc " +
             "limit 50 offset 0 ")
     List<Product> findBestProductList();
+
+    // 악기별 조회
+//    @Query("select p " +
+//        "from Product p " +
+//        "where p.category like :cates% " +
+//        "order by p.releaseDate desc " +
+//        "limit :limit offset :offset ")
+    // 서브쿼리의 인덱스로 찾는 시간 단축
+    @Query(
+            value = "select product.* " +
+                    "from (" +
+                    "   select id from product" +
+                    "   where category like :cates% " +
+                    "   order by release_date desc " +
+                    "   limit :limit offset :offset " +
+                    ") t left join product on t.id = product.id",
+            nativeQuery = true
+    )
+    List<Product> findAllCatesProducts(
+            @Param("cates") String cates,
+            @Param("offset") Long offset,
+            @Param("limit") Long limit
+    );
+
+
+
+
+
 
     // 페이지수를 알기 위한 카운트
     @Query(

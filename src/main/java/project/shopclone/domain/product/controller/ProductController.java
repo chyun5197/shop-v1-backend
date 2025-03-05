@@ -17,13 +17,23 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    // 전체 조회 페이징
+    // 전체 페이징 조회
     @GetMapping("")
     public ProductPageResponse getAllProducts(
             @RequestParam("page") Long page,
             @RequestParam("pageSize") Long pageSize
     ) {
         return productService.getAllProducts(page, pageSize);
+    }
+
+    // 악기별 페이징 조회  (Guitar/Bass/Acoustic)
+    @GetMapping("/inst")
+    public ProductPageResponse getAllInstProducts(
+            @RequestParam("cates") String cates,
+            @RequestParam("page") Long page,
+            @RequestParam("pageSize") Long pageSize
+    ){
+        return productService.getAllInstProducts(cates, page, pageSize);
     }
 
     // 베스트 조회
@@ -33,6 +43,7 @@ public class ProductController {
     }
 
 
+    // 검색 통으로 조회
     @GetMapping("/search")
     public ProductPageResponse search(@RequestParam("keyword") String keyword,
                                         @RequestParam(value = "cate", required = false) String category,
@@ -60,6 +71,7 @@ public class ProductController {
         return productService.search(keyword, category, brand, sorting, start, end, page, pageSize);
     }
 
+    // 카테번호 페이징 조회
     @GetMapping("/list")
     public ProductPageResponse readAllBrand(
 //            @RequestParam("brand") String brand,
