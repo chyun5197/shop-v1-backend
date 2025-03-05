@@ -7,6 +7,7 @@ import project.shopclone.domain.product.service.response.BrandResponse;
 import project.shopclone.domain.product.service.response.ProductPageResponse;
 import project.shopclone.domain.product.service.response.ProductResponse;
 import project.shopclone.domain.product.service.ProductService;
+import project.shopclone.domain.product.service.response.ProductThumbResponse;
 
 import java.util.List;
 
@@ -16,10 +17,21 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-//    @GetMapping("/test")
-//    public String test() {
-//        return "test 확인";
-//    }
+    // 전체 조회 페이징
+    @GetMapping("")
+    public ProductPageResponse getAllProducts(
+            @RequestParam("page") Long page,
+            @RequestParam("pageSize") Long pageSize
+    ) {
+        return productService.getAllProducts(page, pageSize);
+    }
+
+    // 베스트 조회
+    @GetMapping("/best")
+    public List<ProductThumbResponse> getBestProducts(){
+        return productService.getBestProducts();
+    }
+
 
     @GetMapping("/search")
     public ProductPageResponse search(@RequestParam("keyword") String keyword,

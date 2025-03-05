@@ -15,4 +15,9 @@ public class Test {
     public ResponseEntity<UUID> test() {
         return ResponseEntity.ok(randomUUID);
     }
+
+    @GetMapping("/health")
+    public String healthCheck() {
+        return "Success Health Check";
+    }
 }

@@ -35,15 +35,15 @@ public class ProductService {
     public ProductPageResponse readAllBrand(Integer cateNo, Long page, Long pageSize, String sorting){
         List<ProductThumbResponse> productThumbResponseList;
         if(sorting.equals("new")){
-            productThumbResponseList = productRepository.findAllBrand(cateNo, (page - 1) * pageSize, pageSize).stream()
+            productThumbResponseList = productRepository.findAllByCateNo(cateNo, (page - 1) * pageSize, pageSize).stream()
                     .map(ProductThumbResponse::from)
                     .toList();
         }else if(sorting.equals("asc")){// 오름차순(낮은가격)
-            productThumbResponseList = productRepository.findAllBrand(cateNo, (page - 1) * pageSize, pageSize, sorting).stream()
+            productThumbResponseList = productRepository.findAllByCateNoPriceAsc(cateNo, (page - 1) * pageSize, pageSize, sorting).stream()
                     .map(ProductThumbResponse::from)
                     .toList();
         }else {
-            productThumbResponseList = productRepository.findAllBrandDesc(cateNo, (page - 1) * pageSize, pageSize, sorting).stream()
+            productThumbResponseList = productRepository.findAllByCateNoPriceDesc(cateNo, (page - 1) * pageSize, pageSize, sorting).stream()
                     .map(ProductThumbResponse::from)
                     .toList();
         }
@@ -77,5 +77,24 @@ public class ProductService {
                 productThumbResponseList.size()
         );
     }
+
+    // 전체 조회
+    public ProductPageResponse getAllProducts(Long page, Long pageSize) {
+        List<ProductThumbResponse> productThumbResponseList = productRepository.findAllProduct((page - 1) * pageSize, pageSize).stream()
+                .map(ProductThumbResponse::from)
+                .toList();
+        return ProductPageResponse.of(
+                productThumbResponseList,
+                0L,
+                productThumbResponseList.size()
+        );
+    }
+
+    // 베스트 조회
+    public List<ProductThumbResponse> getBestProducts() {
+        return productRepository.findBestProductList().stream()
+                .map(ProductThumbResponse::from).toList();
+    }
+
 
 }

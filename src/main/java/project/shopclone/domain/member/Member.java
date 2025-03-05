@@ -47,11 +47,11 @@ public class Member {
     }
 
     public void plusWishCount(){
-        this.wishCount += 1;
+        this.wishCount++;
     }
     public void minusWishCount(){
         if(this.wishCount > 0){
-            this.wishCount -= 1;
+            this.wishCount--;
         }
     }
     public void updateWishCount(int num){

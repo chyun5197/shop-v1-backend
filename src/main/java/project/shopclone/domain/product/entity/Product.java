@@ -40,6 +40,8 @@ public class Product {
     private String country;         // 원산지
     private Integer releaseDate;    // 출시 연도
 
+    private Integer wishCount;      // 위시 개수
+
     // 상세 이미지
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProductImage> prdouctImageList = new ArrayList<>();
@@ -59,6 +61,7 @@ public class Product {
         this.model = model;
         this.country = country;
         this.releaseDate = releaseDate;
+        this.wishCount = 0;
     }
 
     public void updateCateNo(Integer cateNo) {
@@ -67,6 +70,15 @@ public class Product {
 
     public void updateCdnUrl(String cdnImage){
         this.cdnImage = cdnImage;
+    }
+
+    public void plusWishCount(){
+        this.wishCount++;
+    }
+    public void minusWishCount(){
+        if(this.wishCount > 0){
+            this.wishCount--;
+        }
     }
 
 }

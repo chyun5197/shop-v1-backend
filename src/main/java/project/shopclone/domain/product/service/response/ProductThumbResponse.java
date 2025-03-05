@@ -22,7 +22,8 @@ public class ProductThumbResponse {
     private Integer price;          // 판매가: 예약중인 상품은 제외
     private Integer originPrice;    // 원가: 없는 경우 null
     private String image;           // 현재는 원본 사이트의 url
-    private String cdnImage;           // 현재는 원본 사이트의 url
+    private String cdnImage;        // CloudFront url
+    private Integer wishCount;      // 위시 개수
 
     public static ProductThumbResponse from(Product product) {
         ProductThumbResponse response = new ProductThumbResponse();
@@ -35,6 +36,7 @@ public class ProductThumbResponse {
         response.originPrice = product.getOriginPrice();
         response.image = product.getImage();
         response.cdnImage = product.getCdnImage();
+        response.wishCount = product.getWishCount();
         return response;
     }
 }

@@ -35,7 +35,6 @@ public class WishService {
     public ResponseEntity<Void> createWish(String token, Long productId) {
         Member member = memberService.getMember(token);
         Product product = productRepository.findById(productId).get();
-
         // 중복일 경우
         if(wishRepository.findByProduct(product) != null) {
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(null);
@@ -45,7 +44,10 @@ public class WishService {
                 .member(member)
                 .product(product)
                 .build());
-        member.plusWishCount(); // 위시 개수++
+        // 위시 개수++
+        member.plusWishCount();
+        product.plusWishCount();
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -53,9 +55,13 @@ public class WishService {
     @Transactional
     public ResponseEntity<Void> deleteWish(String token, Long wishId) {
         Member member = memberService.getMember(token);
-        member.getWishList()
-                .remove(wishRepository.findById(wishId).orElseThrow());
-        member.minusWishCount(); // 위시 개수--
+        Wish wish = wishRepository.findById(wishId).get();
+
+        // 위시 개수--
+        member.minusWishCount();
+        wish.getProduct().minusWishCount();
+
+        wishRepository.delete(wish);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -65,6 +71,8 @@ public class WishService {
         // 관심상품 비우기
         if (productIds.get(0) == -1){
             Member member = memberService.getMember(token);
+            List<Wish> wishList = member.getWishList();
+            wishList.forEach(wish -> wish.getProduct().minusWishCount()); // 상품들 위시 개수--
             member.getWishList().clear();
             return ResponseEntity.status(HttpStatus.OK).build();
         }
@@ -73,9 +81,9 @@ public class WishService {
         Member member = memberService.getMember(token);
         List<Wish> wishList  = new ArrayList<>();
         for(Long productId : productIds) { // 상품ID->상품객체->위시객체
-            wishList.add(wishRepository.findByProduct(
-                    productRepository.findById(productId).orElseThrow())
-            );
+            Product product = productRepository.findById(productId).get();
+            product.minusWishCount(); // 상품 위시 개수--
+            wishList.add(wishRepository.findByProduct(product));
         }
 
         member.getWishList()
