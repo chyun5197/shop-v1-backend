@@ -11,7 +11,8 @@
 
 ## 📃 개요
 ### 소개
-- 온라인 쇼핑몰 '뮤직포스'를 클론한 개인 프로젝트 <br>
+- 쇼핑몰 '뮤직포스' 사이트를 클론한 개인 프로젝트 <br>
+- 상품 정보는 크롤링한 데이터를 사용
 
 ### 프로젝트 목적
 - 웹 전반에 대한 학습과 이해도를 높이기 위해 풀스택으로 온라인 쇼핑몰을 클론하는 프로젝트를 진행 <br>
@@ -38,9 +39,9 @@
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)
 
 ### Frontend
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
 
 ### Database
@@ -57,6 +58,10 @@
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 
+### Performance Test & Monitoring
+![k6](https://img.shields.io/badge/k6-%2300B5E2.svg?style=for-the-badge&logo=k6&logoColor=white)
+![AWS CloudWatch](https://img.shields.io/badge/AWS%20CloudWatch-%23FF4F8B.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+
 ### IDE & Tools
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
@@ -72,14 +77,30 @@
 <img width="860" alt="ERD" src="https://github.com/user-attachments/assets/93141604-96d4-4bbb-9e91-550c527cb7a1" />
 
 ---
+
+## 모니터링
+
 ## :link: 트러블 슈팅
-**[nginx redirect]** SSL을 연결하면서 발생한 302 CORS 에러: <br>
-**[nginx load-balance]** 서버 호스트 포트번호로 로드밸런싱이 안되는 문제: 
+Truble Shooting
+
+SSL을 연결하면서 발생한 302 CORS 에러
+
+## :star: 성능 테스트
+1. 병목 지점과 최대 쓰루풋 확인하기
+2. Nginx 로드밸런스를 추가시
+3. 분산 요청 테스트
 
 ## 성능 개선
-**[SQL SubQuery]** 상품 테이블에서 인덱스 튜닝으로 페이지 조회시 응답시간 개선:  <br>
+커버링 인덱스 활용한 페이지 조회
+베스트 게시판 캐시
 
-## 성능 테스트
+---
+
+## 가상 서버 코드 링크
+docker-compose.yml <br>
+nginx.conf
+
+
 
 
 
