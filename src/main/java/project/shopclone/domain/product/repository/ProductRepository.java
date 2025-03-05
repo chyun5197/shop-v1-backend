@@ -8,45 +8,45 @@ import project.shopclone.domain.product.entity.Product;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-    @Query("select p " +
-            "from Product p " +
-            "where p.cateNo = :cateNo " +
-            "order by p.releaseDate desc " +
-            "limit :limit offset :offset ")
+//    @Query("select p " +
+//            "from Product p " +
+//            "where p.cateNo = :cateNo " +
+//            "order by p.releaseDate desc " +
+//            "limit :limit offset :offset ")
     // 한 브랜드 모든 상품 최신순
     // 서브쿼리의 인덱스로 찾는 시간 단축(limit 보완)
-//    @Query(
-//            value = "select product.* " +
-//                    "from (" +
-//                    "   select id from product" +
-//                    "   where cate_no = :cateNo " +
-//                    "   order by release_date desc " +
-//                    "   limit :limit offset :offset " +
-//                    ") t left join product on t.id = product.id",
-//            nativeQuery = true
-//    )
+    @Query(
+            value = "select product.* " +
+                    "from (" +
+                    "   select id from product" +
+                    "   where cate_no = :cateNo " +
+                    "   order by release_date desc " +
+                    "   limit :limit offset :offset " +
+                    ") t left join product on t.id = product.id",
+            nativeQuery = true
+    )
     List<Product> findAllByCateNo(
             @Param("cateNo") Integer cateNo,
             @Param("offset") Long offset,
             @Param("limit") Long limit
     );
 
-    @Query("select p " +
-        "from Product p " +
-        "where p.cateNo = :cateNo " +
-        "order by p.price asc " +
-        "limit :limit offset :offset ")
+//    @Query("select p " +
+//        "from Product p " +
+//        "where p.cateNo = :cateNo " +
+//        "order by p.price asc " +
+//        "limit :limit offset :offset ")
     // 한 브랜드 모든 상품 낮은가격순
-//    @Query(
-//            value = "select product.* " +
-//                    "from (" +
-//                    "   select id from product" +
-//                    "   where cate_no = :cateNo " +
-//                    "   order by price asc " +
-//                    "   limit :limit offset :offset " +
-//                    ") t left join product on t.id = product.id",
-//            nativeQuery = true
-//    )
+    @Query(
+            value = "select product.* " +
+                    "from (" +
+                    "   select id from product" +
+                    "   where cate_no = :cateNo " +
+                    "   order by price asc " +
+                    "   limit :limit offset :offset " +
+                    ") t left join product on t.id = product.id",
+            nativeQuery = true
+    )
     List<Product> findAllByCateNoPriceAsc(
             @Param("cateNo") Integer cateNo,
             @Param("offset") Long offset,
