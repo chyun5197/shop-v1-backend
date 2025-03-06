@@ -33,6 +33,7 @@ public class ProductService {
     }
 
     // 브랜드별 리스트 조회
+    @Cacheable(cacheNames = "getBrandProducts", key = "'brand_products:cate:' + #cateNo + ':page' + #page + ':size' + #pageSize")
     public ProductPageResponse readAllBrand(Integer cateNo, Long page, Long pageSize, String sorting){
         List<ProductThumbResponse> productThumbResponseList;
         if(sorting.equals("new")){
@@ -59,14 +60,6 @@ public class ProductService {
         );
     }
 
-    // 임시
-    public List<ProductResponse> getAllProduct() {
-        List<Product> products = productRepository.getProductTmp();
-        return products.stream()
-                .map(ProductResponse::new)
-                .toList();
-    }
-
     // 검색
     public ProductPageResponse search(String keyword, String category, String brand, String sorting, Integer start, Integer end, Long page, Long pageSize) {
         List<ProductThumbResponse> productThumbResponseList = productCustomRepository.searchAll(keyword, category, brand, sorting, start, end, page, pageSize)
@@ -78,6 +71,30 @@ public class ProductService {
                 productThumbResponseList.size()
         );
     }
+
+    // 베스트 조회
+    @Cacheable(cacheNames = "getBestProducts", key = "'best_products'")
+    public List<ProductThumbResponse> getBestProducts() {
+        return productRepository.findBestProductList().stream()
+                .map(ProductThumbResponse::from).toList();
+    }
+
+
+    // 악기별 조회
+    @Cacheable(cacheNames = "getCatesProducts", key = "'inst_products:cates:' + #cates + ':page' + #page + ':size' + #pageSize")
+    public ProductPageResponse getAllInstProducts(String cates, Long page, Long pageSize) {
+        List<ProductThumbResponse> productThumbResponseList = productRepository.findAllCatesProducts(cates, (page - 1) * pageSize, pageSize).stream()
+                .map(ProductThumbResponse::from)
+                .toList();
+        return ProductPageResponse.of(
+                productThumbResponseList,
+                0L,
+                productThumbResponseList.size()
+        );
+    }
+
+
+    // ====================================================================================
 
     // 전체 조회
     public ProductPageResponse getAllProducts(Long page, Long pageSize) {
@@ -91,24 +108,12 @@ public class ProductService {
         );
     }
 
-    // 베스트 조회
-//    @Cacheable(cacheNames = "getBestProducts", key = "'best_products'")
-    public List<ProductThumbResponse> getBestProducts() {
-        return productRepository.findBestProductList().stream()
-                .map(ProductThumbResponse::from).toList();
-    }
-
-
-    // 악기별 조회
-//    @Cacheable(cacheNames = "getBestProducts", key = "'inst_products:cates:' + #cates + ':page' + #page + ':size' + #pageSize")
-    public ProductPageResponse getAllInstProducts(String cates, Long page, Long pageSize) {
-        List<ProductThumbResponse> productThumbResponseList = productRepository.findAllCatesProducts(cates, (page - 1) * pageSize, pageSize).stream()
-                .map(ProductThumbResponse::from)
+    // 임시
+    public List<ProductResponse> getAllProduct() {
+        List<Product> products = productRepository.getProductTmp();
+        return products.stream()
+                .map(ProductResponse::new)
                 .toList();
-        return ProductPageResponse.of(
-                productThumbResponseList,
-                0L,
-                productThumbResponseList.size()
-        );
     }
 }
+

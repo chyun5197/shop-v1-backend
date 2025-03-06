@@ -112,6 +112,29 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("limit") Long limit
     );
 
+    //카테고리별 조회
+//    @Query("select p " +
+//    "from Product p " +
+//    "where p.category = :category " +
+//    "order by p.releaseDate desc " +
+//    "limit :limit offset :offset ")
+    // 서브쿼리의 인덱스로 찾는 시간 단축
+    @Query(
+            value = "select product.* " +
+                    "from (" +
+                    "   select id from product" +
+                    "   where category = :category " +
+                    "   order by release_date desc " +
+                    "   limit :limit offset :offset " +
+                    ") t left join product on t.id = product.id",
+            nativeQuery = true
+    )
+    List<Product> findAllByCategory(
+            @Param("category") String category,
+            @Param("offset") Long offset,
+            @Param("limit") Long limit
+    );
+
 
 
 
