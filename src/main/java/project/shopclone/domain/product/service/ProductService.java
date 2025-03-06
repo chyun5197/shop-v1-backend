@@ -21,7 +21,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
     private final ProductCustomRepository productCustomRepository;
-    private final CacheService cacheService;
 
     // 브랜드 정보 조회
     public BrandResponse getBrand(Integer cate) {
