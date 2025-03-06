@@ -69,8 +69,8 @@ public class AuthUserController {
         // 2. 필터체인 실행과 api 실행이 각각 별개 실행으로 간주해서 SecurityContext 정보가 계속 이어지지 않거나
         // => 코드로 확인해보니 2번이 맞다.
         // => 해결책: 필터체인에서 successHandler 객체에서 SecurityContext값을 여기 api로 param값(id)으로 보내와서 사용
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String email = authentication.getName();
 //        System.out.println("(loginSuccess)authentication.getName(): " + email);
 
 //        System.out.println("(loginSuccess)id = " + id);
@@ -105,7 +105,7 @@ public class AuthUserController {
 //        response.addCookie(cookie);
 
         // 이메일, 리프레시 토큰, 액세스 토큰 전달
-        return ResponseEntity.ok().body(new AuthUserLoginResponse(email, refreshToken, accessToken));
+        return ResponseEntity.ok().body(new AuthUserLoginResponse(authuser.getEmail(), refreshToken, accessToken));
     }
 
     // 로그인 실패시 401 반환 => 실패핸들러에서 sendError()로 처리
