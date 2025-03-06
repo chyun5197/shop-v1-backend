@@ -21,6 +21,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
     private final ProductCustomRepository productCustomRepository;
+    private final CacheService cacheService;
 
     // 브랜드 정보 조회
     public BrandResponse getBrand(Integer cate) {
@@ -73,17 +74,23 @@ public class ProductService {
     }
 
     // 베스트 조회
-    @Cacheable(cacheNames = "getBestProducts", key = "'best_products'")
-    public List<ProductThumbResponse> getBestProducts() {
-        return productRepository.findBestProductList().stream()
-                .map(ProductThumbResponse::from).toList();
+    @Cacheable(cacheNames = "getBestProducts", key = "'best_products'", cacheManager = "redisCacheManager")
+    public ProductPageResponse getBestProducts() {
+        List<ProductThumbResponse> productThumbResponseList =
+                productRepository.findBestProductList().stream()
+                        .map(ProductThumbResponse::from).toList();
+        return ProductPageResponse.of(
+                productThumbResponseList,
+                0L,
+                productThumbResponseList.size());
     }
 
 
     // 악기별 조회
-    @Cacheable(cacheNames = "getCatesProducts", key = "'inst_products:cates:' + #cates + ':page' + #page + ':size' + #pageSize")
+    @Cacheable(cacheNames = "getCatesProducts", key = "'inst_products:cates:' + #cates + ':page' + #page + ':size' + #pageSize", cacheManager = "redisCacheManager")
     public ProductPageResponse getAllInstProducts(String cates, Long page, Long pageSize) {
-        List<ProductThumbResponse> productThumbResponseList = productRepository.findAllCatesProducts(cates, (page - 1) * pageSize, pageSize).stream()
+        List<ProductThumbResponse> productThumbResponseList =
+                productRepository.findAllCatesProducts(cates, (page - 1) * pageSize, pageSize).stream()
                 .map(ProductThumbResponse::from)
                 .toList();
         return ProductPageResponse.of(
@@ -92,6 +99,8 @@ public class ProductService {
                 productThumbResponseList.size()
         );
     }
+
+
 
 
     // ====================================================================================

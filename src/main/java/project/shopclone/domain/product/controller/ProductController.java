@@ -38,7 +38,7 @@ public class ProductController {
 
     // 베스트 조회
     @GetMapping("/best")
-    public List<ProductThumbResponse> getBestProducts(){
+    public ProductPageResponse getBestProducts(){
         return productService.getBestProducts();
     }
 
