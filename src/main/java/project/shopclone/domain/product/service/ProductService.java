@@ -2,6 +2,7 @@ package project.shopclone.domain.product.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.BrandRepository;
@@ -91,6 +92,7 @@ public class ProductService {
     }
 
     // 베스트 조회
+//    @Cacheable(cacheNames = "getBestProducts", key = "'best_products'")
     public List<ProductThumbResponse> getBestProducts() {
         return productRepository.findBestProductList().stream()
                 .map(ProductThumbResponse::from).toList();
@@ -98,6 +100,7 @@ public class ProductService {
 
 
     // 악기별 조회
+//    @Cacheable(cacheNames = "getBestProducts", key = "'inst_products:cates:' + #cates + ':page' + #page + ':size' + #pageSize")
     public ProductPageResponse getAllInstProducts(String cates, Long page, Long pageSize) {
         List<ProductThumbResponse> productThumbResponseList = productRepository.findAllCatesProducts(cates, (page - 1) * pageSize, pageSize).stream()
                 .map(ProductThumbResponse::from)

@@ -19,11 +19,6 @@ import java.util.Arrays;
 @Configuration
 @EnableCaching // Spring Boot의 캐싱 설정을 활성화
 public class RedisCacheConfig {
-    // 캐싱 필요
-    // 1. 액세스 토큰으로 회원 확인 MemberService.getMember()
-    // 2. 액세스 토큰 재발급을 위한 리프레시 토큰 유효성 검사 TokenProvider.validToken() -> 보류
-    // 둘다 5분으로 공통 관리하기 위해서 2번의 액세스 토큰도 유효시간을 5분으로 바꿀지?
-
     // 캐시 매니저 빈 등록
     @Bean
     public CacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
