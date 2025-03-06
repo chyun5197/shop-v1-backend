@@ -16,10 +16,10 @@ public class TokenService {
     private final RefreshTokenService refreshTokenService;
 
     // 리프레시 토큰으로 Redis에서 인증회원ID 반환하면서 캐싱
-    @Cacheable(cacheNames = "token", key="'refreshToken:' + #refreshToken")
-    public Long getAuthUserIdRefreshToken(String refreshToken) {
-        return refreshTokenService.findByRefreshToken(refreshToken).getAuthuserId();
-    }
+//    @Cacheable(cacheNames = "token", key="'refreshToken:' + #refreshToken")
+//    public Long getAuthUserIdRefreshToken(String refreshToken) {
+//        return refreshTokenService.findByRefreshToken(refreshToken).getAuthuserId();
+//    }
 
     // 리프레시 토큰 발급
     public String createNewRefreshToken(AuthUser authUser) {

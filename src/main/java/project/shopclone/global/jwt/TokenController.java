@@ -24,10 +24,7 @@ public class TokenController {
     @PostMapping("/api/token")
     public ResponseEntity<AccessTokenCreateResponse> createNewAccessToken(@RequestBody AccessTokenCreateRequest request){
 
-//        AuthUser authUser = authUserRepository.findById(tokenProvider.getAuthUserId(request.getRefreshToken()))
-//                .orElseThrow();
-
-        AuthUser authUser = authUserRepository.findById(tokenService.getAuthUserIdRefreshToken(request.getRefreshToken()))
+        AuthUser authUser = authUserRepository.findById(tokenProvider.getAuthUserId(request.getRefreshToken()))
                 .orElseThrow();
         String newAccessToken = tokenService.createNewAccessToken(authUser, request.getRefreshToken());
         return ResponseEntity.status(HttpStatus.CREATED)

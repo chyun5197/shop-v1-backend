@@ -94,15 +94,15 @@ public class AuthUserController {
         String accessToken = tokenService.createNewAccessToken(authuser, refreshToken);
 
         // Redis에 리프레시 토큰 저장
-//        RefreshToken redis = new RefreshToken(refreshToken, authuser.getId());
-//        refreshTokenRepository.save(redis);
+        RefreshToken redis = new RefreshToken(refreshToken, authuser.getId());
+        refreshTokenRepository.save(redis);
 
         // 일반 DB 저장
-        RefreshToken rt = new RefreshToken(authuser.getId(), refreshToken);
-        refreshTokenRepository.save(rt);
+//        RefreshToken rt = new RefreshToken(authuser.getId(), refreshToken);
+//        refreshTokenRepository.save(rt);
 
         // 리프레시 토큰으로 ID 찾는 메서드를 Redis에 캐싱
-        tokenService.getAuthUserIdRefreshToken(refreshToken);
+//        tokenService.getAuthUserIdRefreshToken(refreshToken);
 
         // 현재 스프링에서 받아온 쿠키는 새로고침하면 사라진다.. => 일단 바디로 보내서 리액트 훅으로 setCookie
 //        Cookie cookie = new Cookie("refresh_token", refreshToken);
