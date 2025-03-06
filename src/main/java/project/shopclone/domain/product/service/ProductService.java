@@ -33,7 +33,7 @@ public class ProductService {
     }
 
     // 브랜드별 리스트 조회
-    @Cacheable(cacheNames = "getBrandProducts", key = "'brand_products:cate:' + #cateNo + ':page' + #page + ':size' + #pageSize")
+//    @Cacheable(cacheNames = "getBrandProducts", key = "'brand_products:cate:' + #cateNo + ':page' + #page + ':size' + #pageSize")
     public ProductPageResponse readAllBrand(Integer cateNo, Long page, Long pageSize, String sorting){
         List<ProductThumbResponse> productThumbResponseList;
         if(sorting.equals("new")){
@@ -73,7 +73,7 @@ public class ProductService {
     }
 
     // 베스트 조회
-    @Cacheable(cacheNames = "getBestProducts", key = "'best_products'", cacheManager = "redisCacheManager")
+//    @Cacheable(cacheNames = "getBestProducts", key = "'best_products'", cacheManager = "redisCacheManager")
     public ProductPageResponse getBestProducts() {
         List<ProductThumbResponse> productThumbResponseList =
                 productRepository.findBestProductList().stream()
@@ -86,7 +86,7 @@ public class ProductService {
 
 
     // 악기별 조회
-    @Cacheable(cacheNames = "getCatesProducts", key = "'inst_products:cates:' + #cates + ':page' + #page + ':size' + #pageSize", cacheManager = "redisCacheManager")
+//    @Cacheable(cacheNames = "getCatesProducts", key = "'inst_products:cates:' + #cates + ':page' + #page + ':size' + #pageSize", cacheManager = "redisCacheManager")
     public ProductPageResponse getAllInstProducts(String cates, Long page, Long pageSize) {
         List<ProductThumbResponse> productThumbResponseList =
                 productRepository.findAllCatesProducts(cates, (page - 1) * pageSize, pageSize).stream()
