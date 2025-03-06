@@ -73,7 +73,7 @@ public class ProductService {
     }
 
     // 베스트 조회
-//    @Cacheable(cacheNames = "getBestProducts", key = "'best_products'", cacheManager = "redisCacheManager")
+    @Cacheable(cacheNames = "getBestProducts", key = "'best_products'", cacheManager = "redisCacheManager")
     public ProductPageResponse getBestProducts() {
         List<ProductThumbResponse> productThumbResponseList =
                 productRepository.findBestProductList().stream()

@@ -13,6 +13,7 @@ import project.shopclone.domain.product.service.response.ProductPageResponse;
 @RequestMapping("/api/products")
 public class ProductPageController {
     private final ProductService productService;
+
     // 카테번호 페이징 조회
     @GetMapping("/list")
     public ProductPageResponse readAllBrand(
