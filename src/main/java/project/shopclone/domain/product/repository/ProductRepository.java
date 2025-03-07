@@ -89,7 +89,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "limit 50 offset 0 ")
     List<Product> findBestProductList();
 
-    // inst 조회
+    // 카테고리 like 조회
     @Query("select p " +
         "from Product p " +
         "where p.category = :cates " +
@@ -136,7 +136,28 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     );
 
 
-
+    // 악기별 조회
+    @Query("select p " +
+        "from Product p " +
+        "where p.inst = :inst " +
+        "order by p.releaseDate desc " +
+        "limit :limit offset :offset ")
+    // 서브쿼리의 인덱스로 찾는 시간 단축
+//    @Query(
+//            value = "select product.* " +
+//                    "from (" +
+//                    "   select id from product" +
+//                    "   where inst = :inst " +
+//                    "   order by release_date desc " +
+//                    "   limit :limit offset :offset " +
+//                    ") t left join product on t.id = product.id",
+//            nativeQuery = true
+//    )
+    List<Product> findAllByInst(
+            @Param("inst") String inst,
+            @Param("offset") Long offset,
+            @Param("limit") Long limit
+    );
 
 
 

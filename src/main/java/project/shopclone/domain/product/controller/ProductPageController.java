@@ -36,14 +36,23 @@ public class ProductPageController {
         return productService.getAllProducts(page, pageSize);
     }
 
-    // 악기별 페이징 조회  (Guitar/Bass/Acoustic)
-    @GetMapping("/inst")
+    // 악기별 Like 페이징 조회  (Guitar/Bass/Acoustic)
+//    @GetMapping("/inst")
+//    public ProductPageResponse getAllInstProducts(
+//            @RequestParam("cates") String cates,
+//            @RequestParam("page") Long page,
+//            @RequestParam("pageSize") Long pageSize
+//    ){
+//        return productService.getAllInstProducts(cates, page, pageSize);
+//    }
+
+    // 악기별 특정 페이징 조회
+    @GetMapping("/category")
     public ProductPageResponse getAllInstProducts(
-            @RequestParam("cates") String cates,
+            @RequestParam("inst") String inst,
             @RequestParam("page") Long page,
             @RequestParam("pageSize") Long pageSize
     ){
-        return productService.getAllInstProducts(cates, page, pageSize);
+        return productService.getAllInstProducts(inst, page, pageSize);
     }
-
 }

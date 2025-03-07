@@ -85,13 +85,26 @@ public class ProductService {
     }
 
 
-    // 악기별 조회
+    // 악기별 like 조회
 //    @Cacheable(cacheNames = "getCatesProducts", key = "'inst_products:cates:' + #cates + ':page' + #page + ':size' + #pageSize", cacheManager = "redisCacheManager")
-    public ProductPageResponse getAllInstProducts(String cates, Long page, Long pageSize) {
+//    public ProductPageResponse getAllInstProducts(String cates, Long page, Long pageSize) {
+//        List<ProductThumbResponse> productThumbResponseList =
+//                productRepository.findAllCatesProducts(cates, (page - 1) * pageSize, pageSize).stream()
+//                .map(ProductThumbResponse::from)
+//                .toList();
+//        return ProductPageResponse.of(
+//                productThumbResponseList,
+//                0L,
+//                productThumbResponseList.size()
+//        );
+//    }
+
+    // 특정 악기별 조회
+    public ProductPageResponse getAllInstProducts(String inst, Long page, Long pageSize) {
         List<ProductThumbResponse> productThumbResponseList =
-                productRepository.findAllCatesProducts(cates, (page - 1) * pageSize, pageSize).stream()
-                .map(ProductThumbResponse::from)
-                .toList();
+                productRepository.findAllByInst(inst, (page - 1) * pageSize, pageSize).stream()
+                        .map(ProductThumbResponse::from)
+                        .toList();
         return ProductPageResponse.of(
                 productThumbResponseList,
                 0L,
