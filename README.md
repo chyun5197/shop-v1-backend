@@ -74,29 +74,27 @@
 <img width="1153" alt="SA" src="https://github.com/user-attachments/assets/218c13d5-0b5b-478d-97fa-7e4e69f2a017" />
 
 ## 📊 ERD 설계
-<img width="860" alt="ERD" src="https://github.com/user-attachments/assets/93141604-96d4-4bbb-9e91-550c527cb7a1" />
+<img width="876" alt="ERD" src="https://github.com/user-attachments/assets/1d559af5-e042-431f-abb0-ab00d9479a64" />
 
 ---
 
 ## 모니터링
 
 ## :link: 트러블 슈팅
-Truble Shooting
-
 SSL을 연결하면서 발생한 302 CORS 에러
 
-## :star: 성능 테스트
-1. 병목 지점과 최대 쓰루풋 확인하기
-2. Nginx 로드밸런스를 추가시
-3. 분산 요청 테스트
+## :link: 성능 테스트 및 성능 개선
+#### [성능 확인]
+[병목 지점과 최대 쓰루풋](https://github.com/chyun5197/shop-clone-backend/issues/1)
 
-## 성능 개선
-커버링 인덱스 활용한 페이지 조회
-베스트 게시판 캐시
+#### [성능 개선]
+1. 커버링 인덱스와 서브쿼리를 활용한 인덱스 튜닝
+2. 캐시 서버를 도입하여 캐싱 및 DB 부하 분산
+3. 로드밸런싱을 통한 스케일 아웃(nginx, alb)
 
 ---
 
-## 가상 서버 코드 링크
+## :link: 가상 서버 코드 링크
 docker-compose.yml <br>
 nginx.conf
 
