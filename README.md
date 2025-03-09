@@ -78,8 +78,6 @@
 
 ---
 
-## 모니터링
-
 ## :link: 트러블 슈팅
 SSL을 연결하면서 발생한 302 CORS 에러
 
@@ -88,8 +86,8 @@ SSL을 연결하면서 발생한 302 CORS 에러
 [병목 지점과 최대 쓰루풋](https://github.com/chyun5197/shop-clone-backend/issues/1)
 
 #### [성능 개선]
-1. 커버링 인덱스와 서브쿼리를 활용한 인덱스 튜닝
-2. 캐시 서버를 도입하여 캐싱 및 DB 부하 분산
+1. [Covering Index를 활용한 DB 조회 성능 개선](https://github.com/chyun5197/shop-clone-backend/issues/2)
+2. [Redis를 도입하여 캐싱 및 DB 부하 분산](https://github.com/chyun5197/shop-clone-backend/issues/3)
 3. 로드밸런싱을 통한 스케일 아웃(nginx, alb)
 
 ---
