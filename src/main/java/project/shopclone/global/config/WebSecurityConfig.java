@@ -27,6 +27,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import project.shopclone.domain.user.AuthSuccessHandler;
 import project.shopclone.domain.user.service.AuthUserDetailService;
 import project.shopclone.global.jwt.TokenAuthenticationFilter;
 import project.shopclone.global.jwt.service.TokenProvider;
@@ -62,6 +63,7 @@ public class WebSecurityConfig {
 //                -> (이전 폼로그인에서는 off) 로그인 성공시 /login 컨트롤러에서 사용자 아이디를 Authentication로부터 꺼내와서 토큰 만들도록 짜놓았기 때문
 //                => (현재 폼로그인에서는 on) 컨트롤러에서는 Authentication 미사용하고 필터체인에서 /login/{authentication.getName()} 파라미터로 보내주는걸로 해결.
 //                -> !소셜로그인 구현했을때는 구글(카카오)에서 사용자 정보(이메일)을 받아온걸로 토큰 만드니까 Authentication가 필요 없었음
+//                .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth //인증, 인가 설정
                         .requestMatchers( // 인증 필요
@@ -82,12 +84,14 @@ public class WebSecurityConfig {
                                 // => 여기서도 결국 successHandler를 사용하는게 강제되었는데, 필터체인에서의 인증정보를 로그인성공시 실행할 컨트롤러로 매개값을 보내야 했기 때문이다.
 //                                .defaultSuccessUrl("/api/user/login") // 인증이 성공하였을 때 이동할 url
                                 .successHandler(
+//                                        authSuccessHandler()
                                         new AuthenticationSuccessHandler() {
                                             @Override
                                             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                                System.out.println("(필터체인)authentication : " + authentication.getName());
-                                                response.sendRedirect("https://api.hyun-clone.shop/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
-//                                                response.sendRedirect("/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
+//                                                System.out.println("(성공필터체인)authentication : " + authentication.getName());
+//                                                response.sendRedirect("https://api.hyun-clone.shop/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
+//                                                response.sendRedirect("http://localhost:8080/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
+                                                response.sendRedirect("/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
                                                 // 상대주소를 사용하면 리다이렉트가 스프링의 http로 가서 CORS가 나는 문제
                                                 // => 절대주소(https)로 해결
                                                 // 의문인건 nginx에서 자동으로 listen 80->443 리다이렉트되도록 설정해놨는데 왜 http로 가는건지?
@@ -133,6 +137,11 @@ public class WebSecurityConfig {
 
     }
 
+    @Bean
+    public AuthSuccessHandler authSuccessHandler() {
+        return new AuthSuccessHandler();
+    }
+
     // 인증 관리자 관련 설정
     // 사용자 정보를 가져올 서비스를 재정희거나,
     // 인증 방법 ~ 예를 들어 LDAP, JDBC 기반 인증 등을 설정할 때 사용
@@ -154,5 +163,19 @@ public class WebSecurityConfig {
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
         return new TokenAuthenticationFilter(tokenProvider);
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost:5174");// 리액트 서버
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+
+        return new CorsFilter(source);
     }
 }
