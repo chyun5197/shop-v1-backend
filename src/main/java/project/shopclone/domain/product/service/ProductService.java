@@ -33,7 +33,6 @@ public class ProductService {
     }
 
     // 브랜드별 리스트 조회
-//    @Cacheable(cacheNames = "getBrandProducts", key = "'brand_products:cate:' + #cateNo + ':page' + #page + ':size' + #pageSize")
     public ProductPageResponse readAllBrand(Integer cateNo, Long page, Long pageSize, String sorting){
         List<ProductThumbResponse> productThumbResponseList;
         if(sorting.equals("new")){
