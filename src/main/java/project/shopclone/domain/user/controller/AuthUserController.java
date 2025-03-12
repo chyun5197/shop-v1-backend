@@ -77,8 +77,7 @@ public class AuthUserController {
 //        System.out.println("(loginSuccess)authentication.getName(): " + email);
 
 //        System.out.println("(loginSuccess)id = " + id);
-        System.out.println("request.getRequestURL() = " + request.getRequestURL());
-        System.out.println("request.getRequestURI() = " + request.getRequestURI());
+        System.out.println("spring->spring 리다이렉트 request.getRequestURL() = " + request.getRequestURL());
 
 //        System.out.println("request.getParameterNames() = " + request.getParameterNames());
 //        Enumeration<String> paramKeys = request.getParameterNames();
