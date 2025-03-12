@@ -45,7 +45,10 @@ public class AuthUserController {
 
     // 회원가입
     @PostMapping("/signup")
-    public ResponseEntity<Void> signup(@RequestBody AuthUserAddRequest authUserAddRequest) {
+    public ResponseEntity<Void> signup(@RequestBody AuthUserAddRequest authUserAddRequest,
+                                       HttpServletRequest request
+    
+    ) {
 //        log.info("email : {}", authUserAddRequest.getEmail());
 //        log.info("password : {}", authUserAddRequest.getPassword());
         if (authUserRepository.findByEmail(authUserAddRequest.getEmail()) != null) {
@@ -74,8 +77,8 @@ public class AuthUserController {
 //        System.out.println("(loginSuccess)authentication.getName(): " + email);
 
 //        System.out.println("(loginSuccess)id = " + id);
-//        System.out.println("request.getRequestURL() = " + request.getRequestURL());
-//        System.out.println("request.getRequestURI() = " + request.getRequestURI());
+        System.out.println("request.getRequestURL() = " + request.getRequestURL());
+        System.out.println("request.getRequestURI() = " + request.getRequestURI());
 
 //        System.out.println("request.getParameterNames() = " + request.getParameterNames());
 //        Enumeration<String> paramKeys = request.getParameterNames();
