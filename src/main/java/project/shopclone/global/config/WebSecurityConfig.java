@@ -89,8 +89,8 @@ public class WebSecurityConfig {
                                             @Override
                                             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
                                                     throws IOException, ServletException {
-//                                                response.sendRedirect("https://api.hyun-clone.shop/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
-                                                response.sendRedirect("/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
+                                                response.sendRedirect("https://api.hyun-clone.shop/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
+//                                                response.sendRedirect("/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
 //                                                response.sendRedirect("http://localhost:8080/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
                                                 System.out.println("nginx->spring request.getRequestURL() = " + request.getRequestURL());
                                                 // 상대주소를 사용하면 리다이렉트가 스프링의 http로 가서 CORS가 나는 문제
