@@ -23,7 +23,7 @@ public class ProductPageController {
             @RequestParam("pageSize") Long pageSize,
             @RequestParam("sorting") String sorting
 //            @RequestParam("category") String category
-    ){
+    )  {
         return productService.readAllBrand(cateNo, page, pageSize, sorting);
     }
 
