@@ -1,5 +1,5 @@
 # 쇼핑몰 클론 프로젝트
-[프로젝트 바로가기](http://hyun-clone.shop)
+[프로젝트 바로가기](http://hyun-clone.shop) (구글 크롬 권장)
 <img width="1459" alt="프로젝트 소개" src="https://github.com/user-attachments/assets/b69ddf9f-0b61-47c8-86ec-808b53d70ba9" />
 
 #### 프로젝트 vs 원본 사이트
@@ -12,7 +12,7 @@
 ## 📃 개요
 ### 소개
 - 쇼핑몰 '뮤직포스' 사이트를 클론한 개인 프로젝트 <br>
-- 상품 정보는 크롤링한 데이터를 사용
+- 원본 쇼핑몰의 상품 정보는 데이터를 크롤링하여 사용
 
 ### 프로젝트 목적
 - 웹 전반에 대한 학습과 이해도를 높이기 위해 풀스택으로 온라인 쇼핑몰을 클론하는 프로젝트를 진행 <br>
@@ -71,30 +71,27 @@
 ---
 
 ## 🔨 서버 아키텍처
-<img width="1153" alt="SA" src="https://github.com/user-attachments/assets/218c13d5-0b5b-478d-97fa-7e4e69f2a017" />
+<img width="1434" alt="SA" src="https://github.com/user-attachments/assets/9f90339c-3b81-40a2-9279-684473e86b1c" />
 
 ## 📊 ERD 설계
 <img width="876" alt="ERD" src="https://github.com/user-attachments/assets/1d559af5-e042-431f-abb0-ab00d9479a64" />
 
 ---
 
-## :link: 트러블 슈팅
-SSL을 연결하면서 발생한 302 CORS 에러
-
 ## :link: 성능 테스트 및 성능 개선
-#### [성능 확인]
-[병목 지점과 최대 쓰루풋](https://github.com/chyun5197/shop-clone-backend/issues/1)
+### 성능 테스트
+- [병목 지점과 최대 쓰루풋](https://github.com/chyun5197/shop-clone-backend/issues/1)
 
-#### [성능 개선]
-1. [Covering Index를 활용한 DB 조회 성능 개선](https://github.com/chyun5197/shop-clone-backend/issues/2)
-2. [Redis를 도입하여 캐싱 및 DB 부하 분산](https://github.com/chyun5197/shop-clone-backend/issues/3)
-3. 로드밸런싱을 통한 스케일 아웃(nginx, alb)
+### 성능 개선
+- [커버링 인덱스를 활용한 DB 조회 성능 개선](https://github.com/chyun5197/shop-clone-backend/issues/2) <br>
+- [Redis를 도입하여 캐싱 및 DB 부하 분산](https://github.com/chyun5197/shop-clone-backend/issues/3) <br>
+- 로드밸런싱을 통한 스케일 아웃(nginx, alb)
+
+## :link: 트러블 슈팅
+- [스프링에서 리다이렉트 했을때 CORS가 발생하는 문제](https://github.com/chyun5197/shop-clone-backend/issues/4)
 
 ---
 
-## :link: 가상 서버 코드 링크
-docker-compose.yml <br>
-nginx.conf
 
 
 
