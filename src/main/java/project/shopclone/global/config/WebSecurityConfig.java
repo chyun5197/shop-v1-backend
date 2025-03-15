@@ -1,5 +1,6 @@
 package project.shopclone.global.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,9 +29,12 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import project.shopclone.domain.user.AuthSuccessHandler;
+import project.shopclone.domain.user.repository.AuthUserRepository;
 import project.shopclone.domain.user.service.AuthUserDetailService;
 import project.shopclone.global.jwt.TokenAuthenticationFilter;
+import project.shopclone.global.jwt.refreshtoken.RefreshTokenRepository;
 import project.shopclone.global.jwt.service.TokenProvider;
+import project.shopclone.global.jwt.service.TokenService;
 
 import java.io.IOException;
 
@@ -41,6 +45,11 @@ import java.io.IOException;
 public class WebSecurityConfig {
     private final AuthUserDetailService authUserDetailService;
     private final TokenProvider tokenProvider;
+    private final AuthUserRepository authUserRepository;
+    private final TokenService tokenService;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final ObjectMapper objectMapper;
+
 
     // 해당 리소스에 대해 시큐리티 기능 비활성화하려면
 //    @Bean
@@ -84,27 +93,18 @@ public class WebSecurityConfig {
                                 // => 여기서도 결국 successHandler를 사용하는게 강제되었는데, 필터체인에서의 인증정보를 로그인성공시 실행할 컨트롤러로 매개값을 보내야 했기 때문이다.
 //                                .defaultSuccessUrl("/api/user/login") // 인증이 성공하였을 때 이동할 url
                                 .successHandler(
-//                                        authSuccessHandler()
-                                        new AuthenticationSuccessHandler() {
-                                            @Override
-                                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
-                                                    throws IOException, ServletException {
-                                                response.sendRedirect("https://api.hyun-clone.shop/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
-//                                                response.sendRedirect("http://api.hyun-clone.shop/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
-//                                                response.sendRedirect("/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
-//                                                response.sendRedirect("http://localhost:8080/api/user/login/" + authentication.getName()); // 인증이 성공한 후에는 root로 이동
-                                                System.out.println("nginx->spring request.getRequestURL() = " + request.getRequestURL());
-                                                // 상대주소를 사용하면 리다이렉트가 스프링의 http로 가서 CORS가 나는 문제
-                                                // => 절대주소(https)로 해결
-                                                // 의문인건 nginx에서 자동으로 listen 80->443 리다이렉트되도록 설정해놨는데 왜 http로 가는건지?
-                                                // 리버스 프록시로 return 301 되기전에 cors로 문제가 나서 멈출수도 있나
-                                                // 혹은 nginx 안거치고 도커 스프링 내부 포트에서만 이동하다가 cors 걸린걸수도?
-
-                                                // 아니면 목적지가 http인게 아니라 출발지가 http로 인식되어서 문제가 된건지
-                                                // 리액트에서 출발지를 https로 upgrade 설정할 수 있었듯 스프링도 기능이 있을듯
-                                                // => 절대주소로 목적지를 바꿔서 해결된걸 보면 출발지가 http로 설정되는건 아닐듯
-                                            }
-                                        }
+                                        authSuccessHandler()
+//                                        new AuthenticationSuccessHandler() {
+//                                            @Override
+//                                            public void onAuthenticationSuccess(HttpServletRequest request,
+//                                                                                HttpServletResponse response,
+//                                                                                Authentication authentication)
+//                                                    throws IOException, ServletException {
+////                                                response.sendRedirect("https://api.hyun-clone.shop/api/user/login/" + authentication.getName());
+//                                                response.sendRedirect("/api/user/login/" + authentication.getName());
+//
+//                                            }
+//                                        }
                                 )
                                 .failureHandler( // defaultFailureUrl은 따로 없음
                                         new AuthenticationFailureHandler() {
@@ -141,7 +141,10 @@ public class WebSecurityConfig {
 
     @Bean
     public AuthSuccessHandler authSuccessHandler() {
-        return new AuthSuccessHandler();
+        return new AuthSuccessHandler(authUserRepository,
+                tokenService,
+                refreshTokenRepository,
+                objectMapper);
     }
 
     // 인증 관리자 관련 설정

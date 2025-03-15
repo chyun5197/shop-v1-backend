@@ -63,8 +63,7 @@ public class AuthUserController {
     // 로그인 성공시 동작할 메서드. 브라우저에 리프레시, 액세스 토큰 모두 전달
     @GetMapping("/login/{id}")
     public ResponseEntity<AuthUserLoginResponse> loginSuccessAuthentication(
-            @PathVariable String id,
-            HttpServletRequest request
+            @PathVariable String id, HttpServletRequest request
     ) {
 
         // 로컬 환경과 달리 서버 환경에서는 이 시점에서 authentication의 값이 null. (loadUserByUsername에서는 잘 리턴함)
