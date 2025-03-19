@@ -91,6 +91,8 @@
 - [스프링에서 리다이렉트 했을때 CORS가 발생하는 문제](https://github.com/chyun5197/shop-clone-backend/issues/4)
 
 ---
+## ETC
+프론트엔드 깃허브 - [https://github.com/chyun5197/shop-clone-frontend](https://github.com/chyun5197/shop-clone-frontend)
 
 
 
