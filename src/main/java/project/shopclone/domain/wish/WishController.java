@@ -45,4 +45,12 @@ public class WishController {
         }
         return wishService.deleteWishes(token, productIds);
     }
+
+    // 위시 랜덤 추가
+    @PostMapping("/random")
+    public ResponseEntity<Void> createRandomWish(
+            @RequestHeader("Authorization") String token
+    ){
+        return wishService.createRandomWish(token);
+    }
 }

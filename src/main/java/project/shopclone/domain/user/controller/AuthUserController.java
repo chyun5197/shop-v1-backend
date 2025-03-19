@@ -60,6 +60,16 @@ public class AuthUserController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response){
+//                                         ,@RequestHeader("Authorization") String refreshToken) {
+        // Redis에서 토큰도 삭제?
+        new SecurityContextLogoutHandler().logout(request, response,
+                SecurityContextHolder.getContext().getAuthentication());
+        return ResponseEntity.ok().build();
+    }
+
+    // ============================================= 미사용 =============================================
     // 로그인 성공시 동작할 메서드. 브라우저에 리프레시, 액세스 토큰 모두 전달
     @GetMapping("/login/{id}")
     public ResponseEntity<AuthUserLoginResponse> loginSuccessAuthentication(
@@ -118,14 +128,5 @@ public class AuthUserController {
 //    public ResponseEntity<Void> loginFailureUnauthorized(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) {
 //        return ResponseEntity.status(401).build();
 //    }
-
-    @GetMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response){
-//                                         ,@RequestHeader("Authorization") String refreshToken) {
-        // Redis에서 토큰도 삭제?
-        new SecurityContextLogoutHandler().logout(request, response,
-                SecurityContextHolder.getContext().getAuthentication());
-        return ResponseEntity.ok().build();
-    }
 
 }

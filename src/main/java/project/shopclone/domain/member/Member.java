@@ -2,9 +2,11 @@ package project.shopclone.domain.member;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.domain.wish.Wish;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,6 +28,9 @@ public class Member {
     private Integer wishCount;
     private Integer cartCount;
     private Integer savings; // 적립금
+
+//    @CreatedDate
+//    private LocalDateTime createdAt;
 
     @OneToOne
     @JoinColumn(name="authuser_id")

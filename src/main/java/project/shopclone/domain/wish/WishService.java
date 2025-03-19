@@ -92,5 +92,21 @@ public class WishService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    // 랜덤 위시 추가
+    @Transactional
+    public ResponseEntity<Void> createRandomWish(String token) {
+        // sql에서 기존 위시에 없는 위시로 랜덤하게 1개 뽑기
+        Member member = memberService.getMember(token);
+        List<Product> randProducts = productRepository.findListOneNotInOriginWish(member.getMemberId());
 
+        wishRepository.save(Wish.builder()
+                .member(member)
+                .product(randProducts.get(0))
+                .build());
+        // 위시 개수++
+        member.plusWishCount();
+        randProducts.get(0).plusWishCount();
+
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
 }

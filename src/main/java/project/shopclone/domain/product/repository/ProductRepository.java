@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import project.shopclone.domain.product.entity.Product;
+import project.shopclone.domain.wish.Wish;
 
 import java.util.List;
 
@@ -189,4 +190,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAllByBrandAndCategory(String brand, String category);
     List<Product> findAllByCateNo(Integer cateNo);
+
+    // 위시에 없는 상품 랜덤 1개 뽑기
+    @Query(value = "select * from product where id not in " +
+            "(select member_id from wish where member_id = :memberId) " +
+            "order by Rand() limit 1",
+            nativeQuery = true)
+    List<Product> findListOneNotInOriginWish(Long memberId);
 }
