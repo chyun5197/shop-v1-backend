@@ -1,5 +1,7 @@
 package project.shopclone.domain.user.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import project.shopclone.global.jwt.refreshtoken.RefreshTokenRepository;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "회원인증 API")
 @RequestMapping("/api/user")
 public class AuthUserController {
     private final AuthUserService authUserService;
@@ -37,13 +40,13 @@ public class AuthUserController {
 //        securityUserService.test();
 //    }
 
-    // 아이디 중복 여부
+    @Operation(summary = "아이디 중복 여부 확인")
     @GetMapping("/check/{email}")
     public ResponseEntity<Integer> checkAuthUser(@PathVariable String email) {
         return ResponseEntity.ok().body(authUserRepository.findByEmail(email) != null ? 1 : 0); // 중복 : 사용가능
     }
 
-    // 회원가입
+    @Operation(summary = "회원 등록")
     @PostMapping("/signup")
     public ResponseEntity<Void> signup(@RequestBody AuthUserAddRequest authUserAddRequest,
                                        HttpServletRequest request
@@ -60,6 +63,7 @@ public class AuthUserController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "로그아웃 요청")
     @GetMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response){
 //                                         ,@RequestHeader("Authorization") String refreshToken) {
@@ -71,6 +75,7 @@ public class AuthUserController {
 
     // ============================================= 미사용 =============================================
     // 로그인 성공시 동작할 메서드. 브라우저에 리프레시, 액세스 토큰 모두 전달
+    @Operation(summary = "(미사용->대체됨)로그인 성공시 동작할 메서드")
     @GetMapping("/login/{id}")
     public ResponseEntity<AuthUserLoginResponse> loginSuccessAuthentication(
             @PathVariable String id, HttpServletRequest request

@@ -1,5 +1,7 @@
 package project.shopclone.domain.cart.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,17 +14,18 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "장바구니 API") //, description = "장바구니 목록 조회, 등록, 삭제, 비우기, 수량 변경 / 체크한 장바구니 아이템들 관리 등등")
 @RequestMapping("/api/cart")
 public class CartController {
     private final CartService cartService;
 
-    // 장바구니 조회
+    @Operation(summary="장바구니 목록 조회")
     @GetMapping("")
     public ResponseEntity<CartResponse> findAll(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok().body(cartService.findAll(token));
     }
 
-    // 장바구니 상품 등록 (중복 허용X)
+    @Operation(summary="장바구니에 아이템 등록")
     @PostMapping("/{productId}")
     public ResponseEntity<Void> createCartItem(
             @RequestHeader("Authorization") String token,
@@ -34,7 +37,7 @@ public class CartController {
         return cartService.createCartItem(token, productId, count);
     }
 
-    // 체크한 장바구니 상품들 등록
+    @Operation(summary="체크한 아이템들을 장바구니에 등록", description = "위시리스트 화면에서 체크한 아이템들을 장바구니에 추가")
     @PostMapping("")
     public ResponseEntity<Void> createCartItemList(
             @RequestHeader("Authorization") String token,
@@ -45,7 +48,7 @@ public class CartController {
         return cartService.createCartItemList(token, productIds);
     }
 
-    // 장바구니 아이템 삭제
+    @Operation(summary="장바구니에서 아이템 삭제")
     @DeleteMapping("/{cartItemId}")
     public ResponseEntity<Void> deleteCartItem(
                         @RequestHeader("Authorization") String token,
@@ -53,7 +56,7 @@ public class CartController {
         return cartService.deleteCartItem(token, cartItemId);
     }
 
-    // 체크한 장바구니 아이템들 삭제
+    @Operation(summary="체크한 아이템들을 장바구니에서 삭제", description = "장바구니 화면에서 체크한 아이템들을 장바구니에서 삭제")
     @DeleteMapping("")
     public ResponseEntity<Void> deleteCartItemList(
             @RequestHeader("Authorization") String token,
@@ -64,7 +67,7 @@ public class CartController {
         return cartService.deleteCartItems(token, cartItemIds);
     }
 
-    // 장바구니 비우기
+    @Operation(summary="장바구니 비우기")
     @DeleteMapping("/clear")
     public ResponseEntity<Void> clearCart(
             @RequestHeader("Authorization") String token
@@ -72,8 +75,7 @@ public class CartController {
         return cartService.clearCarts(token);
     }
 
-
-    // 장바구니 아이템 수량 변경
+    @Operation(summary="장바구니 아이템의 수량 변경")
     @PatchMapping("/{cartItemId}")
     public ResponseEntity<Void> updateCartItem(
                         @PathVariable Long cartItemId,

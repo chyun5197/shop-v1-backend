@@ -1,5 +1,6 @@
 package project.shopclone.domain.product.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "크롤링 컨트롤러")
 public class CrawlingController {
     private final ProductImageService productImageService;
     @Value("${data.crawling.pw}")
@@ -60,7 +62,6 @@ public class CrawlingController {
         return "성공";
     }
 
-
     @GetMapping("/crawling/brand/{password}")
     public String crawlB(@PathVariable String password) {
         if (!password.equals(pw)) {
@@ -79,8 +80,6 @@ public class CrawlingController {
         productImageService.imageConvertAndSaveS3();
         return "성공";
     }
-
-
 
     // 상품 상세 이미지 저장
 //    @GetMapping("/crawling/images")

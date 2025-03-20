@@ -1,5 +1,7 @@
 package project.shopclone.global.jwt;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +17,14 @@ import project.shopclone.global.jwt.service.TokenService;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "토큰 API")
 public class TokenController {
     private final TokenService tokenService;
     private final TokenProvider tokenProvider;
     private final AuthUserRepository authUserRepository;
 
     // 리프레시 토큰으로 새로운 액세스 토큰을 발급
+    @Operation(summary = "액세스 토큰 재발급")
     @PostMapping("/api/token")
     public ResponseEntity<AccessTokenCreateResponse> createNewAccessToken(@RequestBody AccessTokenCreateRequest request){
 

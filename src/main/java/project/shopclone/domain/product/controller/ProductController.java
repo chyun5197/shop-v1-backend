@@ -1,5 +1,7 @@
 package project.shopclone.domain.product.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
@@ -13,17 +15,18 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "상품 조회 API")
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;
 
-    // 베스트 조회
+    @Operation(summary = "베스트 상품 목록 조회")
     @GetMapping("/best")
     public ProductPageResponse getBestProducts(){
         return productService.getBestProducts();
     }
 
-    // 검색 통으로 조회
+    @Operation(summary = "검색 결과 상품 목록 조회")
     @GetMapping("/search")
     public ProductPageResponse search(@RequestParam("keyword") String keyword,
                                         @RequestParam(value = "cate", required = false) String category,
@@ -51,23 +54,24 @@ public class ProductController {
         return productService.search(keyword, category, brand, sorting, start, end, page, pageSize);
     }
 
-
+    @Operation(summary = "브랜드 정보 조회")
     @GetMapping("/brand/{cate}")
     public BrandResponse getBrand(@PathVariable Integer cate) {
         return productService.getBrand(cate);
     }
 
 
+    @Operation(summary = "상품 상세 조회")
     @GetMapping("/detail/{id}")
     public ProductResponse getProduct(@PathVariable Long id) {
         return productService.getProduct(id);
     }
 
     // 임시
-    @GetMapping("/all")
-    public List<ProductResponse> getAllProduct() {
-        return productService.getAllProduct();
-    }
+//    @GetMapping("/all")
+//    public List<ProductResponse> getAllProduct() {
+//        return productService.getAllProduct();
+//    }
 
 //    @GetMapping("/tmp/{id}")
 //    public ProductResponseTmp getProductTmp(@PathVariable Long id) {

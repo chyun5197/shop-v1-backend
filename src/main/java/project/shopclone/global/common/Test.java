@@ -1,5 +1,7 @@
 package project.shopclone.global.common;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Random;
 import java.util.UUID;
 
+@Tag(name = "테스트용 API")
 @RestController
 public class Test {
     // 로드밸런싱으로 서버가 바뀌면 응답도 바뀌도록
@@ -29,6 +32,7 @@ public class Test {
         return "fin";
     }
 
+    @Operation(summary = "헬스 체크")
     @GetMapping("/health")
     public String healthCheck() {
         return "Success Health Check";

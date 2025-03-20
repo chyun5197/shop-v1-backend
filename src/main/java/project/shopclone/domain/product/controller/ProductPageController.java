@@ -1,5 +1,7 @@
 package project.shopclone.domain.product.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +12,12 @@ import project.shopclone.domain.product.service.response.ProductPageResponse;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "상품 조회 API")
 @RequestMapping("/api/products")
 public class ProductPageController {
     private final ProductService productService;
 
-    // 카테번호 페이징 조회
+    @Operation(summary = "특정 브랜드의 상품 목록 페이지 조회")
     @GetMapping("/list")
     public ProductPageResponse readAllBrand(
 //            @RequestParam("brand") String brand,
@@ -28,6 +31,7 @@ public class ProductPageController {
     }
 
     // 전체 페이징 조회
+    @Operation(summary = "전체 상품 목록 페이지 조회")
     @GetMapping("")
     public ProductPageResponse getAllProducts(
             @RequestParam("page") Long page,
@@ -47,6 +51,7 @@ public class ProductPageController {
 //    }
 
     // 악기별 특정 페이징 조회
+    @Operation(summary = "특정 카테고리(기타/베이스/어쿠스틱) 상품 목록 페이지 조회")
     @GetMapping("/category")
     public ProductPageResponse getAllInstProducts(
             @RequestParam("inst") String inst,

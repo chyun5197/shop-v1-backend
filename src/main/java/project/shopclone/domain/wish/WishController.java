@@ -1,5 +1,7 @@
 package project.shopclone.domain.wish;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,17 +11,18 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Tag(name = "위시리스트 API")
 @RequestMapping("/api/wish")
 public class WishController {
     private final WishService wishService;
 
-    // 위시리스트 조회
+    @Operation(summary="위시리스트 조회")
     @GetMapping("")
     public ResponseEntity<List<WishResponse>> findAll(@RequestHeader("Authorization") String token) {
         return ResponseEntity.ok().body(wishService.findAll(token));
     }
 
-    // 위시 등록 (중복 허용X)
+    @Operation(summary="위시리스트에 상품 등록")
     @PostMapping("/{productId}")
     public ResponseEntity<Void> createWish(
             @RequestHeader("Authorization") String token,
@@ -27,7 +30,7 @@ public class WishController {
         return wishService.createWish(token, productId);
     }
 
-    // 위시 삭제 (요청: 위시ID)
+    @Operation(summary="위시리스트에서 상품 삭제")
     @DeleteMapping("/{wishId}")
     public ResponseEntity<Void> deleteWish(
             @RequestHeader("Authorization") String token,
@@ -35,7 +38,7 @@ public class WishController {
         return wishService.deleteWish(token, wishId);
     }
 
-    // 체크한 위시들 삭제(요청: 상품ID 리스트) or 관심상품 비우기(요청: [-1])
+    @Operation(summary="체크한 상품들을 위시리스트에서 삭제", description = "위시리스트 화면에서 체크한 상품들을 위시리스트에서 삭제")
     @DeleteMapping("")
     public ResponseEntity<Void> deleteWishes(
             @RequestHeader("Authorization") String token,
@@ -46,7 +49,8 @@ public class WishController {
         return wishService.deleteWishes(token, productIds);
     }
 
-    // 위시 랜덤 추가
+    @Operation(summary="위시리스트에 랜덤하게 추출한 상품 등록",
+            description = "화면에서 체크한 상품들의 추가, 삭제 기능이 잘 작동하는지 확인하기 위해 편의상 만들어놓음")
     @PostMapping("/random")
     public ResponseEntity<Void> createRandomWish(
             @RequestHeader("Authorization") String token
