@@ -12,7 +12,7 @@
 ## 📃 개요
 ### 소개
 - 쇼핑몰 '뮤직포스' 사이트를 클론한 개인 프로젝트 <br>
-- 원본 쇼핑몰의 상품 정보는 데이터를 크롤링하여 사용
+- 원본 쇼핑몰의 상품 데이터를 크롤링하여 SQL, S3에 저장하여 관리
 
 ### 프로젝트 목적
 - 웹 전반에 대한 학습과 이해도를 높이기 위해 풀스택으로 온라인 쇼핑몰을 클론하는 프로젝트를 진행 <br>
@@ -95,7 +95,7 @@
 
 ---
 ## ETC
-프론트엔드 깃허브 - [https://github.com/chyun5197/shop-clone-frontend](https://github.com/chyun5197/shop-clone-frontend)
+프론트엔드 레파지토리 - [https://github.com/chyun5197/shop-clone-frontend](https://github.com/chyun5197/shop-clone-frontend)
 
 
 
