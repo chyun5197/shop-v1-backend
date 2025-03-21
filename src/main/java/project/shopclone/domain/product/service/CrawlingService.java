@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.shopclone.domain.product.entity.Brand;
 import project.shopclone.domain.product.entity.Product;
+import project.shopclone.domain.product.entity.ProductImage;
 import project.shopclone.domain.product.repository.BrandRepository;
 import project.shopclone.domain.product.repository.ProductImageRepository;
 import project.shopclone.domain.product.repository.ProductRepository;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class Crawling {
+public class CrawlingService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
     private final ProductImageRepository productImageRepository;
@@ -209,36 +210,33 @@ public class Crawling {
 //        }
     }
 
+    // 상세 이미지까지 S3에 담으면 프리티어 용량 초과라서 원본사이트 url로 사용해야한다.
     public void crawlingImages(){
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless"); // 브라우저 안뜨게 설정
-        chromeOptions.addArguments("--no-sandbox");
+        WebDriver driver = webDriver();
+        List<Product> productList = productRepository.findAll();
+        for(Product product : productList){
+            if (product.getId()<3347) continue;
+            if (product.getId()>3351) return;
+            String url = "https://musicforce.co.kr/product/detail.html?product_no=" + product.getNo();
+            driver.get(url);
 
-        System.setProperty("webdriver.chrome.driver", "./chromedriver");
-        WebDriver driver = new ChromeDriver(chromeOptions); // (옵션전달)
+            List<WebElement> imgs = driver.findElements(By.cssSelector(".posthan .cont img"));
+            for (WebElement img : imgs) {
+                try{
+                    System.out.println("div.getText() = " + img.getAttribute("src"));
+//                    if (img.getAttribute("src").contains("AAAAAXNSR0IArs4c6QAAIAB")){continue;}
+//                    else if (img.getAttribute("src").contains("AAAAAAAAAAAAAAAA")){continue;}
+                    productImageRepository.save(ProductImage.builder()
+                    .imageDetail(img.getAttribute("src"))
+                    .product(product)
+                    .build());
 
-        // fender 전체 조회 페이지. 기본이 최신순인듯
-        String url = "https://musicforce.co.kr/product/detail.html?product_no=42133";
-        driver.get(url);
+                }catch (Exception ignored){
 
-//        List<WebElement> images = driver.findElements(By.cssSelector(".posthan .cont > div:first img" ));
-        List<WebElement> divs = driver.findElements(By.cssSelector(".posthan .cont > div"));
-        List<WebElement> images = divs.get(1).findElements(By.cssSelector("img"));
-        for (WebElement image : images){
-            String imgUrl = image.getAttribute("src");
-            System.out.println("imgUrl = " + imgUrl);
+                }
+            }
         }
 
-    }
-
-    public WebDriver webDriver(){
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless"); // 브라우저 안뜨게 설정
-        chromeOptions.addArguments("--no-sandbox");
-
-        System.setProperty("webdriver.chrome.driver", "./chromedriver");
-        WebDriver driver = new ChromeDriver(chromeOptions); // (옵션전달)
-        return driver;
     }
 
     // 분류번호 작업
@@ -252,4 +250,16 @@ public class Crawling {
         }
         System.out.println(productRepository.findAllByCateNo(cateNo).size());
     }
+
+    public WebDriver webDriver(){
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--headless"); // 브라우저 안뜨게 설정
+        chromeOptions.addArguments("--no-sandbox");
+
+        System.setProperty("webdriver.chrome.driver", "./chromedriver");
+        WebDriver driver = new ChromeDriver(chromeOptions); // (옵션전달)
+        return driver;
+    }
+
+
 }

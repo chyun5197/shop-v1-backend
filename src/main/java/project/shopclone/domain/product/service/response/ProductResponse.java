@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.shopclone.domain.product.entity.Product;
+import project.shopclone.domain.product.entity.ProductImage;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,7 +30,6 @@ public class ProductResponse {
     private String image;           // 원본 사이트의 url
     private String cdnImage;        // (사용)도메인 cdn url
 
-
     // 본문 (현재 할당X)
     private String description;     // 본문 설명
 
@@ -35,6 +37,8 @@ public class ProductResponse {
     private String model;           // 모델명
     private String country;         // 원산지
     private Integer releaseDate;    // 출시 연도
+
+    private List<String> imageList;
 
     public ProductResponse(Product product) {
         this.id = product.getId();
@@ -52,5 +56,10 @@ public class ProductResponse {
         this.model = product.getModel();
         this.country = product.getCountry();
         this.releaseDate = product.getReleaseDate();
+
+        // 상세 이미지 목록 조회
+        this.imageList = product.getPrdouctImageList().stream()
+                .map(ProductImage::getImageDetail)
+                .toList();
     }
 }

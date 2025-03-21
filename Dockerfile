@@ -1,4 +1,4 @@
-FROM openjdk:21-jdk
+FROM openjdk:17-jdk
 
 COPY build/libs/*v1.jar app.jar
 

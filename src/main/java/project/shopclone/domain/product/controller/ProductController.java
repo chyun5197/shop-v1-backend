@@ -63,9 +63,13 @@ public class ProductController {
 
     @Operation(summary = "상품 상세 조회")
     @GetMapping("/detail/{id}")
-    public ProductResponse getProduct(@PathVariable Long id) {
-        return productService.getProduct(id);
-    }
+    public ProductResponse getProduct(@PathVariable Long id) {return productService.getProduct(id);}
+
+//    @Operation(summary = "상품 상세 이미지 목록 조회")
+//    @GetMapping("/detail/{id}/images")
+//    public List<String> getProductDetailImages(@PathVariable Long id) {
+//        return productService.getProductDetailImages(id);
+//    }
 
     // 임시
 //    @GetMapping("/all")

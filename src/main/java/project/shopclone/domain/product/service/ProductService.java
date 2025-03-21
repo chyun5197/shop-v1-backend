@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import project.shopclone.domain.product.entity.Product;
+import project.shopclone.domain.product.entity.ProductImage;
 import project.shopclone.domain.product.repository.BrandRepository;
 import project.shopclone.domain.product.repository.ProductCustomRepository;
 import project.shopclone.domain.product.service.response.*;
@@ -129,11 +130,11 @@ public class ProductService {
     }
 
     // 임시
-    public List<ProductResponse> getAllProduct() {
-        List<Product> products = productRepository.getProductTmp();
-        return products.stream()
-                .map(ProductResponse::new)
-                .toList();
-    }
+//    public List<ProductResponse> getAllProduct() {
+//        List<Product> products = productRepository.getProductTmp();
+//        return products.stream()
+//                .map(ProductResponse::new)
+//                .toList();
+//    }
 }
 

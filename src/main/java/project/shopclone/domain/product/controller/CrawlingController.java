@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import project.shopclone.domain.product.service.Crawling;
+import project.shopclone.domain.product.service.CrawlingService;
 import project.shopclone.domain.product.entity.Brand;
 import project.shopclone.domain.product.repository.BrandRepository;
 import project.shopclone.domain.product.repository.ProductRepository;
@@ -22,7 +22,7 @@ public class CrawlingController {
     @Value("${data.crawling.pw}")
     private String pw;
 
-    private final Crawling crawling;
+    private final CrawlingService crawlingService;
     private final BrandRepository brandRepository;
     private final ProductRepository productRepository;
 
@@ -37,7 +37,7 @@ public class CrawlingController {
         }
         List<Brand> brands = brandRepository.findAll();
         for (Brand brand : brands){
-            crawling.crawlingPages(brand.getCateNo(), brand.getBrand(), brand.getCategory());
+            crawlingService.crawlingPages(brand.getCateNo(), brand.getBrand(), brand.getCategory());
             // 분류번호 작업
 //            crawling.cateNumbering(brand.getCateNo(), brand.getBrand(), brand.getCategory());
         }
@@ -57,7 +57,7 @@ public class CrawlingController {
             }
 
             // 분류번호 작업
-            crawling.cateNumbering(brand.getCateNo(), brand.getBrand(), brand.getCategory());
+            crawlingService.cateNumbering(brand.getCateNo(), brand.getBrand(), brand.getCategory());
         }
         return "성공";
     }
@@ -67,7 +67,7 @@ public class CrawlingController {
         if (!password.equals(pw)) {
             return "접근 불가";
         }
-        crawling.crawlingCateAndBrand();
+        crawlingService.crawlingCateAndBrand();
         return "성공";
     }
 
@@ -82,10 +82,11 @@ public class CrawlingController {
     }
 
     // 상품 상세 이미지 저장
-//    @GetMapping("/crawling/images")
-//    public String crawlC() {
-//        crawling.crawlingOne();
-//        return "성공";
-//    }
+    @GetMapping("/crawling/images")
+    public String crawlC() {
+
+        crawlingService.crawlingImages();
+        return "성공";
+    }
 
 }
