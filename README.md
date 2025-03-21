@@ -76,9 +76,12 @@
 ## 📊 ERD 설계
 <img width="876" alt="ERD" src="https://github.com/user-attachments/assets/1d559af5-e042-431f-abb0-ab00d9479a64" />
 
+## 📋 API 명세서
+[Swagger 바로가기](https://api.hyun-clone.shop/swagger-ui/index.html)
+
 ---
 
-## :link: 성능 테스트 및 성능 개선
+## ✅ 성능 테스트 및 성능 개선
 ### 성능 테스트
 - [병목 지점과 최대 쓰루풋](https://github.com/chyun5197/shop-clone-backend/issues/1)
 
