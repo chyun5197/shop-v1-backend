@@ -6,10 +6,12 @@ import project.shopclone.domain.member.Member;
 import project.shopclone.domain.product.entity.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface WishRepository extends JpaRepository<Wish, Long> {
     List<Wish> findAllByMemberOrderByCreatedAtDesc(Member member);
     Wish findByProduct(Product product);
+    Optional<Wish> findByMemberAndProduct(Member member, Product product);
 
 //    @Query("select p from Product p where p.id not in " +
 //            "(select w.member from Wish w where w.member = :member)")

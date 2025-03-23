@@ -56,7 +56,7 @@ public class CartService {
         Product product = productRepository.findById(productId).get();
 
         // 중복일 경우
-        if(cartItemRepository.findByProduct(product) != null) {
+        if(cartItemRepository.findByCartAndProduct(cart, product).isPresent()) {
             return ResponseEntity.status(HttpStatus.ALREADY_REPORTED).body(null); // 208
         }
 

@@ -28,6 +28,7 @@ public class Wish {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="product_id")
     private Product product;
+    // sql에서 create unique index 만들었음
 
     @CreatedDate
     private LocalDateTime createdAt;
