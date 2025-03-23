@@ -21,7 +21,8 @@ import java.time.LocalDateTime;
                 @UniqueConstraint(
                         columnNames = {"member_id", "product_id"}
                 )
-        })
+        }
+)
 public class Wish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +35,6 @@ public class Wish {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="product_id")
     private Product product;
-    // sql에서 create unique index 만들었음
 
     @CreatedDate
     private LocalDateTime createdAt;
