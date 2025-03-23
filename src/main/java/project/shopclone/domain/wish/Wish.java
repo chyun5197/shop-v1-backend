@@ -15,7 +15,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-@Table(name="wish")
+@Table(
+        name="wish",
+        uniqueConstraints= { // 복합키 설정 (중복 저장 불가)
+                @UniqueConstraint(
+                        columnNames = {"member_id", "product_id"}
+                )
+        })
 public class Wish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
