@@ -83,7 +83,7 @@ public class CrawlingController {
 
     // 상품 상세 이미지 저장
     @GetMapping("/crawling/images/{password}")
-    public String crawlC() {
+    public String crawlC(@PathVariable String password) {
         if (!password.equals(pw)) {
             return "접근 불가";
         }
