@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -29,9 +30,8 @@ import static project.shopclone.global.common.TokenDuration.REFRESH_TOKEN_DURATI
 @RequiredArgsConstructor
 @Component
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-//    public static final String REDIRECT_PATH = "https://hyun-clone.shop"; // 로그인 프로세스 모두 성공 후 리다이렉트할 페이지
-//    public static final String REDIRECT_PATH = "http://localhost:5174"; // 로그인 프로세스 모두 성공 후 리다이렉트할 페이지
-    public static final String REDIRECT_PATH = "http://localhost:5174/oauth/success"; // 로그인 프로세스 모두 성공 후 리다이렉트할 페이지
+    @Value("${jwt.oauth-redirect}")
+    public String redirect_path; // 로그인 성공 후 리다이렉트할 프론트 페이지
 
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -50,13 +50,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         String oauthId;
         if(attributes.get("email") != null) { // 구글
-            System.out.println("실행1");
             oauthId = (String) attributes.get("sub");
         }else if(attributes.get("connected_at")!=null){ // 카카오 (네이버에 없는 파라미터(connected_at)로 구분)
-            System.out.println("실행2");
             oauthId = attributes.get("id").toString();
         }else{ // 네이버
-            System.out.println("실행3");
             Map attributesResponse = (Map) attributes.get("response");
             oauthId = attributesResponse.get("id").toString();
         }
@@ -105,7 +102,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     // 쿠키에서 리다이렉트 경로가 담긴 값을 가져와 쿼리 파라미터에 액세스 토큰을 추가한다
     // 액세스 토큰을 클라이언트에게 전달
     private String getTargetUrl(String access, String refresh) {
-        return UriComponentsBuilder.fromUriString(REDIRECT_PATH)
+        return UriComponentsBuilder.fromUriString(redirect_path)
                 .queryParam("access_token", access)
 //                .queryParam("refresh", refresh) // 쿠키로 보냄
                 .build()

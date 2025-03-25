@@ -43,25 +43,21 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
 //        System.out.println("provider = " + provider);
 
         if (provider.equals("google")){ // 구글
-            System.out.println("진입1");
             email = (String) attributes.get("email");
             name = (String) attributes.get("name");
             oauthId = (String) attributes.get("sub");
         }else if (provider.equals("kakao")){ // 카카오
-            System.out.println("진입2");
             Map attributesProperties = (Map) attributes.get("properties");
             name = (String) attributesProperties.get("nickname");
             Map attributesKakaoAcount = (Map) attributes.get("kakao_account");
             email = (String) attributesKakaoAcount.get("email");
             oauthId = attributes.get("id").toString();
         }else { // 네이버
-            System.out.println("진입3");
             Map attributesResponse = (Map) attributes.get("response");
             name = (String) attributesResponse.get("name");
             email = (String) attributesResponse.get("email");
             oauthId = attributesResponse.get("id").toString();
         }
-        System.out.println("oauthId = " + oauthId);
 
         // 기존 회원 여부 찾는 기준은 각 소셜 고유ID
         AuthUser authUser = authUserRepository.findByOauthId(oauthId)
