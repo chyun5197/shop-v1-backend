@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import project.shopclone.domain.user.entity.AuthUser;
+import project.shopclone.domain.user.exception.AuthUserErrorCode;
+import project.shopclone.domain.user.exception.AuthUserException;
 import project.shopclone.domain.user.repository.AuthUserRepository;
 
 @RequiredArgsConstructor
@@ -22,7 +24,8 @@ public class AuthUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 //        System.out.println("(loadUserByUsername)UserDetailService loadUserByUsername()의 매개값 email: " + email);
 
-        AuthUser authUser = authUserRepository.findByEmail(email);
+        AuthUser authUser = authUserRepository.findByEmail(email)
+                .orElseThrow(() -> new AuthUserException(AuthUserErrorCode.USER_NOT_FOUND));
 //        System.out.println("(loadUserByUsername)UserDetailService authUser.getEmail(): " + authUser.getEmail());
 
         // 사용자 없다면
@@ -35,7 +38,8 @@ public class AuthUserDetailService implements UserDetailsService {
 //        System.out.println("(실행1)authentication.getName(): " + authentication.getName());
 
 
-        return authUserRepository.findByEmail(email);
+        return authUserRepository.findByEmail(email)
+                .orElseThrow(() -> new AuthUserException(AuthUserErrorCode.USER_NOT_FOUND));
     }
 
 

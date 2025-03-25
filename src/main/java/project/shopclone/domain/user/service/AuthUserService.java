@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import project.shopclone.domain.member.Member;
 import project.shopclone.domain.member.MemberService;
 import project.shopclone.domain.user.entity.AuthUser;
+import project.shopclone.domain.user.exception.AuthUserErrorCode;
+import project.shopclone.domain.user.exception.AuthUserException;
 import project.shopclone.domain.user.repository.AuthUserRepository;
 import project.shopclone.domain.user.service.request.AuthUserAddRequest;
 
@@ -17,15 +19,15 @@ public class AuthUserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final MemberService memberService;
 
-
-
     // 회원가입
     @Transactional
     public void save(AuthUserAddRequest authUserAddRequest) {
         // AuthUser 생성
         AuthUser authUser = AuthUser.builder()
+                .oauthId(authUserAddRequest.getEmail())
                 .email(authUserAddRequest.getEmail())
                 .password(bCryptPasswordEncoder.encode(authUserAddRequest.getPassword()))
+                .channel("home")
                 .build();
         authUserRepository.save(authUser);
 
@@ -33,9 +35,9 @@ public class AuthUserService {
         Member member = memberService.save(authUser, authUserAddRequest);
     }
 
-    public AuthUser findById(Long id) {
-        return authUserRepository.findById(id)
-                .orElseThrow(()->new IllegalArgumentException("Unexpected User"));
-    }
+//    public AuthUser findById(Long id) {
+//        return authUserRepository.findById(id)
+//                .orElseThrow(() -> new AuthUserException(AuthUserErrorCode.USER_NOT_FOUND));
+//    }
 
 }

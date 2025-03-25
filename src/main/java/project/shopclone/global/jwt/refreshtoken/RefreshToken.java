@@ -10,10 +10,15 @@ public class RefreshToken {
     @Id // 리프레시 토큰으로 아이디 찾기
     private String refreshToken;
 
-    private Long authuserId;
+    private Long authUserId;
 
-    public RefreshToken(String refreshToken, Long authuserId ) {
+    public RefreshToken(String refreshToken, Long authUserId ) {
         this.refreshToken = refreshToken;
-        this.authuserId = authuserId;
+        this.authUserId = authUserId;
+    }
+
+    public RefreshToken update(String newRefreshToken){
+        this.refreshToken = newRefreshToken;
+        return this;
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import project.shopclone.domain.user.entity.AuthUser;
+import project.shopclone.domain.user.exception.AuthUserErrorCode;
+import project.shopclone.domain.user.exception.AuthUserException;
 import project.shopclone.domain.user.repository.AuthUserRepository;
 import project.shopclone.global.jwt.accesstoken.AccessTokenCreateRequest;
 import project.shopclone.global.jwt.accesstoken.AccessTokenCreateResponse;
@@ -29,7 +31,7 @@ public class TokenController {
     public ResponseEntity<AccessTokenCreateResponse> createNewAccessToken(@RequestBody AccessTokenCreateRequest request){
 
         AuthUser authUser = authUserRepository.findById(tokenProvider.getAuthUserId(request.getRefreshToken()))
-                .orElseThrow();
+                .orElseThrow(() -> new AuthUserException(AuthUserErrorCode.USER_NOT_FOUND));
         String newAccessToken = tokenService.createNewAccessToken(authUser, request.getRefreshToken());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new AccessTokenCreateResponse(newAccessToken));

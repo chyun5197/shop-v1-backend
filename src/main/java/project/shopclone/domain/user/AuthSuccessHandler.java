@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,8 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 //        System.out.println("request.getRequestURL() = " + request.getRequestURL());
 //        System.out.println("authentication.getName() = " + authentication.getName());
 
-        AuthUser authuser = authUserRepository.findByEmail(authentication.getName());
+        AuthUser authuser = authUserRepository.findByEmail(authentication.getName())
+                .orElseThrow();
 
         // 로그인할때 리프레시 토큰과 액세스 토큰 생성
         String refreshToken = tokenService.createNewRefreshToken(authuser);

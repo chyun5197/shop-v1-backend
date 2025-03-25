@@ -81,9 +81,9 @@
 
 ---
 
-## ✅ 성능 테스트 및 성능 개선
+## :link: 성능 테스트 및 성능 개선
 ### 성능 테스트
-- [병목 지점과 최대 쓰루풋](https://github.com/chyun5197/shop-clone-backend/issues/1)
+- [병목 지점과 최대 쓰루풋 확인하기](https://github.com/chyun5197/shop-clone-backend/issues/1)
 
 ### 성능 개선
 - [커버링 인덱스를 활용한 DB 조회 성능 개선](https://github.com/chyun5197/shop-clone-backend/issues/2) <br>

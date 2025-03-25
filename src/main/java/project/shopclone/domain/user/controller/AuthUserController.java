@@ -8,10 +8,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
+import project.shopclone.domain.user.exception.AuthUserErrorCode;
+import project.shopclone.domain.user.exception.AuthUserException;
 import project.shopclone.domain.user.repository.AuthUserRepository;
 import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.domain.user.service.request.AuthUserAddRequest;
@@ -43,7 +44,7 @@ public class AuthUserController {
     @Operation(summary = "아이디 중복 여부 확인")
     @GetMapping("/check/{email}")
     public ResponseEntity<Integer> checkAuthUser(@PathVariable String email) {
-        return ResponseEntity.ok().body(authUserRepository.findByEmail(email) != null ? 1 : 0); // 중복 : 사용가능
+        return ResponseEntity.ok().body(authUserRepository.findByEmail(email).isPresent() ? 1 : 0); // 중복 : 사용가능
     }
 
     @Operation(summary = "회원 등록")
@@ -54,7 +55,7 @@ public class AuthUserController {
     ) {
 //        log.info("email : {}", authUserAddRequest.getEmail());
 //        log.info("password : {}", authUserAddRequest.getPassword());
-        if (authUserRepository.findByEmail(authUserAddRequest.getEmail()) != null) {
+        if (authUserRepository.findByEmail(authUserAddRequest.getEmail()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
 //            return ResponseEntity.status(409).build();
         }
@@ -103,7 +104,8 @@ public class AuthUserController {
 //        System.out.println("@PathVariable email = " + email);
 
 //        AuthUser authuser = authUserRepository.findByEmail(email);
-        AuthUser authuser = authUserRepository.findByEmail(id);
+        AuthUser authuser = authUserRepository.findByEmail(id)
+                .orElseThrow(() -> new AuthUserException(AuthUserErrorCode.USER_NOT_FOUND));
 
         // 로그인할때 리프레시 토큰과 액세스 토큰 생성
         String refreshToken = tokenService.createNewRefreshToken(authuser);

@@ -16,18 +16,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import project.shopclone.domain.member.MemberRepository;
 import project.shopclone.domain.user.AuthSuccessHandler;
 import project.shopclone.domain.user.repository.AuthUserRepository;
 import project.shopclone.domain.user.service.AuthUserDetailService;
@@ -35,6 +34,9 @@ import project.shopclone.global.jwt.TokenAuthenticationFilter;
 import project.shopclone.global.jwt.refreshtoken.RefreshTokenRepository;
 import project.shopclone.global.jwt.service.TokenProvider;
 import project.shopclone.global.jwt.service.TokenService;
+import project.shopclone.global.oauth.OAuth2AuthorizationRequestBasedOnCookieRepository;
+import project.shopclone.global.oauth.OAuth2SuccessHandler;
+import project.shopclone.global.oauth.OAuth2UserCustomService;
 
 import java.io.IOException;
 
@@ -43,12 +45,13 @@ import java.io.IOException;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-    private final AuthUserDetailService authUserDetailService;
     private final TokenProvider tokenProvider;
     private final AuthUserRepository authUserRepository;
     private final TokenService tokenService;
     private final RefreshTokenRepository refreshTokenRepository;
     private final ObjectMapper objectMapper;
+    private final OAuth2UserCustomService oAuth2UserCustomService;
+    private final MemberRepository memberRepository;
 
 
     // 해당 리소스에 대해 시큐리티 기능 비활성화하려면
@@ -58,8 +61,6 @@ public class WebSecurityConfig {
 //                .requestMatchers(new AntPathRequestMatcher("/static/**")); // static 하위 리소스 제외
 //    }
 
-
-
     //특정 http 요청에 대한 웹 기반 보안 구성 : 해당 메서드에서 인증/인가 및 로그인, 로그아웃 관련 설정한다.
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -67,11 +68,12 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // csrf 해제
                 .httpBasic(AbstractHttpConfigurer::disable) // HttpBasic 인증 비활성화 (formLogin으로 진행)
 //                .formLogin(AbstractHttpConfigurer::disable) // 폼로그인 비활성화 기능
+                .logout(AbstractHttpConfigurer::disable) // 로그아웃 기능을 비활성화한다. 클라이언트 측에서 로그아웃을 처리하는 대신에 인증 서버에 로그아웃 요청을 전달하여 세션을 종료하고 토큰을 무효화한다.
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 //                -> sessionManagement는 인증 정보를 SecurityContextHolder(Authentication활용)에 저장해서 기억할지 말지. STATELESS면 인증 정보 저장X
 //                -> (이전 폼로그인에서는 off) 로그인 성공시 /login 컨트롤러에서 사용자 아이디를 Authentication로부터 꺼내와서 토큰 만들도록 짜놓았기 때문
 //                => (현재 폼로그인에서는 on) 컨트롤러에서는 Authentication 미사용하고 필터체인에서 /login/{authentication.getName()} 파라미터로 보내주는걸로 해결.
-//                -> !소셜로그인 구현했을때는 구글(카카오)에서 사용자 정보(이메일)을 받아온걸로 토큰 만드니까 Authentication가 필요 없었음
+//                -> 소셜로그인 구현에서는 구글에서 사용자 정보(이메일)을 받아온걸로 토큰 만드니까 Authentication가 필요 없었음
 //                .addFilterBefore(corsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth //인증, 인가 설정
@@ -123,6 +125,14 @@ public class WebSecurityConfig {
                                             }
                                         }
                                 )
+
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        // Authorization 요청과 관련된 상태 저장
+                        .authorizationEndpoint(authorizationEndpoint ->
+                                authorizationEndpoint.authorizationRequestRepository(oAuth2AuthorizationRequestBasedOnCookieRepository()))
+                        .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint.userService(oAuth2UserCustomService))
+                        .successHandler(oAuth2SuccessHandler())
                 )
                 .logout(logout -> logout // 로그아웃 설정
 //                        .logoutSuccessUrl("/") // 로그아웃 시 이동 URL
@@ -168,6 +178,20 @@ public class WebSecurityConfig {
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
         return new TokenAuthenticationFilter(tokenProvider);
+    }
+
+    @Bean
+    public OAuth2SuccessHandler oAuth2SuccessHandler() {
+        return new OAuth2SuccessHandler(tokenProvider,
+                refreshTokenRepository,
+                oAuth2AuthorizationRequestBasedOnCookieRepository(),
+                authUserRepository,
+                memberRepository);
+    }
+
+    @Bean
+    public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
+        return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
 
 //    @Bean

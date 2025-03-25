@@ -5,35 +5,55 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Getter
+//UserDetails를 상속 받아 인증 객체로 사용
+//사용자의 인증 정보와 권한 정보를 저장하는 메서드 제공
 public class AuthUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
     private Long id;
 
-    @Column(name = "email", nullable = false, unique = true) // unique 중복X
+    @Column(name = "oauth_id", nullable = false, unique = true)
+    private String oauthId;
+
+    @Column(name = "email")
     private String email;
 
     @Column(name = "password")
     private String password;
 
+    // 소셜로그인 시 계정에서 가져올 닉네임
+    @Column(name="nickname")
+    private String nickname;
+
+    // 소셜로그인 채널
+    private String channel;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
 //    @OneToOne(mappedBy = "auth_user", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private Member member;
 
     @Builder
-    public AuthUser(String email, String password) {
+    public AuthUser(String email, String password, String nickname, String channel, String oauthId) {
         this.email = email;
         this.password = password;
+        this.nickname = nickname;
+        this.channel = channel;
+        this.oauthId = oauthId;
     }
 
     /* ================= implements from UserDetails ================= */
@@ -75,5 +95,7 @@ public class AuthUser implements UserDetails {
         // 계정이 사용 가능한지 확인하는 로직
         return true; // true -> 사용 가능
     }
+
+
 
 }

@@ -19,6 +19,8 @@ public class MemberInfoResponse {
     private Integer cartCount;
     private Integer savings; // 적립금
 
+    private String oauthId;
+
     public static MemberInfoResponse from(Member member) {
         MemberInfoResponse memberInfoResponse = new MemberInfoResponse();
         memberInfoResponse.setEmail(member.getEmail());
@@ -29,6 +31,7 @@ public class MemberInfoResponse {
         memberInfoResponse.setWishCount(member.getWishCount());
         memberInfoResponse.setCartCount(member.getCartCount());
         memberInfoResponse.setSavings(member.getSavings());
+        memberInfoResponse.setOauthId(member.getAuthUser().getOauthId());
         return memberInfoResponse;
     }
 }
