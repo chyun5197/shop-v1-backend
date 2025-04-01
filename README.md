@@ -11,8 +11,8 @@
 
 ## 📃 개요
 ### 소개
-- 쇼핑몰 '뮤직포스' 사이트를 클론한 개인 프로젝트 <br>
-- 원본 쇼핑몰의 상품 데이터를 크롤링하여 SQL, S3에 저장하여 관리
+- 쇼핑몰 '뮤직포스' 사이트를 레퍼런스로 진행한 개인 프로젝트 <br>
+- 원본 쇼핑몰의 상품 정보를 크롤링하여 RDS, S3에 저장하여 데이터를 관리
 
 ### 프로젝트 목적
 - 웹 전반에 대한 학습과 이해도를 높이기 위해 풀스택으로 온라인 쇼핑몰을 클론하는 프로젝트를 진행 <br>
@@ -30,17 +30,19 @@
 
 ## 기술 스택
 ### Backend
+![Java](https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white)
+![Oauth 2.0](https://img.shields.io/badge/Oauth%202.0-3A3A3A?style=for-the-badge&logo=oauth&logoColor=white)
 ![JPA](https://img.shields.io/badge/JPA-59666C?style=for-the-badge&logo=hibernate&logoColor=white)
 ![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white)
 ![QueryDSL](https://img.shields.io/badge/QueryDSL-0769AD?style=for-the-badge&logo=querydsl&logoColor=white)
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)
 
 ### Frontend
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
 
@@ -58,7 +60,8 @@
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 
-### Performance Test & Monitoring
+### Test & Monitoring
+![JUnit](https://img.shields.io/badge/JUnit-25A162?style=for-the-badge&logo=junit5&logoColor=white)
 ![k6](https://img.shields.io/badge/k6-%2300B5E2.svg?style=for-the-badge&logo=k6&logoColor=white)
 ![AWS CloudWatch](https://img.shields.io/badge/AWS%20CloudWatch-%23FF4F8B.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
@@ -71,10 +74,10 @@
 ---
 
 ## 🔨 서버 아키텍처
-<img width="1434" alt="SA" src="https://github.com/user-attachments/assets/9f90339c-3b81-40a2-9279-684473e86b1c" />
+<img width="1433" alt="SA" src="https://github.com/user-attachments/assets/e9735f02-6f6f-4d4e-9928-51b76265e7b9" />
 
 ## 📊 ERD 설계
-<img width="876" alt="ERD" src="https://github.com/user-attachments/assets/1d559af5-e042-431f-abb0-ab00d9479a64" />
+<img width="863" alt="ERD" src="https://github.com/user-attachments/assets/5bc0b670-74ad-4029-953c-2a650557c719" />
 
 ## 📋 API 명세서
 [Swagger 바로가기](https://api.hyun-clone.shop/swagger-ui/index.html)
