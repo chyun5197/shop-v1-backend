@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import project.shopclone.domain.product.service.ProductService;
-import project.shopclone.domain.product.service.response.ProductPageResponse;
+import project.shopclone.domain.product.dto.response.ProductPageResponse;
 
 @RequiredArgsConstructor
 @RestController

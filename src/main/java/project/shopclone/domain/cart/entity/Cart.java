@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
 @Entity
-@AllArgsConstructor
 @Builder
 @Table(name="cart")
 public class Cart {

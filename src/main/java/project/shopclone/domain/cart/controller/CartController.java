@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.shopclone.domain.cart.service.CartService;
-import project.shopclone.domain.cart.service.response.CartResponse;
+import project.shopclone.domain.cart.dto.response.CartResponse;
 
 import java.util.List;
 

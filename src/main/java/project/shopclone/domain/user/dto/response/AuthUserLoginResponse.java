@@ -1,4 +1,4 @@
-package project.shopclone.domain.user.service.response;
+package project.shopclone.domain.user.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

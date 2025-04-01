@@ -3,15 +3,11 @@ package project.shopclone.domain.product.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
-import project.shopclone.domain.product.service.response.BrandResponse;
-import project.shopclone.domain.product.service.response.ProductPageResponse;
-import project.shopclone.domain.product.service.response.ProductResponse;
+import project.shopclone.domain.product.dto.response.BrandResponse;
+import project.shopclone.domain.product.dto.response.ProductPageResponse;
+import project.shopclone.domain.product.dto.response.ProductResponse;
 import project.shopclone.domain.product.service.ProductService;
-import project.shopclone.domain.product.service.response.ProductThumbResponse;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController

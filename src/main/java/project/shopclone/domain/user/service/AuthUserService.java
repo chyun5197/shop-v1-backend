@@ -7,10 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import project.shopclone.domain.member.Member;
 import project.shopclone.domain.member.MemberService;
 import project.shopclone.domain.user.entity.AuthUser;
-import project.shopclone.domain.user.exception.AuthUserErrorCode;
-import project.shopclone.domain.user.exception.AuthUserException;
 import project.shopclone.domain.user.repository.AuthUserRepository;
-import project.shopclone.domain.user.service.request.AuthUserAddRequest;
+import project.shopclone.domain.user.dto.request.AuthUserAddRequest;
 
 @RequiredArgsConstructor
 @Service

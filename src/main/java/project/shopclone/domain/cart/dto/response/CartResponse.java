@@ -1,10 +1,9 @@
-package project.shopclone.domain.cart.service.response;
+package project.shopclone.domain.cart.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project.shopclone.domain.cart.entity.CartItem;
 
 import java.util.List;
 

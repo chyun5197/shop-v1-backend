@@ -1,4 +1,4 @@
-package project.shopclone.domain.cart.service.response;
+package project.shopclone.domain.cart.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
