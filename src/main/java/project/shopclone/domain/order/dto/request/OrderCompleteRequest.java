@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter
 public class OrderCompleteRequest {
-    private String merchantUid;
     private String impUid;
+    private String merchantUid;
 }

@@ -9,7 +9,14 @@ import project.shopclone.domain.product.entity.Product;
 @Builder
 @Entity
 @Getter
-@Table(name="order_item")
+@Table(
+        name="order_item",
+        uniqueConstraints= { // 복합키 설정 (중복 저장 불가)
+                @UniqueConstraint(
+                        columnNames = {"order_id", "product_id"}
+                )
+        }
+)
 public class OrderItem { // 주문 아이템
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

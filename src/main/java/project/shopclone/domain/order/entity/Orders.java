@@ -36,9 +36,7 @@ public class Orders { // 주문정보
     private String merchantUid;     // 쇼핑몰 주문번호
     private String address;         // 주소
 
-    // 결제 요청 시 필수 입력
     private String orderName;       // 주문자명
-    private String orderPhone;      // 전화번호
     private String orderEmail;      // 이메일
 
     // 변화

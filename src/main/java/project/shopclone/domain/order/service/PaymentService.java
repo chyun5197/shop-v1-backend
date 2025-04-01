@@ -62,9 +62,9 @@ public class PaymentService {
         Member member = memberService.getMember(token);
         String mid = prepareRequest.getMerchantUid(); // 쇼핑몰 주문번호
 
-        // 기존에 생성한 주문정보가 있으면 패스
+        // 기존에 생성한 주문정보 및 사전등록이 있으면 아래 절차 생략
         if (orderRepository.findByMerchantUid(mid).isPresent()){
-            return "fail";
+            return "pass";
         }
 
         // 주문정보 테이블 생성
@@ -72,7 +72,6 @@ public class PaymentService {
                 .member(member)
                 .merchantUid(mid)
                 .orderName(prepareRequest.getOrderName())
-                .orderPhone(prepareRequest.getPhone())
                 .orderEmail(prepareRequest.getEmail())
                 .paymentStatus(false)
                 .build());
@@ -95,9 +94,8 @@ public class PaymentService {
         order.setTotalQuantity(totalQuantity);
         order.setTotalPrice(totalPrice);
 
-        // 포트원 결제금액 사전등록 (포트원 토큰은 메서드 내부에서 응답 받은걸로 포함하여 요청)
+        // 포트원 결제금액 사전등록 (API: POST /payments/prepare) (포트원 토큰은 메서드 내부에서 응답 받은걸로 포함하여 요청)
         IamportResponse<Prepare> prepareIamportResponse = iamportClient.postPrepare(new PrepareData(mid, new BigDecimal(1000)));// 모의 결제이므로 금액 1000원으로 설정
-
 
         // 사전등록 성공 시 결제정보 Payment 엔티티 저장
         if (prepareIamportResponse.getCode() == 0){ // 0일때가 ok
@@ -118,29 +116,27 @@ public class PaymentService {
     }
 
     // 결제 검증 및 결제 완료 처리
+    @Transactional
     public ResponseEntity<String> completeOrder(String token, OrderCompleteRequest orderCompleteRequest) throws IamportResponseException, IOException {
         Member member = memberService.getMember(token);
         Payment payment = paymentRepository.findByMerchantUid(orderCompleteRequest.getMerchantUid()).orElseThrow();
         Orders order = orderRepository.findByMerchantUid(orderCompleteRequest.getMerchantUid()).orElseThrow();
         String impUid = orderCompleteRequest.getImpUid();
 
-        // 사전등록 결제정보 보기
-        IamportResponse<Prepare> getPrepareResponse = iamportClient.getPrepare(orderCompleteRequest.getMerchantUid());
-        System.out.println("getPrepareResponse.getResponse() = " + getPrepareResponse.getResponse());
+        // 포트원 결제내역 조회 (API: GET /payments/{imp_uid})
+        com.siot.IamportRestClient.response.Payment portOneResponse = iamportClient.paymentByImpUid(impUid).getResponse();
 
-        // 결제 검증
-        // 사전 등록 결제금액 조회
-        IamportResponse<com.siot.IamportRestClient.response.Payment> paymentIamportResponse = iamportClient.paymentByImpUid(impUid);
-        if (!Objects.equals(paymentIamportResponse.getResponse().getAmount(), new BigDecimal(payment.getPaidPrice()))){
-            // 결제 취소 요청 (두번째 파라미터가 포트원 고유번호로 취소 요청)
+        // 결제 금액 비교
+        if (!Objects.equals(portOneResponse.getAmount(), new BigDecimal(payment.getPaidPrice()))){
+            // 결제 취소 요청 (API: POST /payments/cancel) (두번째 파라미터 true가 포트원 고유번호로 취소 요청)
+            // -> 서비스 하나 따로 빼야할듯? 환불도 겸해야한다.
             IamportResponse<com.siot.IamportRestClient.response.Payment> cancelPaymentByImpUid = iamportClient.cancelPaymentByImpUid(new CancelData(impUid, true));
             log.info("결제 취소 응답(message): {}", cancelPaymentByImpUid.getMessage());
             return ResponseEntity.ok("cancel");
         }
         // 결제 승인 - 주문 완료, 결제 완료
         order.setPaymentStatus(true);
-        payment.setPaidAt(LocalDateTime.now());
-        payment.setPaymentStatus(true);
+        payment.paymentSuccess(portOneResponse); // 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일 저장
 
         return ResponseEntity.ok("complete");
     }
