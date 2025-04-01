@@ -98,8 +98,10 @@ public class PaymentService {
         // 포트원 결제금액 사전등록 (포트원 토큰은 메서드 내부에서 응답 받은걸로 포함하여 요청)
         IamportResponse<Prepare> prepareIamportResponse = iamportClient.postPrepare(new PrepareData(mid, new BigDecimal(1000)));// 모의 결제이므로 금액 1000원으로 설정
 
+
         // 사전등록 성공 시 결제정보 Payment 엔티티 저장
         if (prepareIamportResponse.getCode() == 0){ // 0일때가 ok
+            System.out.println("사전등록 성공");
             paymentRepository.save(Payment.builder()
                     .orders(order)
                     .merchantUid(mid)

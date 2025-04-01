@@ -20,12 +20,7 @@ public class OrderController {
     public ResponseEntity<OrderSheetResponse> createOrderSheet(@RequestHeader("Authorization") String token,
                                                                @RequestBody List<OrderItemRequest> orderItemRequestList
                                               ){
-        System.out.println("실행");
-        System.out.println("orderItemRequestList = " + orderItemRequestList);
-        for(OrderItemRequest orderItemRequest : orderItemRequestList){
-            System.out.println("orderItem = " + orderItemRequest.getProductId());
-            System.out.println("orderItem = " + orderItemRequest.getQuantity());
-        }
+        System.out.println("주문 정보 컨트롤러 실행");
         return  orderService.createOrderSheet(token, orderItemRequestList);
     }
 

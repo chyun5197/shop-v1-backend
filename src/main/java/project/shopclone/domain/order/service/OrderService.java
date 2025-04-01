@@ -15,6 +15,7 @@ import project.shopclone.domain.product.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -38,6 +39,7 @@ public class OrderService {
         return ResponseEntity.ok(OrderSheetResponse.builder()
                 .orderMemberInfo(OrderMemberInfo.from(member))
                 .orderItemSummaryList(orderItemSummaryList)
+                .merchantId("payement-"+String.valueOf(UUID.randomUUID()).substring(0, 13))
                 .build());
     }
 

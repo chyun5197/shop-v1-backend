@@ -15,4 +15,5 @@ import java.util.List;
 public class OrderSheetResponse {
     List<OrderItemSummary> orderItemSummaryList;
     OrderMemberInfo orderMemberInfo;
+    String merchantId;
 }

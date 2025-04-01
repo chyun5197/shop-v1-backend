@@ -20,6 +20,7 @@ public class PaymentController {
     @PostMapping("/prepare")
     public ResponseEntity<String> prepareOrder(@RequestHeader("Authorization") String token,
                                                              @RequestBody OrderPrepareRequest prepareRequest) throws IamportResponseException, IOException {
+        System.out.println("사전등록 컨트롤러 실행");
         String merchantId = paymentService.prepare(token, prepareRequest);
         return ResponseEntity.ok(merchantId);
     }
@@ -28,6 +29,7 @@ public class PaymentController {
     @PostMapping("/complete")
     public ResponseEntity<String> completeOrder(@RequestHeader("Authorization") String token,
                                                               @RequestBody OrderCompleteRequest orderCompleteRequest) throws IamportResponseException, IOException {
+        System.out.println("결제검증 컨트롤러 실행");
         return paymentService.completeOrder(token, orderCompleteRequest);
     }
 
