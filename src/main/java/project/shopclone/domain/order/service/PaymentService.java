@@ -34,6 +34,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import static project.shopclone.domain.order.entity.QPayment.payment;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -100,7 +102,6 @@ public class PaymentService {
 
         // 사전등록 성공 시 결제정보 Payment 테이블 생성
         if (prepareIamportResponse.getCode() == 0){ // 0일때가 ok
-            System.out.println("사전등록 성공");
             paymentRepository.save(Payment.builder()
                             .orders(order)
                             .merchantUid(mid)
@@ -131,22 +132,28 @@ public class PaymentService {
         // 결제 금액 비교
         if (!Objects.equals(portOneResponse.getAmount(), new BigDecimal(payment.getPaidPrice()))){
             // 결제 취소 요청 (API: POST /payments/cancel) (두번째 파라미터 true가 포트원 고유번호로 취소 요청)
-            // -> 서비스 하나 따로 빼야할듯? 환불도 겸해야한다.
             IamportResponse<com.siot.IamportRestClient.response.Payment> cancelPaymentByImpUid = iamportClient.cancelPaymentByImpUid(new CancelData(impUid, true));
             log.info("결제 취소 응답(message): {}", cancelPaymentByImpUid.getMessage());
+            payment.setPaymentStatus(PaymentStatus.CANCEL);
             return ResponseEntity.ok("cancel");
         }
         // 결제 승인 - 주문 완료, 결제 완료
-        order.setPaymentStatus(true); // 주문 - 지불 상태
-        payment.paymentSuccess(portOneResponse, impUid); // 결제 - 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일, impUid 저장
+        order.setPaymentStatus(true); // 주문상태 지불 완료
+        payment.paymentSuccess(portOneResponse, impUid); // 결제 수정 - 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일, impUid 저장
         
-        System.out.println("승인 처리 후");
-        System.out.println("order.getPaymentStatus() = " + order.getPaymentStatus());
-        System.out.println("payment.getPaymentStatus() = " + payment.getPaymentStatus());
-        System.out.println("payment.getBuyerEmail() = " + payment.getBuyerEmail());
-
-        System.out.println("결제완료");
-
         return ResponseEntity.ok("complete");
+    }
+
+    // 환불하기
+    public ResponseEntity<String> cancelOrder(String token, String merchantUid) throws IamportResponseException, IOException {
+        // 결제 취소 요청 (API: POST /payments/cancel) (두번째 파라미터 false가 쇼핑몰 주문번호로 취소 요청)
+        IamportResponse<com.siot.IamportRestClient.response.Payment> cancelPaymentByImpUid = iamportClient.cancelPaymentByImpUid(new CancelData(merchantUid, false));
+        log.info("결제 취소 응답(message): {}", cancelPaymentByImpUid.getMessage());
+        log.info("결제 취소 상태: {}", cancelPaymentByImpUid.getResponse().getStatus());
+        log.info("결제 취소 시각: {}", cancelPaymentByImpUid.getResponse().getCancelledAt());
+        Payment payment = paymentRepository.findByMerchantUid(merchantUid).orElseThrow();
+        payment.setPaymentStatus(PaymentStatus.CANCEL);
+
+        return ResponseEntity.ok("cancel");
     }
 }

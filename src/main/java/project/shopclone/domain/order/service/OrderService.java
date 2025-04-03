@@ -46,8 +46,13 @@ public class OrderService {
         return ResponseEntity.ok(OrderSheetResponse.builder()
                 .orderMemberInfo(OrderMemberInfo.from(member))
                 .orderItemSummaryList(orderItemSummaryList)
-                .merchantId("Payment-"+String.valueOf(UUID.randomUUID()).substring(0, 13))
+                .merchantId("Payment"+String.valueOf(UUID.randomUUID()).substring(0, 8))
                 .build());
+    }
+
+    // 주문완료 후 처리: 장바구니에서 상품 삭제, 상품 구매수량 증가, 적립금 업데이트
+    public void OrderComplete(){
+
     }
 
     // 주문조회
