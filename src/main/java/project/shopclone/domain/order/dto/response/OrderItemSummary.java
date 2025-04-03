@@ -4,14 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project.shopclone.domain.order.entity.OrderItem;
 import project.shopclone.domain.product.entity.Product;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class OrderItemSummary {
+public class OrderItemSummary { // 주문 상품
     private Long productId;     // 상품번호
     private Integer quantity;   // 수량
 

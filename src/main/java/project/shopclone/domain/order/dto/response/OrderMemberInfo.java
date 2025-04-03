@@ -10,7 +10,7 @@ import project.shopclone.domain.member.Member;
 @NoArgsConstructor
 @Builder
 @Getter
-public class OrderMemberInfo {
+public class OrderMemberInfo { // 주문자 정보
     private String email;
     private String name;
     private String phone;

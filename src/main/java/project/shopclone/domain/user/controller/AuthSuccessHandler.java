@@ -1,4 +1,4 @@
-package project.shopclone.domain.user;
+package project.shopclone.domain.user.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -26,7 +26,7 @@ public class AuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final ObjectMapper objectMapper;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 //        System.out.println("request.getRequestURL() = " + request.getRequestURL());
 //        System.out.println("authentication.getName() = " + authentication.getName());
 

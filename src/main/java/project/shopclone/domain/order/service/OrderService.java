@@ -10,6 +10,11 @@ import project.shopclone.domain.order.dto.request.OrderItemRequest;
 import project.shopclone.domain.order.dto.response.OrderItemSummary;
 import project.shopclone.domain.order.dto.response.OrderMemberInfo;
 import project.shopclone.domain.order.dto.response.OrderSheetResponse;
+import project.shopclone.domain.order.dto.response.orderlist.OrderResponse;
+import project.shopclone.domain.order.entity.Orders;
+import project.shopclone.domain.order.entity.Payment;
+import project.shopclone.domain.order.repository.OrderRepository;
+import project.shopclone.domain.order.repository.PaymentRepository;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.ProductRepository;
 
@@ -23,6 +28,8 @@ import java.util.UUID;
 public class OrderService {
     private final MemberService memberService;
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
+    private final PaymentRepository paymentRepository;
 
     // 주문 정보 저장 / 주문자 정보, 결제 정보 응답
     public ResponseEntity<OrderSheetResponse> createOrderSheet(String token, List<OrderItemRequest> orderItemRequestList) {
@@ -39,8 +46,21 @@ public class OrderService {
         return ResponseEntity.ok(OrderSheetResponse.builder()
                 .orderMemberInfo(OrderMemberInfo.from(member))
                 .orderItemSummaryList(orderItemSummaryList)
-                .merchantId("payement-"+String.valueOf(UUID.randomUUID()).substring(0, 13))
+                .merchantId("Payment-"+String.valueOf(UUID.randomUUID()).substring(0, 13))
                 .build());
     }
 
+    // 주문조회
+    public ResponseEntity<List<OrderResponse>> getOrderList(String token) {
+        Member member = memberService.getMember(token);
+        List<Orders> orderList = orderRepository.findAllByMemberAndPaymentStatusOrderByOrderDateDesc(member, true);
+        List<OrderResponse> orderResponseList = new ArrayList<>();
+        Payment payment;
+        for(Orders order : orderList){
+            payment = paymentRepository.findByOrdersAndPaymentStatus(order, true);
+            orderResponseList.add(OrderResponse.of(order, payment));
+        }
+
+        return ResponseEntity.ok(orderResponseList);
+    }
 }
