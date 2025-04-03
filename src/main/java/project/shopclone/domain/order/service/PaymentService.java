@@ -147,12 +147,15 @@ public class PaymentService {
     // 환불하기
     @Transactional
     public ResponseEntity<String> cancelOrder(String token, String merchantUid) throws IamportResponseException, IOException {
+        Payment payment = paymentRepository.findByMerchantUid(merchantUid).orElseThrow();
+        if(payment.getPaymentStatus() == PaymentStatus.CANCEL){
+            return ResponseEntity.ok("already canceled");
+        }
+
         // 결제 취소 요청 (API: POST /payments/cancel) (두번째 파라미터 false가 쇼핑몰 주문번호로 취소 요청)
         IamportResponse<com.siot.IamportRestClient.response.Payment> cancelPaymentByImpUid = iamportClient.cancelPaymentByImpUid(new CancelData(merchantUid, false));
         log.info("결제 취소 응답(message): {}", cancelPaymentByImpUid.getMessage());
-        log.info("결제 취소 상태: {}", cancelPaymentByImpUid.getResponse().getStatus());
-        log.info("결제 취소 시각: {}", cancelPaymentByImpUid.getResponse().getCancelledAt());
-        Payment payment = paymentRepository.findByMerchantUid(merchantUid).orElseThrow();
+        log.info("결제 취소 응답(code): {}", cancelPaymentByImpUid.getCode());
         payment.setPaymentStatus(PaymentStatus.CANCEL);
 
         return ResponseEntity.ok("cancel");
