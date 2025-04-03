@@ -125,6 +125,10 @@ public class PaymentService {
 
         // 포트원 결제내역 조회 (API: GET /payments/{imp_uid})
         com.siot.IamportRestClient.response.Payment portOneResponse = iamportClient.paymentByImpUid(impUid).getResponse();
+        System.out.println("portOneResponse.getAmount() = " + portOneResponse.getAmount());
+        System.out.println("portOneResponse.getBuyerEmail() = " + portOneResponse.getBuyerEmail());
+        System.out.println("portOneResponse.getBuyerName() = " + portOneResponse.getBuyerName());
+        System.out.println("portOneResponse.getEmbPgProvider() = " + portOneResponse.getEmbPgProvider());
 
         // 결제 금액 비교
         if (!Objects.equals(portOneResponse.getAmount(), new BigDecimal(payment.getPaidPrice()))){

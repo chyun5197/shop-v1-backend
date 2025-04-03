@@ -44,6 +44,7 @@ public class Payment {
     private LocalDateTime paidAt;   // 결제 일자
 
     public void paymentSuccess(com.siot.IamportRestClient.response.Payment portOneResponse, String impUid) {
+        System.out.println("paymentSuccess 실행");
         this.paymentStatus = true;
         this.payMethod = portOneResponse.getEmbPgProvider();
         this.buyerName = portOneResponse.getBuyerName();
