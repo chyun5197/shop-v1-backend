@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.shopclone.domain.order.dto.request.OrderItemRequest;
 import project.shopclone.domain.order.dto.response.OrderSheetResponse;
-import project.shopclone.domain.order.dto.response.orderlist.OrderResponse;
+import project.shopclone.domain.order.dto.response.orderlist.OrderListResponse;
 import project.shopclone.domain.order.service.OrderService;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class OrderController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<OrderResponse>> getOrderList(@RequestHeader("Authorization") String token){
+    public ResponseEntity<List<OrderListResponse>> getOrderList(@RequestHeader("Authorization") String token){
         return orderService.getOrderList(token);
     }
 

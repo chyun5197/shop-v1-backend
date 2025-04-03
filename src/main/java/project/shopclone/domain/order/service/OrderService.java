@@ -10,7 +10,7 @@ import project.shopclone.domain.order.dto.request.OrderItemRequest;
 import project.shopclone.domain.order.dto.response.OrderItemSummary;
 import project.shopclone.domain.order.dto.response.OrderMemberInfo;
 import project.shopclone.domain.order.dto.response.OrderSheetResponse;
-import project.shopclone.domain.order.dto.response.orderlist.OrderResponse;
+import project.shopclone.domain.order.dto.response.orderlist.OrderListResponse;
 import project.shopclone.domain.order.entity.Orders;
 import project.shopclone.domain.order.entity.Payment;
 import project.shopclone.domain.order.repository.OrderRepository;
@@ -56,16 +56,16 @@ public class OrderService {
     }
 
     // 주문조회
-    public ResponseEntity<List<OrderResponse>> getOrderList(String token) {
+    public ResponseEntity<List<OrderListResponse>> getOrderList(String token) {
         Member member = memberService.getMember(token);
         List<Orders> orderList = orderRepository.findAllByMemberAndPaymentStatusOrderByOrderDateDesc(member, true);
-        List<OrderResponse> orderResponseList = new ArrayList<>();
+        List<OrderListResponse> orderListResponses = new ArrayList<>();
         Payment payment;
         for(Orders order : orderList){
             payment = paymentRepository.findByOrdersAndOrderCompleted(order, true);
-            orderResponseList.add(OrderResponse.of(order, payment));
+            orderListResponses.add(OrderListResponse.of(order, payment));
         }
 
-        return ResponseEntity.ok(orderResponseList);
+        return ResponseEntity.ok(orderListResponses);
     }
 }
