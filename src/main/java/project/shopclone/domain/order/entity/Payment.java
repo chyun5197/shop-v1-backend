@@ -32,6 +32,8 @@ public class Payment {
     private Integer paidPrice;      // 결제 가격 (테스트 결제 1000원 고정)
     private Integer totalQuantity;  // 결제 수량
 
+    private Boolean orderCompleted; // 결제 완료 여부
+
     // 포트원으로부터 응답
     private PaymentStatus paymentStatus;  // 결제 상태 : ready, failed, paid, cancel
     private String payMethod;       // 결제 방법 (카드 외 네이버페이, 카카오페이, 토스 등등..)
@@ -58,6 +60,7 @@ public class Payment {
         // Date -> LocalDateTime 변환
         this.paidAt = portOneResponse.getPaidAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         this.impUid = impUid;
+        this.orderCompleted = true;
     }
 
 }

@@ -57,7 +57,7 @@ public class OrderService {
         List<OrderResponse> orderResponseList = new ArrayList<>();
         Payment payment;
         for(Orders order : orderList){
-            payment = paymentRepository.findByOrdersAndPaymentStatus(order, true);
+            payment = paymentRepository.findByOrdersAndOrderCompleted(order, true);
             orderResponseList.add(OrderResponse.of(order, payment));
         }
 

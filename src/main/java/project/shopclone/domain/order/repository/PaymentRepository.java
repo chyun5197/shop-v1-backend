@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
     Optional<Payment> findByMerchantUid(String merchantUid);
-    Payment findByOrdersAndPaymentStatus(Orders order, Boolean paymentStatus);
+    Payment findByOrdersAndOrderCompleted(Orders orders, boolean orderCompleted);
 }

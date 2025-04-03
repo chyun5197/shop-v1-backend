@@ -102,12 +102,13 @@ public class PaymentService {
         if (prepareIamportResponse.getCode() == 0){ // 0일때가 ok
             System.out.println("사전등록 성공");
             paymentRepository.save(Payment.builder()
-                    .orders(order)
-                    .merchantUid(mid)
-                    .realPrice(totalPrice)
-                    .paidPrice(1000)
-                    .totalQuantity(totalQuantity)
-                    .paymentStatus(PaymentStatus.READY)
+                            .orders(order)
+                            .merchantUid(mid)
+                            .realPrice(totalPrice)
+                            .paidPrice(1000)
+                            .totalQuantity(totalQuantity)
+                            .paymentStatus(PaymentStatus.READY)
+                            .orderCompleted(false)
                     .build());
         }else{
             log.info("오류 메세지: {}", prepareIamportResponse.getMessage());

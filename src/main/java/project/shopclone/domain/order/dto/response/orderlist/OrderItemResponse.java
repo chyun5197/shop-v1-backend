@@ -10,8 +10,9 @@ import project.shopclone.domain.product.entity.Product;
 public class OrderItemResponse { // 주문 아이템 조회
     private Long orderItemId;   // 주문 아이템ID
     private Long productId;     // 상품ID
-    private String image;    // 이미지
+    private String image;       // 이미지
     private String productName; // 상품명
+    private Integer realPrice;  // 실제 가격
     private int quantity;       // 수량
 
     public static OrderItemResponse from(OrderItem orderItem) {
@@ -20,6 +21,7 @@ public class OrderItemResponse { // 주문 아이템 조회
         orderItemResponse.setQuantity(orderItem.getQuantity());
 
         Product product = orderItem.getProduct();
+        orderItemResponse.setRealPrice(product.getPrice());
         orderItemResponse.setProductId(product.getId());
         orderItemResponse.setProductName(product.getName());
         orderItemResponse.setImage(product.getImage());

@@ -14,11 +14,11 @@ import java.util.List;
 public class OrderResponse { // 주문 조회
     private Long orderId;               // 주문ID
     private String merchantUid;         // 주문번호
-    private String orderDate;    // 주문일자
+    private String orderDate;           // 주문일자
     private Integer price;              // 실제상품가격
-    private String payCard;             // 결제 카드
+    private String payCard;             // 결제카드
     private String payMethod;           // 결제방법
-    private String paymentStatus;      // 결제상태
+    private String paymentStatus;       // 결제상태
 
     private List<OrderItemResponse> orderItems; // 주문 아이템 리스트
 
