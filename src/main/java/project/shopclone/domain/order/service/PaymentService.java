@@ -21,6 +21,7 @@ import project.shopclone.domain.order.dto.request.OrderPrepareRequest;
 import project.shopclone.domain.order.entity.OrderItem;
 import project.shopclone.domain.order.entity.Orders;
 import project.shopclone.domain.order.entity.Payment;
+import project.shopclone.domain.order.entity.PaymentStatus;
 import project.shopclone.domain.order.repository.OrderItemRepository;
 import project.shopclone.domain.order.repository.OrderRepository;
 import project.shopclone.domain.order.repository.PaymentRepository;
@@ -97,7 +98,7 @@ public class PaymentService {
         // 포트원 결제금액 사전등록 (API: POST /payments/prepare) (포트원 토큰은 메서드 내부에서 응답 받은걸로 포함하여 요청)
         IamportResponse<Prepare> prepareIamportResponse = iamportClient.postPrepare(new PrepareData(mid, new BigDecimal(1000)));// 모의 결제이므로 금액 1000원으로 설정
 
-        // 사전등록 성공 시 결제정보 Payment 엔티티 저장
+        // 사전등록 성공 시 결제정보 Payment 테이블 생성
         if (prepareIamportResponse.getCode() == 0){ // 0일때가 ok
             System.out.println("사전등록 성공");
             paymentRepository.save(Payment.builder()
@@ -106,7 +107,7 @@ public class PaymentService {
                     .realPrice(totalPrice)
                     .paidPrice(1000)
                     .totalQuantity(totalQuantity)
-                    .paymentStatus(false)
+                    .paymentStatus(PaymentStatus.READY)
                     .build());
         }else{
             log.info("오류 메세지: {}", prepareIamportResponse.getMessage());
@@ -125,10 +126,6 @@ public class PaymentService {
 
         // 포트원 결제내역 조회 (API: GET /payments/{imp_uid})
         com.siot.IamportRestClient.response.Payment portOneResponse = iamportClient.paymentByImpUid(impUid).getResponse();
-        System.out.println("portOneResponse.getAmount() = " + portOneResponse.getAmount());
-        System.out.println("portOneResponse.getBuyerEmail() = " + portOneResponse.getBuyerEmail());
-        System.out.println("portOneResponse.getBuyerName() = " + portOneResponse.getBuyerName());
-        System.out.println("portOneResponse.getEmbPgProvider() = " + portOneResponse.getEmbPgProvider());
 
         // 결제 금액 비교
         if (!Objects.equals(portOneResponse.getAmount(), new BigDecimal(payment.getPaidPrice()))){
@@ -141,6 +138,11 @@ public class PaymentService {
         // 결제 승인 - 주문 완료, 결제 완료
         order.setPaymentStatus(true); // 주문 - 지불 상태
         payment.paymentSuccess(portOneResponse, impUid); // 결제 - 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일, impUid 저장
+        
+        System.out.println("승인 처리 후");
+        System.out.println("order.getPaymentStatus() = " + order.getPaymentStatus());
+        System.out.println("payment.getPaymentStatus() = " + payment.getPaymentStatus());
+        System.out.println("payment.getBuyerEmail() = " + payment.getBuyerEmail());
 
         System.out.println("결제완료");
 

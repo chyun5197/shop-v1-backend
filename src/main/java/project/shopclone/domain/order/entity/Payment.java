@@ -33,8 +33,9 @@ public class Payment {
     private Integer totalQuantity;  // 결제 수량
 
     // 포트원으로부터 응답
-    private Boolean paymentStatus;  // 결제 상태
-    private String payMethod;       // 결제 방법 (카드사; 포트원의 emb_pg_provider)
+    private PaymentStatus paymentStatus;  // 결제 상태 : ready, failed, paid, cancel
+    private String payMethod;       // 결제 방법 (카드 외 네이버페이, 카카오페이, 토스 등등..)
+    private String payCard;         // 결제 카드 (카드사; 포트원의 card_name)
     private String buyerName;       // 구매자 이름
     private String buyerEmail;      // 구매자 이메일
 //    private String buyerTel;
@@ -45,7 +46,12 @@ public class Payment {
 
     public void paymentSuccess(com.siot.IamportRestClient.response.Payment portOneResponse, String impUid) {
         System.out.println("paymentSuccess 실행");
-        this.paymentStatus = true;
+        if (portOneResponse.getStatus().equals("paid")) {
+            this.paymentStatus = PaymentStatus.PAID;
+        }else if(portOneResponse.getStatus().equals("failed")){
+            this.paymentStatus = PaymentStatus.FAILED;
+        }
+        this.payCard = portOneResponse.getCardName();
         this.payMethod = portOneResponse.getEmbPgProvider();
         this.buyerName = portOneResponse.getBuyerName();
         this.buyerEmail = portOneResponse.getBuyerEmail();
