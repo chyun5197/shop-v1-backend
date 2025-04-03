@@ -5,12 +5,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import project.shopclone.global.common.BaseTime;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,7 +18,7 @@ import java.util.List;
 @Getter
 //UserDetails를 상속 받아 인증 객체로 사용
 //사용자의 인증 정보와 권한 정보를 저장하는 메서드 제공
-public class AuthUser implements UserDetails {
+public class AuthUser extends BaseTime implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
@@ -40,9 +39,6 @@ public class AuthUser implements UserDetails {
 
     // 소셜로그인 채널
     private String channel;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
 
 //    @OneToOne(mappedBy = "auth_user", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private Member member;

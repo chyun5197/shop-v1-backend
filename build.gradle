@@ -68,7 +68,7 @@ dependencies {
     implementation 'com.github.iamport:iamport-rest-client-java:0.2.21'
 
     // websocket
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+//    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 }
 

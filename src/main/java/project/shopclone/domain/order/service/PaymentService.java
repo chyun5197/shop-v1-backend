@@ -135,8 +135,10 @@ public class PaymentService {
             return ResponseEntity.ok("cancel");
         }
         // 결제 승인 - 주문 완료, 결제 완료
-        order.setPaymentStatus(true);
-        payment.paymentSuccess(portOneResponse); // 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일 저장
+        order.setPaymentStatus(true); // 주문 - 지불 상태
+        payment.paymentSuccess(portOneResponse, impUid); // 결제 - 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일, impUid 저장
+
+        System.out.println("결제완료");
 
         return ResponseEntity.ok("complete");
     }

@@ -2,10 +2,8 @@ package project.shopclone.domain.cart.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 import project.shopclone.domain.member.Member;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,7 +23,4 @@ public class Cart {
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItemList;
-
-    @CreatedDate
-    private LocalDateTime createdAt;
 }

@@ -3,6 +3,7 @@ package project.shopclone.domain.order.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -13,6 +14,7 @@ import java.time.ZoneId;
 @Entity
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 @Table(name="payment")
 public class Payment {
     @Id
@@ -37,17 +39,18 @@ public class Payment {
     private String buyerEmail;      // 구매자 이메일
 //    private String buyerTel;
 //    private String buyerAddress;
+
     @CreatedDate
     private LocalDateTime paidAt;   // 결제 일자
 
-
-    public void paymentSuccess(com.siot.IamportRestClient.response.Payment portOneResponse) {
+    public void paymentSuccess(com.siot.IamportRestClient.response.Payment portOneResponse, String impUid) {
         this.paymentStatus = true;
         this.payMethod = portOneResponse.getEmbPgProvider();
         this.buyerName = portOneResponse.getBuyerName();
         this.buyerEmail = portOneResponse.getBuyerEmail();
         // Date -> LocalDateTime 변환
         this.paidAt = portOneResponse.getPaidAt().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        this.impUid = impUid;
     }
 
 }

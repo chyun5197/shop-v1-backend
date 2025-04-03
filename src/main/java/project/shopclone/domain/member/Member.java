@@ -2,18 +2,17 @@ package project.shopclone.domain.member;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.domain.wish.Wish;
+import project.shopclone.global.common.BaseTime;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 @Table(name="member")
-public class Member {
+public class Member extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
