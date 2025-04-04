@@ -151,7 +151,7 @@ public class PaymentService {
             return ResponseEntity.ok("already canceled");
         }
 
-        // 결제 취소 요청 (API: POST /payments/cancel) (두번째 파라미터 false가 쇼핑몰 주문번호로 취소 요청)
+        // 결제 취소 요청 (API: POST /payments/cancel) (두번째 파라미터 false가 쇼핑몰 주문번호로 취소 요청).
         IamportResponse<com.siot.IamportRestClient.response.Payment> cancelPaymentByImpUid = iamportClient.cancelPaymentByImpUid(new CancelData(merchantUid, false));
         log.info("결제 취소 응답(message): {}", cancelPaymentByImpUid.getMessage());
         log.info("결제 취소 응답(code): {}", cancelPaymentByImpUid.getCode());
