@@ -9,5 +9,5 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Orders, Long> {
     Optional<Orders> findByMerchantUid(String merchantUid);
-    List<Orders> findAllByMemberAndPaymentStatusOrderByOrderDateDesc(Member member, Boolean paymentStatus);
+    List<Orders> findAllByMemberAndIsPaidOrderByOrderDateDesc(Member member, Boolean isPaid);
 }

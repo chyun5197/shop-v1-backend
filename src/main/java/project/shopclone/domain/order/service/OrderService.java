@@ -54,7 +54,7 @@ public class OrderService {
     // 주문조회
     public ResponseEntity<List<OrderListResponse>> getOrderList(String token) {
         Member member = memberService.getMember(token);
-        List<Orders> orderList = orderRepository.findAllByMemberAndPaymentStatusOrderByOrderDateDesc(member, true);
+        List<Orders> orderList = orderRepository.findAllByMemberAndIsPaidOrderByOrderDateDesc(member, true);
         List<OrderListResponse> orderListResponses = new ArrayList<>();
         Payment payment;
         for(Orders order : orderList){
