@@ -147,7 +147,7 @@ public class PaymentService {
     }
 
     // 환불하기
-    public ResponseEntity<String> cancelOrder(String token, String merchantUid) throws IamportResponseException, IOException {
+    public ResponseEntity<String> cancelOrder(String token, String merchantUid) throws IOException, IamportResponseException {
         Payment payment = paymentRepository.findByMerchantUid(merchantUid)
                 .orElseThrow(() -> new OrderException(OrderErrorCode.PAYMENT_NOT_FOUND));
         if(payment.getPaymentStatus() == PaymentStatus.CANCEL){

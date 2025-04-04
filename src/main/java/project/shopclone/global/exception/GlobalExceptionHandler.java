@@ -1,5 +1,6 @@
 package project.shopclone.global.exception;
 
+import com.siot.IamportRestClient.exception.IamportResponseException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,14 +12,19 @@ import project.shopclone.domain.user.exception.AuthUserException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(AuthUserException.class)
-    public ResponseEntity<ErrorRes<Void>> handleMemberException(AuthUserException e) {
+    public ResponseEntity<ErrorRes<Void>> memberExceptionHandler(AuthUserException e) {
         log.info(e.getMessage(), e);
         return ResponseEntity.status(e.getHttpStatus()).body(ErrorRes.failure(e.getCode(), e.getMessage()));
     }
 
     @ExceptionHandler(OrderException.class)
-    public ResponseEntity<ErrorRes<Void>> handleMemberException(OrderException e) {
+    public ResponseEntity<ErrorRes<Void>> orderExceptionHandler(OrderException e) {
         log.info(e.getMessage(), e);
         return ResponseEntity.status(e.getHttpStatus()).body(ErrorRes.failure(e.getCode(), e.getMessage()));
     }
+
+//    @ExceptionHandler(IamportResponseException.class)
+//    public ResponseEntity<String> iamportResponseException(final IamportResponseException e) {
+//        return ResponseEntity.badRequest().body(e.getMessage());
+//    }
 }

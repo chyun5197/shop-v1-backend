@@ -1,6 +1,8 @@
 package project.shopclone.domain.order.controller;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +14,12 @@ import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "결제 API")
 @RequestMapping("/api/payment")
 public class PaymentController {
     private final PaymentService paymentService;
 
-    // 결제금액 사전등록
+    @Operation(summary = "결제금액 사전등록")
     @PostMapping("/prepare")
     public ResponseEntity<String> prepareOrder(@RequestHeader("Authorization") String token,
                                                              @RequestBody OrderPrepareRequest prepareRequest) throws IamportResponseException, IOException {
@@ -24,17 +27,17 @@ public class PaymentController {
         return ResponseEntity.ok(merchantId);
     }
 
-    // 결제검증 후 저장 or 취소
+    @Operation(summary = "결제 검증 후 결제 승인/취소 처리")
     @PostMapping("/complete")
     public ResponseEntity<String> completeOrder(@RequestHeader("Authorization") String token,
                                                               @RequestBody OrderCompleteRequest orderCompleteRequest) throws IamportResponseException, IOException {
         return paymentService.completeOrder(token, orderCompleteRequest);
     }
 
-    // 환불하기
+    @Operation(summary = "환불하기")
     @PostMapping("/cancel/{merchantUid}")
     public ResponseEntity<String> cancelOrder(@RequestHeader("Authorization") String token,
-                                              @PathVariable String merchantUid) throws IamportResponseException, IOException {
+                                              @PathVariable String merchantUid) throws IOException, IamportResponseException {
         return paymentService.cancelOrder(token, merchantUid);
     }
 

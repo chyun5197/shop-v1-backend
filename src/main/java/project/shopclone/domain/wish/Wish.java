@@ -32,7 +32,7 @@ public class Wish {
     @JoinColumn(name="member_id")
     private Member member;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
 

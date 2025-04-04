@@ -29,7 +29,7 @@ public class CartItem {
     private Integer count;   // 수량
 
     // 상품 정보
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
 

@@ -1,5 +1,7 @@
 package project.shopclone.domain.order.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +14,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "주문 API")
 @RequestMapping("/api/order")
 public class OrderController {
     private final OrderService orderService;
 
+    @Operation(summary = "주문서 불러오기")
     @PostMapping("/sheet")
     public ResponseEntity<OrderSheetResponse> createOrderSheet(@RequestHeader("Authorization") String token,
                                                                @RequestBody List<OrderItemRequest> orderItemRequestList
@@ -23,6 +27,7 @@ public class OrderController {
         return  orderService.createOrderSheet(token, orderItemRequestList);
     }
 
+    @Operation(summary = "주문내역 조회")
     @GetMapping("/list")
     public ResponseEntity<List<OrderListResponse>> getOrderList(@RequestHeader("Authorization") String token){
         return orderService.getOrderList(token);
