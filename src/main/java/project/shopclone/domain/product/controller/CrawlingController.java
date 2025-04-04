@@ -52,7 +52,7 @@ public class CrawlingController {
         }
         List<Brand> brands = brandRepository.findAll();
         for (Brand brand : brands){
-            if (brand.getId() < 53) {
+            if (brand.getBrandId() < 53) {
                 continue;
             }
 

@@ -5,15 +5,19 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import project.shopclone.global.common.BaseTime;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
 //UserDetails를 상속 받아 인증 객체로 사용
@@ -25,7 +29,9 @@ public class AuthUser extends BaseTime implements UserDetails {
     private Long id;
 
     @Column(name = "oauth_id", nullable = false, unique = true)
-    private String oauthId;
+    private String oauthId; // 소셜로그인 ID
+
+    private String channel; // 소셜로그인 채널
 
     @Column(name = "email")
     private String email;
@@ -37,8 +43,8 @@ public class AuthUser extends BaseTime implements UserDetails {
     @Column(name="nickname")
     private String nickname;
 
-    // 소셜로그인 채널
-    private String channel;
+    @CreatedDate
+    private LocalDateTime createdAt;
 
 //    @OneToOne(mappedBy = "auth_user", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private Member member;

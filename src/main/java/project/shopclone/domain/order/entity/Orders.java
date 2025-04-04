@@ -35,15 +35,15 @@ public class Orders { // 주문정보
     @CreatedDate
     private LocalDateTime orderDate;
 
-    private String merchantUid;     // 쇼핑몰 주문번호
-    private String address;         // 주소
-
     private String orderName;       // 주문자명
     private String orderEmail;      // 이메일
 
+    private String merchantUid;     // 쇼핑몰 주문번호
+
     // 변화
     private Boolean paymentStatus;  // 결제 상태
-
     private Integer totalQuantity;  // 수량
     private Integer totalPrice;     // 총가격
+
+    private String address;         // 주소
 }

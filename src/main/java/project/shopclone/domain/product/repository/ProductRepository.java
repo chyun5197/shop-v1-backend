@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import project.shopclone.domain.product.entity.Product;
-import project.shopclone.domain.wish.Wish;
 
 import java.util.List;
 
