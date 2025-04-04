@@ -22,6 +22,8 @@ import project.shopclone.domain.order.entity.OrderItem;
 import project.shopclone.domain.order.entity.Orders;
 import project.shopclone.domain.order.entity.Payment;
 import project.shopclone.domain.order.entity.PaymentStatus;
+import project.shopclone.domain.order.exception.OrderErrorCode;
+import project.shopclone.domain.order.exception.OrderException;
 import project.shopclone.domain.order.repository.OrderItemRepository;
 import project.shopclone.domain.order.repository.OrderRepository;
 import project.shopclone.domain.order.repository.PaymentRepository;
@@ -39,6 +41,7 @@ import static project.shopclone.domain.order.entity.QPayment.payment;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
@@ -60,7 +63,6 @@ public class PaymentService {
     }
 
     // 결제금액 사전등록
-    @Transactional
     public String prepare(String token, OrderPrepareRequest prepareRequest) throws IamportResponseException, IOException {
         Member member = memberService.getMember(token);
         String mid = prepareRequest.getMerchantUid(); // 쇼핑몰 주문번호
@@ -98,7 +100,8 @@ public class PaymentService {
         order.setTotalPrice(totalPrice);
 
         // 포트원 결제금액 사전등록 (API: POST /payments/prepare) (포트원 토큰은 메서드 내부에서 응답 받은걸로 포함하여 요청)
-        IamportResponse<Prepare> prepareIamportResponse = iamportClient.postPrepare(new PrepareData(mid, new BigDecimal(1000)));// 모의 결제이므로 금액 1000원으로 설정
+        // 모의 결제이므로 금액 1000원으로 고정
+        IamportResponse<Prepare> prepareIamportResponse = iamportClient.postPrepare(new PrepareData(mid, new BigDecimal(1000)));
 
         // 사전등록 성공 시 결제정보 Payment 테이블 생성
         if (prepareIamportResponse.getCode() == 0){ // 0일때가 ok
@@ -119,11 +122,10 @@ public class PaymentService {
     }
 
     // 결제 검증 및 결제 완료 처리
-    @Transactional
     public ResponseEntity<String> completeOrder(String token, OrderCompleteRequest orderCompleteRequest) throws IamportResponseException, IOException {
-        Member member = memberService.getMember(token);
         Payment payment = paymentRepository.findByMerchantUid(orderCompleteRequest.getMerchantUid()).orElseThrow();
-        Orders order = orderRepository.findByMerchantUid(orderCompleteRequest.getMerchantUid()).orElseThrow();
+        Orders order = orderRepository.findByMerchantUid(orderCompleteRequest.getMerchantUid())
+                .orElseThrow(() -> new OrderException(OrderErrorCode.ORDER_NOT_FOUND));
         String impUid = orderCompleteRequest.getImpUid();
 
         // 포트원 결제내역 조회 (API: GET /payments/{imp_uid})
@@ -145,9 +147,9 @@ public class PaymentService {
     }
 
     // 환불하기
-    @Transactional
     public ResponseEntity<String> cancelOrder(String token, String merchantUid) throws IamportResponseException, IOException {
-        Payment payment = paymentRepository.findByMerchantUid(merchantUid).orElseThrow();
+        Payment payment = paymentRepository.findByMerchantUid(merchantUid)
+                .orElseThrow(() -> new OrderException(OrderErrorCode.PAYMENT_NOT_FOUND));
         if(payment.getPaymentStatus() == PaymentStatus.CANCEL){
             return ResponseEntity.ok("already canceled");
         }

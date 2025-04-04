@@ -35,11 +35,12 @@ public class Payment {
     private Boolean orderCompleted; // 결제 완료 여부
 
     // 포트원으로부터 응답
-    private PaymentStatus paymentStatus;  // 결제 상태 : ready, failed, paid, cancel
-    private String payMethod;       // 결제 방법 (카드 외 네이버페이, 카카오페이, 토스 등등..)
-    private String payCard;         // 결제 카드 (카드사; 포트원의 card_name)
-    private String buyerName;       // 구매자 이름
-    private String buyerEmail;      // 구매자 이메일
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;    // 결제 상태 : READY, FAILED, PAID, CANCEL
+    private String payMethod;               // 결제 방법 (카드 외 네이버페이, 카카오페이, 토스 등등..)
+    private String payCard;                 // 결제 카드 (카드사; 포트원의 card_name)
+    private String buyerName;               // 구매자 이름
+    private String buyerEmail;              // 구매자 이메일
 //    private String buyerTel;
 //    private String buyerAddress;
 

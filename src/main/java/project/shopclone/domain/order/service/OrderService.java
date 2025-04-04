@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.shopclone.domain.member.Member;
 import project.shopclone.domain.member.MemberService;
 import project.shopclone.domain.order.dto.request.OrderItemRequest;
@@ -31,7 +32,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
 
-    // 주문 정보 저장 / 주문자 정보, 결제 정보 응답
+    // 주문번호, 주문자 정보, 결제 정보 응답
     public ResponseEntity<OrderSheetResponse> createOrderSheet(String token, List<OrderItemRequest> orderItemRequestList) {
         Member member = memberService.getMember(token);
 
@@ -46,13 +47,8 @@ public class OrderService {
         return ResponseEntity.ok(OrderSheetResponse.builder()
                 .orderMemberInfo(OrderMemberInfo.from(member))
                 .orderItemSummaryList(orderItemSummaryList)
-                .merchantId("Payment"+String.valueOf(UUID.randomUUID()).substring(0, 8))
+                .merchantId("Payment"+String.valueOf(UUID.randomUUID()).substring(0, 8)) // 주문번호 생성
                 .build());
-    }
-
-    // 주문완료 후 처리: 장바구니에서 상품 삭제, 상품 구매수량 증가, 적립금 업데이트
-    public void OrderComplete(){
-
     }
 
     // 주문조회
@@ -67,5 +63,11 @@ public class OrderService {
         }
 
         return ResponseEntity.ok(orderListResponses);
+    }
+
+    // 주문완료 후 처리: 장바구니에서 상품 삭제, 상품 구매수량 증가, 적립금 업데이트
+    @Transactional
+    public void OrderComplete(){
+        
     }
 }
