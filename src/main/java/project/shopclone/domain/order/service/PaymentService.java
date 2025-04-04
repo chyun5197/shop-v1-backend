@@ -32,11 +32,8 @@ import project.shopclone.domain.product.repository.ProductRepository;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-
-import static project.shopclone.domain.order.entity.QPayment.payment;
 
 @Slf4j
 @Service
@@ -78,7 +75,7 @@ public class PaymentService {
                 .merchantUid(mid)
                 .orderName(prepareRequest.getOrderName())
                 .orderEmail(prepareRequest.getEmail())
-                .paymentStatus(false)
+                .isPaid(false)
                 .build());
 
         Integer totalQuantity = 0;
@@ -140,7 +137,7 @@ public class PaymentService {
             return ResponseEntity.ok("cancel");
         }
         // 결제 승인 - 주문 완료, 결제 완료
-        order.setPaymentStatus(true); // 주문상태 지불 완료
+        order.setIsPaid(true); // 주문상태 지불 완료
         payment.paymentSuccess(portOneResponse, impUid); // 결제 수정 - 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일, impUid 저장
         
         return ResponseEntity.ok("complete");
