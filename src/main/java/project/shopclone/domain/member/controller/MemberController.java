@@ -23,11 +23,11 @@ public class MemberController {
         return ResponseEntity.ok().body(MemberInfoResponse.from(member));
     }
 
-    @Operation(summary = "회원정보 수정")
-    @PutMapping("/update")
-    public ResponseEntity<MemberInfoResponse> updateMemberInfo(@RequestHeader("Authorization") String token,
-                                                               @RequestBody
-                                                               ){
-
-    }
+//    @Operation(summary = "회원정보 수정")
+//    @PutMapping("/update")
+//    public ResponseEntity<MemberInfoResponse> updateMemberInfo(@RequestHeader("Authorization") String token,
+//                                                               @RequestBody
+//                                                               ){
+//
+//    }
 }
