@@ -2,6 +2,9 @@ package project.shopclone.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import project.shopclone.domain.member.dto.MemberUpdateRequest;
+import project.shopclone.domain.order.entity.Orders;
+import project.shopclone.domain.order.entity.Payment;
 import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.domain.wish.Wish;
 import project.shopclone.global.common.BaseTime;
@@ -34,6 +37,12 @@ public class Member extends BaseTime {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Wish> wishList;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Payment> paymentList;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Orders> ordersList;
 
     @Builder
     public Member(String email, String name, String address, String phone, AuthUser authUser) {
@@ -72,5 +81,17 @@ public class Member extends BaseTime {
     public void updateCartCount(int num){
         this.cartCount += num;
         this.cartCount = this.cartCount > 0 ? this.cartCount : 0;
+    }
+
+    public void updateMember(MemberUpdateRequest memberUpdateRequest) {
+        if(memberUpdateRequest.getName()!=null){
+            this.name = memberUpdateRequest.getName();
+        }
+        if(memberUpdateRequest.getAddress()!=null){
+            this.address = memberUpdateRequest.getAddress();
+        }
+        if(memberUpdateRequest.getPhone()!=null){
+            this.phone = memberUpdateRequest.getPhone();
+        }
     }
 }

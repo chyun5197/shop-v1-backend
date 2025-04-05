@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.shopclone.domain.member.dto.MemberInfoResponse;
+import project.shopclone.domain.member.dto.MemberUpdateRequest;
 import project.shopclone.domain.member.service.MemberService;
 import project.shopclone.domain.member.entity.Member;
 
@@ -23,11 +24,18 @@ public class MemberController {
         return ResponseEntity.ok().body(MemberInfoResponse.from(member));
     }
 
-//    @Operation(summary = "회원정보 수정")
-//    @PutMapping("/update")
-//    public ResponseEntity<MemberInfoResponse> updateMemberInfo(@RequestHeader("Authorization") String token,
-//                                                               @RequestBody
-//                                                               ){
-//
-//    }
+    @Operation(summary = "회원정보수정")
+    @PutMapping("/update")
+    public ResponseEntity<MemberInfoResponse> updateMemberInfo(@RequestHeader("Authorization") String token,
+                                                               @RequestBody MemberUpdateRequest memberUpdateRequest
+                                                               ){
+        return memberService.updateMemberInfo(token, memberUpdateRequest);
+    }
+
+    @Operation(summary = "회원탈퇴")
+    @DeleteMapping("/signout/{memberId}")
+    public ResponseEntity<String> signOut(@RequestHeader("Authorization") String token,
+                                          @PathVariable Long memberId){
+        return ResponseEntity.ok(memberService.signOut(token, memberId));
+    }
 }

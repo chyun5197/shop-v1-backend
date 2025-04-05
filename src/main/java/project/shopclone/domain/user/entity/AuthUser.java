@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import project.shopclone.domain.member.entity.Member;
 import project.shopclone.global.common.BaseTime;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
+@Table(name = "auth_user")
 //UserDetails를 상속 받아 인증 객체로 사용
 //사용자의 인증 정보와 권한 정보를 저장하는 메서드 제공
 public class AuthUser implements UserDetails {
@@ -46,8 +48,8 @@ public class AuthUser implements UserDetails {
     @CreatedDate
     private LocalDateTime createdAt;
 
-//    @OneToOne(mappedBy = "auth_user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Member member;
+    @OneToOne(mappedBy = "authUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Member member;
 
     @Builder
     public AuthUser(String email, String password, String nickname, String channel, String oauthId) {

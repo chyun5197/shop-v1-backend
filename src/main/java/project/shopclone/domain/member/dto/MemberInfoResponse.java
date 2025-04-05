@@ -11,28 +11,23 @@ import project.shopclone.domain.member.entity.Member;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberInfoResponse {
-    private String email;
     private String name;
     private String address;
     private String phone;
-
-    private Integer wishCount;
-    private Integer cartCount;
     private Integer savings; // 적립금
 
-    private String oauthId;
+    private Long memberId;
+    private String email;  // member.email을 아이디로 사용
 
     public static MemberInfoResponse from(Member member) {
         MemberInfoResponse memberInfoResponse = new MemberInfoResponse();
-        memberInfoResponse.setEmail(member.getEmail());
+        memberInfoResponse.setMemberId(member.getMemberId());
         memberInfoResponse.setName(member.getName());
         memberInfoResponse.setAddress(member.getAddress());
         memberInfoResponse.setPhone(member.getPhone());
-
-        memberInfoResponse.setWishCount(member.getWishCount());
-        memberInfoResponse.setCartCount(member.getCartCount());
         memberInfoResponse.setSavings(member.getSavings());
-        memberInfoResponse.setOauthId(member.getAuthUser().getOauthId());
+
+        memberInfoResponse.setEmail(member.getEmail());
         return memberInfoResponse;
     }
 }

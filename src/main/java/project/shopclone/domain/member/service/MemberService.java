@@ -1,10 +1,13 @@
 package project.shopclone.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.shopclone.domain.cart.repository.CartRepository;
 import project.shopclone.domain.cart.entity.Cart;
+import project.shopclone.domain.member.dto.MemberInfoResponse;
+import project.shopclone.domain.member.dto.MemberUpdateRequest;
 import project.shopclone.domain.member.repository.MemberRepository;
 import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.user.entity.AuthUser;
@@ -45,6 +48,26 @@ public class MemberService {
     public Member getMember(String accessToken){
         Long authUserId = tokenProvider.getAuthUserId(accessToken.split(" ")[1]);
         return memberRepository.findByAuthUser(authUserRepository.findById(authUserId).orElseThrow());
+    }
+
+    // 회원정보 수정
+    @Transactional
+    public ResponseEntity<MemberInfoResponse> updateMemberInfo(String token, MemberUpdateRequest memberUpdateRequest) {
+        Member member = getMember(token);
+        member.updateMember(memberUpdateRequest);
+        return ResponseEntity.ok(MemberInfoResponse.from(member));
+    }
+
+    // 회원탈퇴
+    @Transactional
+    public String signOut(String token, Long memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow();
+        if(!member.equals(getMember(token))){
+            return "mismatch";
+        }
+        cartRepository.delete(cartRepository.findByMember(member));
+        authUserRepository.delete(member.getAuthUser());
+        return "complete";
     }
 
     // ========================================================================================================================
