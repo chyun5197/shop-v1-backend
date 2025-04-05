@@ -1,7 +1,7 @@
 package project.shopclone.domain.order.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import project.shopclone.domain.member.Member;
+import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.order.entity.Orders;
 
 import java.util.List;

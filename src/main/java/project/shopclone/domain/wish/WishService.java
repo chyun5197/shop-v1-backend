@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import project.shopclone.domain.member.Member;
-import project.shopclone.domain.member.MemberService;
+import project.shopclone.domain.member.entity.Member;
+import project.shopclone.domain.member.service.MemberService;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.ProductRepository;
 

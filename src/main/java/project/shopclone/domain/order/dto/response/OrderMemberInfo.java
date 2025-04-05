@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import project.shopclone.domain.member.Member;
+import project.shopclone.domain.member.entity.Member;
 
 @AllArgsConstructor
 @NoArgsConstructor

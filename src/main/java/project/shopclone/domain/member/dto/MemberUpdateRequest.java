@@ -1,11 +1,10 @@
-package project.shopclone.domain.user.dto.request;
+package project.shopclone.domain.member.dto;
 
 import lombok.Getter;
 
 @Getter
-public class AuthUserAddRequest {
+public class MemberUpdateRequest {
     private String email;
-    private String password;
     private String name;
     private String address;
     private String phone;

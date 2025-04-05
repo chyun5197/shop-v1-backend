@@ -1,4 +1,4 @@
-package project.shopclone.domain.member;
+package project.shopclone.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,9 +27,6 @@ public class Member extends BaseTime {
     private Integer wishCount;
     private Integer cartCount;
     private Integer savings; // 적립금
-
-//    @CreatedDate
-//    private LocalDateTime createdAt;
 
     @OneToOne
     @JoinColumn(name="authuser_id")

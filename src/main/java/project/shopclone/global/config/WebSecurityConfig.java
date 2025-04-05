@@ -26,7 +26,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import project.shopclone.domain.member.MemberRepository;
+import project.shopclone.domain.member.repository.MemberRepository;
 import project.shopclone.domain.user.AuthSuccessHandler;
 import project.shopclone.domain.user.repository.AuthUserRepository;
 import project.shopclone.domain.user.service.AuthUserDetailService;
@@ -193,7 +193,7 @@ public class WebSecurityConfig {
     public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
         return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
-
+//
 //    @Bean
 //    public CorsFilter corsFilter() {
 //        CorsConfiguration config = new CorsConfiguration();

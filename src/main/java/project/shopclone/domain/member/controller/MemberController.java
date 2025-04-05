@@ -1,13 +1,13 @@
-package project.shopclone.domain.member;
+package project.shopclone.domain.member.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import project.shopclone.domain.member.dto.MemberInfoResponse;
+import project.shopclone.domain.member.service.MemberService;
+import project.shopclone.domain.member.entity.Member;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,5 +21,13 @@ public class MemberController {
     public ResponseEntity<MemberInfoResponse> getMemberInfo(@RequestHeader("Authorization") String token){
         Member member = memberService.getMember(token);
         return ResponseEntity.ok().body(MemberInfoResponse.from(member));
+    }
+
+    @Operation(summary = "회원정보 수정")
+    @PutMapping("/update")
+    public ResponseEntity<MemberInfoResponse> updateMemberInfo(@RequestHeader("Authorization") String token,
+                                                               @RequestBody
+                                                               ){
+
     }
 }

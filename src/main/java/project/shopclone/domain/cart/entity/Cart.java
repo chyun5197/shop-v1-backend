@@ -2,7 +2,7 @@ package project.shopclone.domain.cart.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import project.shopclone.domain.member.Member;
+import project.shopclone.domain.member.entity.Member;
 
 import java.util.List;
 

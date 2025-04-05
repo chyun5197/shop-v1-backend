@@ -1,8 +1,7 @@
 package project.shopclone.domain.wish;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import project.shopclone.domain.member.Member;
+import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.product.entity.Product;
 
 import java.util.List;

@@ -1,9 +1,10 @@
-package project.shopclone.domain.member;
+package project.shopclone.domain.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.shopclone.domain.member.entity.Member;
 
 @Getter
 @Setter

@@ -11,9 +11,9 @@ import project.shopclone.domain.cart.entity.Cart;
 import project.shopclone.domain.cart.entity.CartItem;
 import project.shopclone.domain.cart.dto.response.CartItemResponse;
 import project.shopclone.domain.cart.dto.response.CartResponse;
-import project.shopclone.domain.member.Member;
-import project.shopclone.domain.member.MemberRepository;
-import project.shopclone.domain.member.MemberService;
+import project.shopclone.domain.member.entity.Member;
+import project.shopclone.domain.member.repository.MemberRepository;
+import project.shopclone.domain.member.service.MemberService;
 import project.shopclone.domain.product.entity.Product;
 import project.shopclone.domain.product.repository.ProductRepository;
 

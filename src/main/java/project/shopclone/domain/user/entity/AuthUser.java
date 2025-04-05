@@ -22,7 +22,7 @@ import java.util.List;
 @Getter
 //UserDetails를 상속 받아 인증 객체로 사용
 //사용자의 인증 정보와 권한 정보를 저장하는 메서드 제공
-public class AuthUser extends BaseTime implements UserDetails {
+public class AuthUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)

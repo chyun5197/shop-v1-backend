@@ -1,10 +1,12 @@
-package project.shopclone.domain.member;
+package project.shopclone.domain.member.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.shopclone.domain.cart.repository.CartRepository;
 import project.shopclone.domain.cart.entity.Cart;
+import project.shopclone.domain.member.repository.MemberRepository;
+import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.domain.user.repository.AuthUserRepository;
 import project.shopclone.domain.user.dto.request.AuthUserAddRequest;

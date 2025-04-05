@@ -1,4 +1,4 @@
-package project.shopclone.domain.member;
+package project.shopclone.domain.member.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
