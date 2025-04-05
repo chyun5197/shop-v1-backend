@@ -39,9 +39,6 @@ public class Member extends BaseTime {
     private List<Wish> wishList;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Payment> paymentList;
-
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Orders> ordersList;
 
     @Builder
