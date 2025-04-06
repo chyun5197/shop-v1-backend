@@ -110,6 +110,7 @@
 ---
 ## ETC
 프론트엔드 레파지토리: [https://github.com/chyun5197/shop-clone-frontend](https://github.com/chyun5197/shop-clone-frontend)
+
 개발 예정: 상담원과 실시간 채팅(WebSocket, Kafka) -> 검색 성능 개선(ElasticSearch) -> MSA로 전환
 
 
