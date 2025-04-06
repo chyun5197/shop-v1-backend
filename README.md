@@ -7,12 +7,15 @@
 
 <img width="2048" alt="비교캡쳐 위시" src="https://github.com/user-attachments/assets/6eaec8e0-713e-4df6-9c8e-cb286f04e04a" />
 
+#### 결제시스템
+![결제시스템 화면](https://github.com/user-attachments/assets/e2439967-47e5-4182-bf21-569194c8db0d)
+
 ---
 
 ## 📃 개요
 ### 소개
 - 쇼핑몰 '뮤직포스' 사이트를 레퍼런스로 진행한 개인 프로젝트 <br>
-- 원본 쇼핑몰의 상품 정보를 크롤링하여 RDS, S3에 저장하여 데이터를 관리
+- 상품 정보는 원본 쇼핑몰에서 크롤링하여 RDS, S3에 저장한 데이터로 사용
 
 ### 프로젝트 목적
 - 웹 전반에 대한 학습과 이해도를 높이기 위해 풀스택으로 온라인 쇼핑몰을 클론하는 프로젝트를 진행 <br>
@@ -72,12 +75,21 @@
 ![WebStorm](https://img.shields.io/badge/webstorm-143?style=for-the-badge&logo=webstorm&logoColor=white&color=black)
 
 ---
+## 📑 Information Architecture
+<img width="800" alt="IA" src="https://github.com/user-attachments/assets/d160172a-4d97-4846-a3cb-021b2edaf2ac" />
 
-## 🔨 서버 아키텍처
+## 🔨 Server Architecture
 <img width="1433" alt="SA" src="https://github.com/user-attachments/assets/e9735f02-6f6f-4d4e-9928-51b76265e7b9" />
 
-## 📊 ERD 설계
-<img width="863" alt="ERD" src="https://github.com/user-attachments/assets/5bc0b670-74ad-4029-953c-2a650557c719" />
+## 📊 ERD 
+<img width="747" alt="ERD" src="https://github.com/user-attachments/assets/ada0dc59-c813-4f94-b0d5-5805a51ac2db" />
+
+## ⚙ Sequence Diagram
+### 결제시스템
+<img width="777" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/72b1df6a-eae3-4a41-a206-85b65ad192ec" />
+
+### 소셜로그인
+<img width="1390" alt="소셜로그인 플로우" src="https://github.com/user-attachments/assets/27ba70ac-6cd6-41db-871f-74aa883b3fb3" />
 
 ## 📋 API 명세서
 [Swagger 바로가기](https://api.hyun-clone.shop/swagger-ui/index.html)
@@ -91,14 +103,14 @@
 ### 성능 개선
 - [커버링 인덱스를 활용한 DB 조회 성능 개선](https://github.com/chyun5197/shop-clone-backend/issues/2) <br>
 - [Redis를 도입하여 캐싱 및 DB 부하 분산](https://github.com/chyun5197/shop-clone-backend/issues/3) <br>
-- 로드밸런싱을 통한 스케일 아웃(nginx, alb)
 
 ## :link: 트러블 슈팅
 - [스프링에서 리다이렉트 했을때 CORS가 발생하는 문제](https://github.com/chyun5197/shop-clone-backend/issues/4)
 
 ---
 ## ETC
-프론트엔드 레파지토리 - [https://github.com/chyun5197/shop-clone-frontend](https://github.com/chyun5197/shop-clone-frontend)
+프론트엔드 레파지토리: [https://github.com/chyun5197/shop-clone-frontend](https://github.com/chyun5197/shop-clone-frontend)
+개발 예정: 상담원과 실시간 채팅(WebSocket, Kafka) -> 검색 성능 개선(ElasticSearch) -> MSA로 전환
 
 
 
