@@ -86,7 +86,7 @@
 
 ## ⚙ Sequence Diagram
 ### 결제시스템
-<img width="776" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/f341c228-13fe-4029-b937-5b1c37119c98" />
+<img width="771" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/2f20c939-286f-462b-8d5c-2d45059887c3" />
 
 ### 소셜로그인
 <img width="1390" alt="소셜로그인 플로우" src="https://github.com/user-attachments/assets/27ba70ac-6cd6-41db-871f-74aa883b3fb3" />
