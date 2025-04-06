@@ -76,7 +76,7 @@
 
 ---
 ## 📑 Information Architecture
-<img width="800" alt="IA" src="https://github.com/user-attachments/assets/d160172a-4d97-4846-a3cb-021b2edaf2ac" />
+<img width="845" alt="IA" src="https://github.com/user-attachments/assets/3018cea0-014b-4dfe-b954-2401da11bcce" />
 
 ## 🔨 Server Architecture
 <img width="1433" alt="SA" src="https://github.com/user-attachments/assets/e9735f02-6f6f-4d4e-9928-51b76265e7b9" />
