@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@Tag(name = "위시리스트 API")
+@Tag(name = "위시 API")
 @RequestMapping("/api/wish")
 public class WishController {
     private final WishService wishService;

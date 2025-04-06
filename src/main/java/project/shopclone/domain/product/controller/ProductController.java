@@ -11,7 +11,7 @@ import project.shopclone.domain.product.service.ProductService;
 
 @RequiredArgsConstructor
 @RestController
-@Tag(name = "상품 조회 API")
+@Tag(name = "상품조회 API")
 @RequestMapping("/api/products")
 public class ProductController {
     private final ProductService productService;

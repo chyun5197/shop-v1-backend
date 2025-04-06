@@ -12,19 +12,19 @@ import project.shopclone.domain.member.entity.Member;
 
 @RequiredArgsConstructor
 @RestController
-@Tag(name = "회원 API")
+@Tag(name = "마이페이지 API")
 @RequestMapping("/api/member")
 public class MemberController {
     private final MemberService memberService;
 
-    @Operation(summary = "마이페이지 조회")
+    @Operation(summary = "회원정보 조회")
     @GetMapping("")
     public ResponseEntity<MemberInfoResponse> getMemberInfo(@RequestHeader("Authorization") String token){
         Member member = memberService.getMember(token);
         return ResponseEntity.ok().body(MemberInfoResponse.from(member));
     }
 
-    @Operation(summary = "회원정보수정")
+    @Operation(summary = "회원정보 수정")
     @PutMapping("/update")
     public ResponseEntity<MemberInfoResponse> updateMemberInfo(@RequestHeader("Authorization") String token,
                                                                @RequestBody MemberUpdateRequest memberUpdateRequest
@@ -32,7 +32,7 @@ public class MemberController {
         return memberService.updateMemberInfo(token, memberUpdateRequest);
     }
 
-    @Operation(summary = "회원탈퇴")
+    @Operation(summary = "회원 탈퇴")
     @DeleteMapping("/signout/{memberId}")
     public ResponseEntity<String> signOut(@RequestHeader("Authorization") String token,
                                           @PathVariable Long memberId){

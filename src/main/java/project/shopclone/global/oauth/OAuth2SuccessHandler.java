@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
+import project.shopclone.domain.cart.entity.Cart;
+import project.shopclone.domain.cart.repository.CartRepository;
 import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.member.repository.MemberRepository;
 import project.shopclone.domain.user.entity.AuthUser;
@@ -38,6 +40,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final OAuth2AuthorizationRequestBasedOnCookieRepository authorizationRequestRepository;
     private final AuthUserRepository authUserRepository;
     private final MemberRepository memberRepository;
+    private final CartRepository cartRepository;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
@@ -64,10 +67,15 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         // 계정으로 연결된 멤버 없으면 생성
         if (memberRepository.findByAuthUser(authUser) == null) {
-            memberRepository.save(Member.builder()
+            Member member = memberRepository.save(Member.builder()
                     .email(authUser.getEmail())
                     .name(authUser.getNickname())
                     .authUser(authUser)
+                    .build());
+
+            // 카트 생성
+            cartRepository.save(Cart.builder()
+                    .member(member)
                     .build());
         }
 

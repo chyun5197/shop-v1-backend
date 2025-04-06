@@ -2,13 +2,18 @@ package project.shopclone.domain.cart.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import project.shopclone.domain.product.entity.Product;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 @Table(
         name="cart_item",
         uniqueConstraints= { // 복합키 설정 (중복 저장 불가)
@@ -36,4 +41,7 @@ public class CartItem {
     public void updateCount(Integer count){
         this.count = count;
     }
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 }

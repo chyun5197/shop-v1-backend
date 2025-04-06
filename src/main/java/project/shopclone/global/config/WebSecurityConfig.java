@@ -26,6 +26,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import project.shopclone.domain.cart.repository.CartRepository;
 import project.shopclone.domain.member.repository.MemberRepository;
 import project.shopclone.domain.user.AuthSuccessHandler;
 import project.shopclone.domain.user.repository.AuthUserRepository;
@@ -52,6 +53,7 @@ public class WebSecurityConfig {
     private final ObjectMapper objectMapper;
     private final OAuth2UserCustomService oAuth2UserCustomService;
     private final MemberRepository memberRepository;
+    private final CartRepository cartRepository;
 
 
     // 해당 리소스에 대해 시큐리티 기능 비활성화하려면
@@ -186,14 +188,15 @@ public class WebSecurityConfig {
                 refreshTokenRepository,
                 oAuth2AuthorizationRequestBasedOnCookieRepository(),
                 authUserRepository,
-                memberRepository);
+                memberRepository,
+                cartRepository);
     }
 
     @Bean
     public OAuth2AuthorizationRequestBasedOnCookieRepository oAuth2AuthorizationRequestBasedOnCookieRepository() {
         return new OAuth2AuthorizationRequestBasedOnCookieRepository();
     }
-//
+
 //    @Bean
 //    public CorsFilter corsFilter() {
 //        CorsConfiguration config = new CorsConfiguration();

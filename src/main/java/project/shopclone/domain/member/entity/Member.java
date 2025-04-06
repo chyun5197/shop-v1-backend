@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import project.shopclone.domain.member.dto.MemberUpdateRequest;
 import project.shopclone.domain.order.entity.Orders;
-import project.shopclone.domain.order.entity.Payment;
 import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.domain.wish.Wish;
 import project.shopclone.global.common.BaseTime;
