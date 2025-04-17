@@ -1,14 +1,16 @@
 # 쇼핑몰 클론 프로젝트
 [프로젝트 바로가기](http://hyun-clone.shop) (구글 크롬 권장)
-<img width="1459" alt="프로젝트 소개" src="https://github.com/user-attachments/assets/b69ddf9f-0b61-47c8-86ec-808b53d70ba9" />
 
-#### 프로젝트 vs 원본 사이트
-<img width="2048" alt="비교캡처 조회" src="https://github.com/user-attachments/assets/08a2b4f3-a7ee-4681-984a-3bd5be502231" /><br>
+<img width="1531" alt="원본과 비교" src="https://github.com/user-attachments/assets/08849b18-0918-4906-89c7-10c276883458" />
 
-<img width="2048" alt="비교캡쳐 위시" src="https://github.com/user-attachments/assets/6eaec8e0-713e-4df6-9c8e-cb286f04e04a" />
+<br>
+<br>
 
-#### 결제시스템
-![결제시스템 화면](https://github.com/user-attachments/assets/e2439967-47e5-4182-bf21-569194c8db0d)
+![상품조회,장바구니](https://github.com/user-attachments/assets/ae44bf96-099f-4b62-bc62-5718b6ee3cb7)
+<br>
+
+
+<img width="1772" alt="결제시스템" src="https://github.com/user-attachments/assets/d28f1a1a-a284-4198-bb09-acd09371fe61" />
 
 ---
 
@@ -21,7 +23,7 @@
 - 웹 전반에 대한 학습과 이해도를 높이기 위해 풀스택으로 온라인 쇼핑몰을 클론하는 프로젝트를 진행 <br>
 
 ### 개발기간
-- 25년 2월 ~ 진행중 <br>
+- 25년 2월 ~ 지속 <br>
 
 ### 도메인
 - [hyun-clone.shop](http://hyun-clone.shop)
@@ -98,13 +100,15 @@
 
 ## :link: 성능 테스트 및 성능 개선
 ### 성능 테스트
-- [병목 지점과 최대 쓰루풋 확인하기](https://github.com/chyun5197/shop-clone-backend/issues/1)
+- [병목 지점과 최대 TPS 확인하기](https://github.com/chyun5197/shop-clone-backend/issues/1)
 
 ### 성능 개선
 - [커버링 인덱스를 활용한 DB 조회 성능 개선](https://github.com/chyun5197/shop-clone-backend/issues/2) <br>
 - [Redis를 도입하여 캐싱 및 DB 부하 분산](https://github.com/chyun5197/shop-clone-backend/issues/3) <br>
 
 ## :link: 트러블 슈팅
+- [동시성 처리 구현중에 발생한 데드락 문제](https://github.com/chyun5197/shop-v1-backend/issues/6)
+- [동시성 이슈 해결하기 - 낙관적 락, 분산 락](https://github.com/chyun5197/shop-v1-backend/issues/7)
 - [스프링에서 리다이렉트 했을때 CORS가 발생하는 문제](https://github.com/chyun5197/shop-clone-backend/issues/4)
 
 ---
