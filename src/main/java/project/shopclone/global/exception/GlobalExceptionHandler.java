@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import project.shopclone.domain.order.exception.OrderException;
 import project.shopclone.domain.user.exception.AuthUserException;
+import project.shopclone.domain.wish.exception.WishException;
 
 @Slf4j
 @RestControllerAdvice
@@ -19,6 +20,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(OrderException.class)
     public ResponseEntity<ErrorRes<Void>> orderExceptionHandler(OrderException e) {
+        log.info(e.getMessage(), e);
+        return ResponseEntity.status(e.getHttpStatus()).body(ErrorRes.failure(e.getCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(WishException.class)
+    public ResponseEntity<ErrorRes<Void>> wishExceptionHandler(WishException e) {
         log.info(e.getMessage(), e);
         return ResponseEntity.status(e.getHttpStatus()).body(ErrorRes.failure(e.getCode(), e.getMessage()));
     }

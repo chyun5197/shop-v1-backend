@@ -52,21 +52,20 @@ public class MemberService {
 
     // 회원정보 수정
     @Transactional
-    public ResponseEntity<MemberInfoResponse> updateMemberInfo(String token, MemberUpdateRequest memberUpdateRequest) {
-        Member member = getMember(token);
+    public ResponseEntity<MemberInfoResponse> updateMemberInfo(Member member, MemberUpdateRequest memberUpdateRequest) {
         member.updateMember(memberUpdateRequest);
         return ResponseEntity.ok(MemberInfoResponse.from(member));
     }
 
     // 회원탈퇴
     @Transactional
-    public String signOut(String token, Long memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow();
-        if(!member.equals(getMember(token))){
+    public String signOut(Member member, Long memberId) {
+        Member findMember = memberRepository.findById(memberId).orElseThrow();
+        if(!findMember.equals(member)){
             return "mismatch";
         }
-        cartRepository.delete(cartRepository.findByMember(member));
-        authUserRepository.delete(member.getAuthUser());
+        cartRepository.delete(cartRepository.findByMember(findMember));
+        authUserRepository.delete(findMember.getAuthUser());
         return "complete";
     }
 

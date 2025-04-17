@@ -1,10 +1,11 @@
-package project.shopclone.domain.wish;
+package project.shopclone.domain.wish.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import project.shopclone.domain.product.entity.Product;
+import project.shopclone.domain.wish.entity.Wish;
 
 @AllArgsConstructor
 @NoArgsConstructor

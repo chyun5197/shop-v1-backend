@@ -1,8 +1,9 @@
-package project.shopclone.domain.wish;
+package project.shopclone.domain.wish.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.product.entity.Product;
+import project.shopclone.domain.wish.entity.Wish;
 
 import java.util.List;
 import java.util.Optional;

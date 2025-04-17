@@ -34,6 +34,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
+
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -69,6 +72,13 @@ dependencies {
 
     // websocket
 //    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    // 유효성 검증 라이브러리리
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // 낙관적 락에서 재시도를 위한 세팅
+    implementation 'org.springframework.retry:spring-retry'
+    implementation 'org.springframework:spring-aspects'
 
 }
 

@@ -29,13 +29,15 @@ public class MemberController {
     public ResponseEntity<MemberInfoResponse> updateMemberInfo(@RequestHeader("Authorization") String token,
                                                                @RequestBody MemberUpdateRequest memberUpdateRequest
                                                                ){
-        return memberService.updateMemberInfo(token, memberUpdateRequest);
+        Member member = memberService.getMember(token);
+        return memberService.updateMemberInfo(member, memberUpdateRequest);
     }
 
     @Operation(summary = "회원 탈퇴")
     @DeleteMapping("/signout/{memberId}")
     public ResponseEntity<String> signOut(@RequestHeader("Authorization") String token,
                                           @PathVariable Long memberId){
-        return ResponseEntity.ok(memberService.signOut(token, memberId));
+        Member member = memberService.getMember(token);
+        return ResponseEntity.ok(memberService.signOut(member, memberId));
     }
 }

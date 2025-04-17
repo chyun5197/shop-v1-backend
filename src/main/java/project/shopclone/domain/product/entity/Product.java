@@ -39,9 +39,10 @@ public class Product {
     private String model;           // 모델명
     private String country;         // 원산지
     private Integer releaseDate;    // 출시 연도
-
-    private Integer wishCount;      // 위시 개수
     private String inst;            // 악기 3개 카테고리 (Guitar, Bass, Acoustic)
+
+    @Version
+    private Integer wishCount;      // 위시 개수
 
     // 상세 이미지
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -81,5 +82,4 @@ public class Product {
             this.wishCount--;
         }
     }
-
 }

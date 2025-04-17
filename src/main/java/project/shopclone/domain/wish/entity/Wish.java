@@ -1,4 +1,4 @@
-package project.shopclone.domain.wish;
+package project.shopclone.domain.wish.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

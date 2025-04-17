@@ -1,5 +1,6 @@
 package project.shopclone.domain.user.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter

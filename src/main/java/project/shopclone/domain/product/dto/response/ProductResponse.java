@@ -40,6 +40,8 @@ public class ProductResponse {
 
     private List<String> imageList;
 
+    private Integer wishCount;
+
     public ProductResponse(Product product) {
         this.id = product.getId();
         this.no = product.getNo();
@@ -56,6 +58,7 @@ public class ProductResponse {
         this.model = product.getModel();
         this.country = product.getCountry();
         this.releaseDate = product.getReleaseDate();
+        this.wishCount = product.getWishCount();
 
         // 상세 이미지 목록 조회
         this.imageList = product.getPrdouctImageList().stream()
