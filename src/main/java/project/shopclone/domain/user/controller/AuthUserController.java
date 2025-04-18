@@ -34,13 +34,6 @@ public class AuthUserController {
     private final TokenService tokenService;
     private final RefreshTokenRepository refreshTokenRepository;
 
-//    @PostMapping("/login") => WebSecurityConfig
-
-//    @GetMapping("/test")
-//    public void test(){
-//        securityUserService.test();
-//    }
-
     @Operation(summary = "아이디 중복 여부 확인")
     @GetMapping("/check/{email}")
     public ResponseEntity<Integer> checkAuthUser(@PathVariable String email) {

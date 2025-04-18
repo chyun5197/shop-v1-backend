@@ -64,7 +64,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         AuthUser authUser = authUserRepository.findByOauthId(oauthId)
                     .orElseThrow(() -> new AuthUserException(AuthUserErrorCode.USER_NOT_FOUND));
 
-
         // 계정으로 연결된 멤버 없으면 생성
         if (memberRepository.findByAuthUser(authUser) == null) {
             Member member = memberRepository.save(Member.builder()
@@ -124,7 +123,6 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         authorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
-    // (미사용)
     // 생성된 리프레시 토큰을 쿠키에 저장.
     // 클라이언트에서 액세스 토큰이 만료되면 재발급 요청하도록 해당 메서드로 쿠키에 리프레시 토큰을 저장
     private void addRefreshTokenToCookie(HttpServletRequest request, HttpServletResponse response, String refreshToken) {

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.member.service.MemberService;
+import project.shopclone.domain.order.dto.VerificationResult;
 import project.shopclone.domain.order.dto.request.OrderCompleteRequest;
 import project.shopclone.domain.order.dto.request.OrderItemRequest;
 import project.shopclone.domain.order.dto.request.OrderPrepareRequest;
@@ -118,45 +119,75 @@ public class PaymentService {
         return order.getMerchantUid();
     }
 
-    // 결제 검증 및 결제 완료 처리
-    public ResponseEntity<String> completeOrder(String token, OrderCompleteRequest orderCompleteRequest) throws IamportResponseException, IOException {
-        Payment payment = paymentRepository.findByMerchantUid(orderCompleteRequest.getMerchantUid()).orElseThrow();
-        Orders order = orderRepository.findByMerchantUid(orderCompleteRequest.getMerchantUid())
-                .orElseThrow(() -> new OrderException(OrderErrorCode.ORDER_NOT_FOUND));
-        String impUid = orderCompleteRequest.getImpUid();
-
+    // 결제 금액 사후 검증 - DB 결제 금액과 실제 결제 금액 비교
+    public VerificationResult postVerification(Payment payment, String impUid) throws IamportResponseException, IOException {
         // 포트원 결제내역 조회 (API: GET /payments/{imp_uid})
         com.siot.IamportRestClient.response.Payment portOneResponse = iamportClient.paymentByImpUid(impUid).getResponse();
 
-        // 결제 금액 비교
+        // 다르면 결제 취소 요청
         if (!Objects.equals(portOneResponse.getAmount(), new BigDecimal(payment.getPaidPrice()))){
-            // 결제 취소 요청 (API: POST /payments/cancel) (두번째 파라미터 true가 포트원 고유번호로 취소 요청)
-            IamportResponse<com.siot.IamportRestClient.response.Payment> cancelPaymentByImpUid = iamportClient.cancelPaymentByImpUid(new CancelData(impUid, true));
-            log.info("결제 취소 응답(message): {}", cancelPaymentByImpUid.getMessage());
-            payment.setPaymentStatus(PaymentStatus.CANCEL);
-            return ResponseEntity.ok("cancel");
+            cancelPayment(payment, impUid, true);
+            return new VerificationResult(false, portOneResponse);
         }
-        // 결제 승인 - 주문 완료, 결제 완료
-        order.setIsPaid(true); // 주문상태 지불 완료
-        payment.paymentSuccess(portOneResponse, impUid); // 결제 수정 - 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일, impUid 저장
-        
-        return ResponseEntity.ok("complete");
+        return new VerificationResult(true, portOneResponse);
     }
 
-    // 환불하기
-    public ResponseEntity<String> cancelOrder(String token, String merchantUid) throws IOException, IamportResponseException {
+    // 주문 완료, 결제 완료
+    public void completeOrderAndPayment(Orders orderSheet, Payment payment, VerificationResult verificationResult, String impUid){
+        orderSheet.setIsPaid(true); // 주문상태 지불 완료
+        payment.paymentSuccess(verificationResult.getPortOneResponse(), impUid); // 결제 수정 - 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일, impUid 저장
+    }
+
+    // 환불하기 (주문완료 이후)
+    public ResponseEntity<String> cancelOrder(String merchantUid) throws IOException, IamportResponseException {
         Payment payment = paymentRepository.findByMerchantUid(merchantUid)
                 .orElseThrow(() -> new OrderException(OrderErrorCode.PAYMENT_NOT_FOUND));
         if(payment.getPaymentStatus() == PaymentStatus.CANCEL){
             return ResponseEntity.ok("already canceled");
         }
+        // 결제 취소 요청
+        cancelPayment(payment, merchantUid, false);
+        return ResponseEntity.ok("cancel");
+    }
 
-        // 결제 취소 요청 (API: POST /payments/cancel) (두번째 파라미터 false가 쇼핑몰 주문번호로 취소 요청).
-        IamportResponse<com.siot.IamportRestClient.response.Payment> cancelPaymentByImpUid = iamportClient.cancelPaymentByImpUid(new CancelData(merchantUid, false));
+    // 포트원에 결제 취소 요청 (API: POST /payments/cancel)
+    public void cancelPayment(Payment payment, String uid, boolean uidType) throws IOException, IamportResponseException {
+        /*
+        uidType: true - impUid / false - merchantUid
+        true가 포트원 고유번호로 취소 요청 / false가 쇼핑몰 주문번호로 취소 요청
+        */
+        IamportResponse<com.siot.IamportRestClient.response.Payment> cancelPaymentByImpUid
+                = iamportClient.cancelPaymentByImpUid(new CancelData(uid, uidType));
+
         log.info("결제 취소 응답(message): {}", cancelPaymentByImpUid.getMessage());
         log.info("결제 취소 응답(code): {}", cancelPaymentByImpUid.getCode());
         payment.setPaymentStatus(PaymentStatus.CANCEL);
-
-        return ResponseEntity.ok("cancel");
     }
+
+
+    // 결제 검증 및 결제 완료 처리 - 과정 나누기 전
+//    public ResponseEntity<String> complete(String token, OrderCompleteRequest orderCompleteRequest) throws IamportResponseException, IOException {
+//        Payment payment = paymentRepository.findByMerchantUid(orderCompleteRequest.getMerchantUid()).orElseThrow();
+//        Orders order = orderRepository.findByMerchantUid(orderCompleteRequest.getMerchantUid())
+//                .orElseThrow(() -> new OrderException(OrderErrorCode.ORDER_NOT_FOUND));
+//        String impUid = orderCompleteRequest.getImpUid();
+//
+//        /*
+//        * (결제금액 사후 검증) DB 결제 금액과 실제 결제 금액 비교
+//        */
+//        // 포트원 결제내역 조회 (API: GET /payments/{imp_uid})
+//        com.siot.IamportRestClient.response.Payment portOneResponse = iamportClient.paymentByImpUid(impUid).getResponse();
+//        // 다르면 결제 취소 요청 (API: POST /payments/cancel) (두번째 파라미터 true가 포트원 고유번호로 취소 요청)
+//        if (!Objects.equals(portOneResponse.getAmount(), new BigDecimal(payment.getPaidPrice()))){
+//            IamportResponse<com.siot.IamportRestClient.response.Payment> cancelPaymentByImpUid = iamportClient.cancelPaymentByImpUid(new CancelData(impUid, true));
+//            log.info("결제 취소 응답(message): {}", cancelPaymentByImpUid.getMessage());
+//            payment.setPaymentStatus(PaymentStatus.CANCEL);
+//            return ResponseEntity.ok("fail");
+//        }
+//        // 결제 승인 - 주문 완료, 결제 완료
+//        order.setIsPaid(true); // 주문상태 지불 완료
+//        payment.paymentSuccess(portOneResponse, impUid); // 결제 수정 - 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일, impUid 저장
+//
+//        return ResponseEntity.ok("complete");
+//    }
 }

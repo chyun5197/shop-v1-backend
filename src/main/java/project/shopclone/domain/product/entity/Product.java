@@ -35,14 +35,16 @@ public class Product {
     // 본문 (현재 할당X)
     private String description;     // 본문 설명
 
-    // table
+    // 하단표 정보
     private String model;           // 모델명
     private String country;         // 원산지
     private Integer releaseDate;    // 출시 연도
     private String inst;            // 악기 3개 카테고리 (Guitar, Bass, Acoustic)
 
     @Version
-    private Integer wishCount;      // 위시 개수
+    private Integer wishCount;      // 위시 개수(좋아요 수)
+
+    private Integer stock;          // 재고 수량
 
     // 상세 이미지
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -77,9 +79,18 @@ public class Product {
     public void plusWishCount(){
         this.wishCount++;
     }
+
     public void minusWishCount(){
         if(this.wishCount > 0){
             this.wishCount--;
         }
+    }
+
+    public boolean removeStock(Integer quantity){
+        if (this.stock - quantity <= 0) {
+            return false;
+        }
+        this.stock -= quantity;
+        return true;
     }
 }

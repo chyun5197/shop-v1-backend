@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(
                 title = "쇼핑몰 프로젝트 API 명세서",
-                version = "v1.0.0",
+                version = "v1",
                 description = "쇼핑몰 프로젝트 API 명세서입니다"
         ),
         servers = {
@@ -33,7 +33,7 @@ public class SwaggerConfig {
                 .type(SecurityScheme.Type.HTTP)
                 .in(SecurityScheme.In.HEADER)
                 .name("Authorization")
-                .scheme("bearer") // 수정 후보
+                .scheme("bearer")
                 .bearerFormat("JWT");
         SecurityRequirement securityRequirement = new SecurityRequirement()
                 .addList("Bearer Token");

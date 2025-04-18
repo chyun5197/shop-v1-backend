@@ -45,7 +45,7 @@ public class RedisCacheConfig {
                                 redisSerializer
                         )
                 )
-                .entryTtl(Duration.ofMinutes(1L)); // TTL 설정 3분
+                .entryTtl(Duration.ofMinutes(1L)); // TTL 설정 1분
 
         return RedisCacheManager
                 .RedisCacheManagerBuilder

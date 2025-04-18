@@ -16,7 +16,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@Tag(name = "크롤링 컨트롤러")
+@Tag(name = "크롤링 API")
 public class CrawlingController {
     private final ProductImageService productImageService;
     @Value("${data.crawling.pw}")

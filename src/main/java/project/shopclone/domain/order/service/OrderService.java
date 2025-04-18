@@ -12,8 +12,11 @@ import project.shopclone.domain.order.dto.response.OrderItemSummary;
 import project.shopclone.domain.order.dto.response.OrderMemberInfo;
 import project.shopclone.domain.order.dto.response.OrderSheetResponse;
 import project.shopclone.domain.order.dto.response.orderlist.OrderListResponse;
+import project.shopclone.domain.order.entity.OrderItem;
 import project.shopclone.domain.order.entity.Orders;
 import project.shopclone.domain.order.entity.Payment;
+import project.shopclone.domain.order.exception.OrderErrorCode;
+import project.shopclone.domain.order.exception.OrderException;
 import project.shopclone.domain.order.repository.OrderRepository;
 import project.shopclone.domain.order.repository.PaymentRepository;
 import project.shopclone.domain.product.entity.Product;
@@ -65,7 +68,22 @@ public class OrderService {
         return ResponseEntity.ok(orderListResponses);
     }
 
-    // 주문완료 후 처리: 장바구니에서 상품 삭제, 상품 구매수량 증가, 적립금 업데이트
+    // 상품 재고 감소
+    @Transactional
+    public void removeStock(Orders orderSheet){
+        List<OrderItem> orderItemList  = orderSheet.getOrderItemList();
+        for(OrderItem orderItem : orderItemList){
+            Product product = orderItem.getProduct();
+            Integer quantity = orderItem.getQuantity();
+            // 주문하는 사이에 다른 구매자에 의해 재고가 줄어들어 구매수량 만큼의 주문이 불가능한 상황
+            if (!product.removeStock(quantity)){
+
+                throw new OrderException(OrderErrorCode.OUT_OF_STOCK);
+            }
+        }
+    }
+
+    // 주문완료 후 처리: 장바구니에서 상품 삭제, 적립금 업데이트, 알림 전송
     @Transactional
     public void OrderComplete(){
         

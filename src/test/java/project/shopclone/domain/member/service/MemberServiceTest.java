@@ -1,28 +1,21 @@
 package project.shopclone.domain.member.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import project.shopclone.domain.cart.entity.Cart;
 import project.shopclone.domain.cart.repository.CartRepository;
 import project.shopclone.domain.member.dto.MemberUpdateRequest;
 import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.member.repository.MemberRepository;
-import project.shopclone.domain.user.dto.request.AuthUserAddRequest;
-import project.shopclone.domain.user.entity.AuthUser;
 import project.shopclone.domain.user.repository.AuthUserRepository;
 
 import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 

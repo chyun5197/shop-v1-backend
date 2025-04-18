@@ -14,7 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@Tag(name = "장바구니 API") //, description = "장바구니 목록 조회, 등록, 삭제, 비우기, 수량 변경 / 체크한 장바구니 아이템들 관리 등등")
+@Tag(name = "장바구니 API")
 @RequestMapping("/api/cart")
 public class CartController {
     private final CartService cartService;
@@ -30,8 +30,7 @@ public class CartController {
     public ResponseEntity<Void> createCartItem(
             @RequestHeader("Authorization") String token,
             @PathVariable Long productId,
-            @RequestParam(value = "count", required = false) Integer count,
-    HttpServletResponse response) {
+            @RequestParam(value = "count", required = false) Integer count) {
 //        System.out.println("개수 = " + count);
         count = count == null ? 1 : count;
         return cartService.createCartItem(token, productId, count);
@@ -82,6 +81,4 @@ public class CartController {
                         @RequestBody Integer count){
         return cartService.updateCartItem(cartItemId, count);
     }
-
-    // 장바구니 아이템(들)을 주문 목록으로 이동
 }

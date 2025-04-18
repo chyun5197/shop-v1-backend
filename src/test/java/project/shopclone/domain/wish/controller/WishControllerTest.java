@@ -107,7 +107,6 @@ class WishControllerTest {
         }
     }
 
-
     void createWish(String token, Long productId) {
         try{
             restClient.post()
