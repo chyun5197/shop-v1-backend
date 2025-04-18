@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import project.shopclone.domain.order.dto.VerificationResult;
 import project.shopclone.domain.order.dto.request.OrderCompleteRequest;
 import project.shopclone.domain.order.dto.request.OrderPrepareRequest;
+import project.shopclone.domain.order.entity.OrderItem;
 import project.shopclone.domain.order.entity.Orders;
 import project.shopclone.domain.order.entity.Payment;
 import project.shopclone.domain.order.exception.OrderErrorCode;
@@ -56,7 +57,10 @@ public class PaymentController {
         // 결제 승인
         if (verificationResult.isCorrect()) {
             // 상품 재고 감소 (중복 구매 충돌 확인후)
-            orderService.removeStock(orderSheet);
+            for(OrderItem orderItem : orderSheet.getOrderItemList()){
+                orderService.redissonDecreaseStock(orderItem.getProduct().getId(), orderItem.getQuantity());
+            }
+//                orderService.removeStock(orderSheet);
 
             // 주문 완료, 결제 완료
             paymentService.completeOrderAndPayment(orderSheet, payment, verificationResult, impUid);

@@ -94,8 +94,8 @@ public class PaymentService {
             totalQuantity += orderItemRequest.getQuantity();
             totalPrice += product.getPrice() * orderItemRequest.getQuantity();
         }
-        order.setTotalQuantity(totalQuantity);
-        order.setTotalPrice(totalPrice);
+        order.updateTotalQuantity(totalQuantity);
+        order.updateTotalPrice(totalPrice);
 
         // 포트원 결제금액 사전등록 (API: POST /payments/prepare) (포트원 토큰은 메서드 내부에서 응답 받은걸로 포함하여 요청)
         // 모의 결제이므로 금액 1000원으로 고정
@@ -134,7 +134,7 @@ public class PaymentService {
 
     // 주문 완료, 결제 완료
     public void completeOrderAndPayment(Orders orderSheet, Payment payment, VerificationResult verificationResult, String impUid){
-        orderSheet.setIsPaid(true); // 주문상태 지불 완료
+        orderSheet.updateIsPaid(true); // 주문상태 지불 완료
         payment.paymentSuccess(verificationResult.getPortOneResponse(), impUid); // 결제 수정 - 결제 상태, 결제 방법, 결제 일자, 구매자명, 구매자 이메일, impUid 저장
     }
 

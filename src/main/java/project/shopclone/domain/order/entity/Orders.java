@@ -14,7 +14,6 @@ import java.util.List;
 @Builder
 @Entity
 @Getter
-@Setter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name="orders")
 public class Orders { // 주문정보
@@ -45,4 +44,14 @@ public class Orders { // 주문정보
     private Integer totalPrice;     // 총가격
 
     private String address;         // 주소
+
+    public void updateTotalQuantity(Integer totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
+    public void updateTotalPrice(Integer totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+    public void updateIsPaid(Boolean isPaid) {
+        this.isPaid = isPaid;
+    }
 }

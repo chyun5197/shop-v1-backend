@@ -2,6 +2,8 @@ package project.shopclone.domain.order.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,7 @@ import project.shopclone.domain.product.repository.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -34,6 +37,7 @@ public class OrderService {
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
+    private final RedissonClient redissonClient;
 
     // 주문번호, 주문자 정보, 결제 정보 응답
     public ResponseEntity<OrderSheetResponse> createOrderSheet(String token, List<OrderItemRequest> orderItemRequestList) {
@@ -70,17 +74,59 @@ public class OrderService {
 
     // 상품 재고 감소
     @Transactional
-    public void removeStock(Orders orderSheet){
+    public void decreaseStock(Orders orderSheet){
         List<OrderItem> orderItemList  = orderSheet.getOrderItemList();
         for(OrderItem orderItem : orderItemList){
             Product product = orderItem.getProduct();
             Integer quantity = orderItem.getQuantity();
-            // 주문하는 사이에 다른 구매자에 의해 재고가 줄어들어 구매수량 만큼의 주문이 불가능한 상황
-            if (!product.removeStock(quantity)){
 
+            // 주문하는 사이에 다른 구매자에 의해 재고가 줄어들어 구매수량 만큼의 주문이 불가능한 상황
+
+            product.removeStock(quantity);
+//            redissonRemoveStock(product.getId(), quantity);
+//            if(!redissonRemoveStock(product.getId(), quantity)){
+//                throw new OrderException(OrderErrorCode.OUT_OF_STOCK);
+//            }
+            if (!product.removeStock(quantity)){
                 throw new OrderException(OrderErrorCode.OUT_OF_STOCK);
             }
         }
+
+        // (테스트용) 주문결제 완료
+        orderSheet.updateIsPaid(true);
+    }
+
+    // 분산락으로 재고 감소
+//    @Transactional // !트랜잭션 걸면 안됨
+    public void redissonDecreaseStock(Long productId, Integer quantity){
+        // Redis 분산 락 키 생성
+        String lockKey = "lock" + productId;
+        // RLock 객체 생성
+        RLock lock = redissonClient.getLock(lockKey);
+
+        try {
+            // 락 획득 시도 (최대 대기 시간, 락 획득시 유지 시간)
+            if (lock.tryLock(5, 3, TimeUnit.SECONDS)) {
+                try {
+                    // 동기화된 작업 수행
+                    Product product = productRepository.findById(productId).orElseThrow();
+                    product.removeStock(quantity);
+                    productRepository.save(product);
+                } finally {
+                    // 락 해제
+                    if (lock.isHeldByCurrentThread()) {
+                        lock.unlock();
+                    }
+                }
+            } else {
+                log.warn("락 획득 실패 productId: {}", productId);
+            }
+        } catch (InterruptedException e) {
+            log.error("락 획득에서 에러 발생 productId: {}", productId, e);
+            Thread.currentThread().interrupt(); // 현재 스레드의 인터럽트 상태를 복원
+        }
+
+
     }
 
     // 주문완료 후 처리: 장바구니에서 상품 삭제, 적립금 업데이트, 알림 전송

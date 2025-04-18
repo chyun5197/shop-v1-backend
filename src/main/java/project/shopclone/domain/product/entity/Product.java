@@ -2,10 +2,12 @@ package project.shopclone.domain.product.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Table(name="product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -41,10 +43,10 @@ public class Product {
     private Integer releaseDate;    // 출시 연도
     private String inst;            // 악기 3개 카테고리 (Guitar, Bass, Acoustic)
 
+    private Integer stock;          // 재고 수량
+
     @Version
     private Integer wishCount;      // 위시 개수(좋아요 수)
-
-    private Integer stock;          // 재고 수량
 
     // 상세 이미지
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -72,25 +74,32 @@ public class Product {
         this.cateNo = cateNo;
     }
 
-    public void updateCdnUrl(String cdnImage){
+    public void updateCdnUrl(String cdnImage) {
         this.cdnImage = cdnImage;
     }
 
-    public void plusWishCount(){
+    public void plusWishCount() {
         this.wishCount++;
     }
 
-    public void minusWishCount(){
-        if(this.wishCount > 0){
+    public void minusWishCount() {
+        if (this.wishCount > 0) {
             this.wishCount--;
         }
     }
 
-    public boolean removeStock(Integer quantity){
-        if (this.stock - quantity <= 0) {
+    public void updateStock(int stock) {
+        this.stock = stock;
+    }
+
+    public boolean removeStock(Integer quantity) {
+        if (this.stock - quantity < 0) {
+            log.info("실패");
             return false;
         }
+        log.info("성공");
         this.stock -= quantity;
         return true;
     }
+
 }

@@ -24,7 +24,7 @@ public class OrderController {
     public ResponseEntity<OrderSheetResponse> createOrderSheet(@RequestHeader("Authorization") String token,
                                                                @RequestBody List<OrderItemRequest> orderItemRequestList
                                               ){
-        return  orderService.createOrderSheet(token, orderItemRequestList);
+        return orderService.createOrderSheet(token, orderItemRequestList);
     }
 
     @Operation(summary = "주문내역 조회")

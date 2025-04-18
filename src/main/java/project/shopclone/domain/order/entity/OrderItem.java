@@ -26,7 +26,8 @@ public class OrderItem { // 주문 아이템
     @JoinColumn(name="order_id")
     private Orders orders;
 
-    @ManyToOne
+    // 분산락 구현중에 추가로 발생한 동시성 문제는 이녀석의 즉시로딩이 원인이었다 -> 지연로딩으로 수정
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="product_id")
     private Product product;
 

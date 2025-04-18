@@ -55,8 +55,7 @@ class WishControllerTest {
         Product product = productRepository.findById(productId).get();
 
         // 기존 AuthUser에서 테스트 유저 수만큼 인원 선정하여 토큰 생성
-        List<AuthUser> authUserList = authUserRepository.findAll();
-        List<AuthUser> randAuthUserList = authUserList.subList(0, userCount);
+        List<AuthUser> randAuthUserList = authUserRepository.findAll().subList(0, userCount);
         for (AuthUser authUser : randAuthUserList) {
             // 이미 위시 등록 되어 있으면 해제
             Member member = memberRepository.findByAuthUser(authUser);

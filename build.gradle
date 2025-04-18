@@ -51,6 +51,9 @@ dependencies {
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+    // Redisson
+    implementation 'org.redisson:redisson-spring-boot-starter:3.28.0'
+
     // selenium
     implementation 'org.jsoup:jsoup:1.15.3'
     implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.28.0'

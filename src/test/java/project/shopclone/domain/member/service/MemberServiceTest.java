@@ -24,9 +24,9 @@ class MemberServiceTest {
     @Mock
     MemberRepository memberRepository;
     @Mock
-    private AuthUserRepository authUserRepository;
+    AuthUserRepository authUserRepository;
     @Mock
-    private CartRepository cartRepository;
+    CartRepository cartRepository;
     @InjectMocks
     MemberService memberService;
 
