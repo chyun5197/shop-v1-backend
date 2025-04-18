@@ -16,11 +16,11 @@
 
 ## 📃 개요
 ### 소개
-- 쇼핑몰 '뮤직포스' 사이트를 레퍼런스로 진행한 쇼핑몰 제작 프로젝트 <br>
-- 상품 정보는 원본 쇼핑몰에서 크롤링하여 RDS, S3에 저장한 데이터로 사용
+- 쇼핑몰 '뮤직포스' 사이트를 레퍼런스로 진행한 쇼핑몰 개발 프로젝트 <br>
+- 상품 정보는 원본 쇼핑몰에서 크롤링하여 RDS, S3에 저장하여 사용
 
 ### 프로젝트 목적
-- 웹 전반에 대한 학습과 이해도를 높이기 위해 풀스택으로 온라인 쇼핑몰을 클론하는 프로젝트를 진행 <br>
+- 웹 전반에 대한 이해도를 높이기 위해 풀스택으로 온라인 쇼핑몰을 개발하는 프로젝트를 진행 <br>
 
 ### 개발기간
 - 25년 2월 ~ 지속 <br>
@@ -107,15 +107,16 @@
 - [Redis를 도입하여 캐싱 및 DB 부하 분산](https://github.com/chyun5197/shop-clone-backend/issues/3) <br>
 
 ## :link: 트러블 슈팅
-- [동시성 처리 구현중에 발생한 데드락 문제](https://github.com/chyun5197/shop-v1-backend/issues/6)
 - [동시성 이슈 해결하기 - 낙관적 락, 분산 락](https://github.com/chyun5197/shop-v1-backend/issues/7)
+- [낙관적 락 구현 도중 발생한 데드락 문제](https://github.com/chyun5197/shop-v1-backend/issues/8)
+- [분산 락 구현 도중 즉시로딩으로 인해 발생한 동시성 문제](https://github.com/chyun5197/shop-v1-backend/issues/9)
 - [스프링에서 리다이렉트 했을때 CORS가 발생하는 문제](https://github.com/chyun5197/shop-clone-backend/issues/4)
 
 ---
 ## ETC
 프론트엔드 레파지토리: [https://github.com/chyun5197/shop-clone-frontend](https://github.com/chyun5197/shop-clone-frontend)
 
-개발 예정: 상담원과 실시간 채팅(WebSocket, Kafka) -> 검색 성능 개선(ElasticSearch) -> MSA로 전환
+개발 예정: 상담원과 실시간 채팅(WebSocket, Kafka) -> 검색 성능 개선(ElasticSearch) -> MSA로 전환(v2)
 
 
 
