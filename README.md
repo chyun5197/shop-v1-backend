@@ -78,17 +78,23 @@
 
 ---
 ## 📑 Information Architecture
-<img width="845" alt="IA" src="https://github.com/user-attachments/assets/3018cea0-014b-4dfe-b954-2401da11bcce" />
+<p align="center">
+<img width="80%" alt="IA" src="https://github.com/user-attachments/assets/3018cea0-014b-4dfe-b954-2401da11bcce" />
+</p>
 
 ## 🔨 Server Architecture
 <img width="1433" alt="SA" src="https://github.com/user-attachments/assets/e9735f02-6f6f-4d4e-9928-51b76265e7b9" />
 
 ## 📊 ERD 
-<img width="747" alt="ERD" src="https://github.com/user-attachments/assets/ada0dc59-c813-4f94-b0d5-5805a51ac2db" />
+<p align="center">
+<img width="80%" alt="ERD" src="https://github.com/user-attachments/assets/ada0dc59-c813-4f94-b0d5-5805a51ac2db" />
+</p>
 
 ## ⚙ Sequence Diagram
 ### 결제시스템
-<img width="771" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/2f20c939-286f-462b-8d5c-2d45059887c3" />
+<p align="center">
+<img width="80%" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/2f20c939-286f-462b-8d5c-2d45059887c3" />
+</p>
 
 ### 소셜로그인
 <img width="1390" alt="소셜로그인 플로우" src="https://github.com/user-attachments/assets/27ba70ac-6cd6-41db-871f-74aa883b3fb3" />
@@ -107,9 +113,9 @@
 - [Redis를 도입하여 캐싱 및 DB 부하 분산](https://github.com/chyun5197/shop-clone-backend/issues/3) <br>
 
 ## :link: 트러블 슈팅
-- [동시성 이슈 해결하기 - 낙관적 락, 분산 락](https://github.com/chyun5197/shop-v1-backend/issues/7)
-- [낙관적 락 구현 도중 발생한 데드락 문제](https://github.com/chyun5197/shop-v1-backend/issues/8)
-- [분산 락 구현 도중 즉시로딩으로 인해 발생한 동시성 문제](https://github.com/chyun5197/shop-v1-backend/issues/9)
+- 동시성 이슈 해결하기 - 낙관적 락, 분산 락
+- 낙관적 락 구현중에 발생한 데드락 문제
+- 분산 락 구현중에 즉시로딩으로 인해 발생한 동시성 문제
 - [스프링에서 리다이렉트 했을때 CORS가 발생하는 문제](https://github.com/chyun5197/shop-clone-backend/issues/4)
 
 ---
