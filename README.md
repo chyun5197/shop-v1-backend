@@ -41,7 +41,7 @@
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white)
 ![Oauth 2.0](https://img.shields.io/badge/Oauth%202.0-3A3A3A?style=for-the-badge&logo=oauth&logoColor=white)
 ![JPA](https://img.shields.io/badge/JPA-59666C?style=for-the-badge&logo=hibernate&logoColor=white)
-![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white)
 ![QueryDSL](https://img.shields.io/badge/QueryDSL-0769AD?style=for-the-badge&logo=querydsl&logoColor=white)
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)
 
@@ -68,7 +68,7 @@
 ### Test & Monitoring
 ![JUnit](https://img.shields.io/badge/JUnit-25A162?style=for-the-badge&logo=junit5&logoColor=white)
 ![k6](https://img.shields.io/badge/k6-%2300B5E2.svg?style=for-the-badge&logo=k6&logoColor=white)
-![AWS CloudWatch](https://img.shields.io/badge/AWS%20CloudWatch-%23FF4F8B.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![AWS CloudWatch](https://img.shields.io/badge/CloudWatch-%23FF4F8B.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
 ### IDE & Tools
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
