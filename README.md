@@ -87,14 +87,12 @@
 
 ## 📊 ERD 
 <p align="center">
-<img width="80%" alt="ERD" src="https://github.com/user-attachments/assets/ada0dc59-c813-4f94-b0d5-5805a51ac2db" />
+<img width="70%" alt="ERD" src="https://github.com/user-attachments/assets/ada0dc59-c813-4f94-b0d5-5805a51ac2db" />
 </p>
 
 ## ⚙ Sequence Diagram
 ### 결제시스템
-<p align="center">
-<img width="80%" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/2f20c939-286f-462b-8d5c-2d45059887c3" />
-</p>
+<img width="70%" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/2f20c939-286f-462b-8d5c-2d45059887c3" />
 
 ### 소셜로그인
 <img width="1390" alt="소셜로그인 플로우" src="https://github.com/user-attachments/assets/27ba70ac-6cd6-41db-871f-74aa883b3fb3" />
