@@ -16,8 +16,8 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
         // 현재 nginx에서 /ws/ -> 백엔드주소로 리버스 프록시 후 여기서 -> /ws 엔드포인트
         registry.addEndpoint("/ws") // 처음 웹소켓 핸드쉐이크 연결 수립을 위한 경로
 //                .setAllowedOrigins("https://www.hyun-clone.shop")
-                .setAllowedOriginPatterns("*")
-                .withSockJS();
+                .setAllowedOriginPatterns("*");
+//                .withSockJS();
 //                .setAllowedOrigins("*")
     }
     // STOMP를 사용하면 웹소켓만 사용할 때와 다르게 하나의 연결주소마다 핸들러 클래스를 따로 구현할 필요없이
