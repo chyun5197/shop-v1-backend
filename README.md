@@ -41,7 +41,7 @@
 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white)
 ![Oauth 2.0](https://img.shields.io/badge/Oauth%202.0-3A3A3A?style=for-the-badge&logo=oauth&logoColor=white)
 ![JPA](https://img.shields.io/badge/JPA-59666C?style=for-the-badge&logo=hibernate&logoColor=white)
-![Amazon S3](https://img.shields.io/badge/Amazon%20S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white)
+![Amazon S3](https://img.shields.io/badge/S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white)
 ![QueryDSL](https://img.shields.io/badge/QueryDSL-0769AD?style=for-the-badge&logo=querydsl&logoColor=white)
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)
 
@@ -68,7 +68,7 @@
 ### Test & Monitoring
 ![JUnit](https://img.shields.io/badge/JUnit-25A162?style=for-the-badge&logo=junit5&logoColor=white)
 ![k6](https://img.shields.io/badge/k6-%2300B5E2.svg?style=for-the-badge&logo=k6&logoColor=white)
-![AWS CloudWatch](https://img.shields.io/badge/AWS%20CloudWatch-%23FF4F8B.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![AWS CloudWatch](https://img.shields.io/badge/CloudWatch-%23FF4F8B.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
 
 ### IDE & Tools
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
@@ -78,17 +78,21 @@
 
 ---
 ## 📑 Information Architecture
-<img width="845" alt="IA" src="https://github.com/user-attachments/assets/3018cea0-014b-4dfe-b954-2401da11bcce" />
+<p align="center">
+<img width="80%" alt="IA" src="https://github.com/user-attachments/assets/3018cea0-014b-4dfe-b954-2401da11bcce" />
+</p>
 
 ## 🔨 Server Architecture
 <img width="1433" alt="SA" src="https://github.com/user-attachments/assets/e9735f02-6f6f-4d4e-9928-51b76265e7b9" />
 
 ## 📊 ERD 
-<img width="747" alt="ERD" src="https://github.com/user-attachments/assets/ada0dc59-c813-4f94-b0d5-5805a51ac2db" />
+<p align="center">
+<img width="70%" alt="ERD" src="https://github.com/user-attachments/assets/ada0dc59-c813-4f94-b0d5-5805a51ac2db" />
+</p>
 
 ## ⚙ Sequence Diagram
 ### 결제시스템
-<img width="771" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/2f20c939-286f-462b-8d5c-2d45059887c3" />
+<img width="70%" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/2f20c939-286f-462b-8d5c-2d45059887c3" />
 
 ### 소셜로그인
 <img width="1390" alt="소셜로그인 플로우" src="https://github.com/user-attachments/assets/27ba70ac-6cd6-41db-871f-74aa883b3fb3" />
@@ -107,9 +111,9 @@
 - [Redis를 도입하여 캐싱 및 DB 부하 분산](https://github.com/chyun5197/shop-clone-backend/issues/3) <br>
 
 ## :link: 트러블 슈팅
-- [동시성 이슈 해결하기 - 낙관적 락, 분산 락](https://github.com/chyun5197/shop-v1-backend/issues/7)
-- [낙관적 락 구현 도중 발생한 데드락 문제](https://github.com/chyun5197/shop-v1-backend/issues/8)
-- [분산 락 구현 도중 즉시로딩으로 인해 발생한 동시성 문제](https://github.com/chyun5197/shop-v1-backend/issues/9)
+- 동시성 이슈 해결하기 - 낙관적 락, 분산 락
+- 낙관적 락 구현중에 발생한 데드락 문제
+- 분산 락 구현중에 즉시로딩으로 인해 발생한 동시성 문제
 - [스프링에서 리다이렉트 했을때 CORS가 발생하는 문제](https://github.com/chyun5197/shop-clone-backend/issues/4)
 
 ---
