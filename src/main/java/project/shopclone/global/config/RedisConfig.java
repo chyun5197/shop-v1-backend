@@ -18,12 +18,12 @@ public class RedisConfig {
     private int port;
 
     @Bean
-    public LettuceConnectionFactory redisConnectionFactory() { // Lettuce - 토큰, 캐싱에 활용
+    public LettuceConnectionFactory redisConnectionFactory() { // Lettuce - 토큰 저장, 캐싱에 사용
         return new LettuceConnectionFactory(new RedisStandaloneConfiguration(host, port));
     }
 
     @Bean
-    public RedissonClient redissonClient() { // Redisson - 분산락 활용
+    public RedissonClient redissonClient() { // Redisson - 분산 락에 사용
         Config config = new Config();
         config.useSingleServer()
                 .setAddress("redis://" + host + ":" + port )

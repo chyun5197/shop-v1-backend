@@ -30,6 +30,9 @@ public class Member extends BaseTime {
     private Integer cartCount;
     private Integer savings; // 적립금
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToOne
     @JoinColumn(name="authuser_id")
     private AuthUser authUser;
@@ -47,6 +50,7 @@ public class Member extends BaseTime {
         this.address = address;
         this.phone = phone;
         this.authUser = authUser;
+        this.role = Role.CUSTOMER;
         this.wishCount = 0;
         this.cartCount = 0;
         this.savings = 1000;

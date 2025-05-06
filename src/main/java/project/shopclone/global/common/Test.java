@@ -75,8 +75,8 @@ public class Test {
         for(OrderItem orderItem : orderSheet.getOrderItemList()){
             Long productId = orderItem.getProduct().getId();
             Integer quantity = orderItem.getQuantity();
-            log.info("name = {}, productId = {}, quantity = {}", Thread.currentThread().getName(), productId, quantity);
-            orderService.redissonDecreaseStock(productId,quantity );
+//            log.info("name = {}, productId = {}, quantity = {}", Thread.currentThread().getName(), productId, quantity);
+//            orderService.redissonDecreaseStock(productId, quantity );
         }
 //        OrderItem orderItem = orderSheet.getOrderItemList().get(0);
 //        Long productId = orderItem.getProduct().getId();

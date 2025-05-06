@@ -42,27 +42,27 @@ public class WishService {
 
     // 위시 등록
     @Transactional
-    @Retryable(
-            retryFor = {ObjectOptimisticLockingFailureException.class},
-            maxAttempts = 4,
-            backoff = @Backoff(300) // 300ms
-    )
+//    @Retryable(
+//            retryFor = {ObjectOptimisticLockingFailureException.class},
+//            maxAttempts = 4,
+//            backoff = @Backoff(300) // 재시도 간격 300ms
+//    )
     public void createWish(Member member, Long productId) {
         Product product = productRepository.findById(productId).get();
-        // 중복일 경우 (memberId, productId)
+        // 이미 등록된 좋아요일 경우 (memberId, productId)
         if(wishRepository.findByMemberAndProduct(member, product).isPresent()) {
-            log.info("좋아요 중복");
             throw new WishException(WishErrorCode.WISH_ALREADY_REPORTED);
         }
-
         wishRepository.save(Wish.builder()
                 .member(member)
                 .product(product)
                 .build());
 
-        member.plusWishCount(); // 멤버의 위시리스트 개수++
-//        product.plusWishCount();
+        member.plusWishCount(); // 멤버의 좋아요 개수++
+//        product.plusWishCount(); // 상품의 좋아요 개수++
     }
+
+
 
     // 위시 삭제
     @Transactional
@@ -122,7 +122,7 @@ public class WishService {
     @Retryable(
             retryFor = {ObjectOptimisticLockingFailureException.class},
             maxAttempts = 4,
-            backoff = @Backoff(300) // 300ms
+            backoff = @Backoff(300) // 재시도 간격 300ms
     )
     public void addWishCount(Long productId) {
         Product product = productRepository.findById(productId).get();

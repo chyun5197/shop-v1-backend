@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClient;
 import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.member.repository.MemberRepository;
@@ -22,6 +23,7 @@ import java.util.concurrent.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
+//@Transactional
 @SpringBootTest
 class OrderControllerTest {
     RestClient restClient = RestClient.create("http://localhost:8080");

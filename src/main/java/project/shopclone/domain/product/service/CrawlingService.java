@@ -136,7 +136,6 @@ public class CrawlingService {
         category = cate;
         brand = brd;
 
-
         // heading area
         name = driver.findElement(By.cssSelector(".headingArea h2")).getText();
         if (name.contains("]")){  // 상품명에 이벤트 멘트인 대괄호(]) 앞은 제거하기

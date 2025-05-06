@@ -58,7 +58,7 @@ class OrderServiceTest {
 
         // then
         log.info("구매후 상품 재고: " + product.getStock());
-        verify(product).removeStock(1);
+        verify(product).decreaseStock(1);
     }
 
     private Orders createOrderSheet(Product product){

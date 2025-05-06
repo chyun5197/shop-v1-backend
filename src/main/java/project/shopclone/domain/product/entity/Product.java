@@ -3,6 +3,8 @@ package project.shopclone.domain.product.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import project.shopclone.domain.order.exception.OrderErrorCode;
+import project.shopclone.domain.order.exception.OrderException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +47,8 @@ public class Product {
 
     private Integer stock;          // 재고 수량
 
-    @Version
-    private Integer wishCount;      // 위시 개수(좋아요 수)
+//    @Version
+    private Integer wishCount; // 위시 개수(좋아요 수)
 
     // 상세 이미지
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
@@ -92,14 +94,11 @@ public class Product {
         this.stock = stock;
     }
 
-    public boolean removeStock(Integer quantity) {
+    public void decreaseStock(Integer quantity) {
         if (this.stock - quantity < 0) {
-            log.info("실패");
-            return false;
+            throw new OrderException(OrderErrorCode.OUT_OF_STOCK);
         }
-        log.info("성공");
         this.stock -= quantity;
-        return true;
     }
 
 }

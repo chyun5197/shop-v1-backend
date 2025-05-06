@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.shopclone.domain.member.entity.Member;
 import project.shopclone.domain.member.service.MemberService;
+import project.shopclone.domain.product.entity.Product;
+import project.shopclone.domain.product.repository.ProductRepository;
 import project.shopclone.domain.wish.dto.WishResponse;
 import project.shopclone.domain.wish.entity.Wish;
 import project.shopclone.domain.wish.repository.WishRepository;

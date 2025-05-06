@@ -6,9 +6,11 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Role {
-    ADMIN("ROLE_ADMIN"),
-    COUNSELOR("ROLE_COUNSELOR"),
-    USER("ROLE_USER");
-
-    private String roleName;
+    ADMIN,
+    COUNSELOR,
+    CUSTOMER,
 }
+
+// 열거형 문자열 리턴 차이
+// Role.ADMIN.name() -> "ADMIN"
+// Role.ADMIN.toString() -> "Admin"

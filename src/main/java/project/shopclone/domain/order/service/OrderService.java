@@ -73,60 +73,53 @@ public class OrderService {
     }
 
     // 상품 재고 감소
-    @Transactional
-    public void decreaseStock(Orders orderSheet){
-        List<OrderItem> orderItemList  = orderSheet.getOrderItemList();
-        for(OrderItem orderItem : orderItemList){
-            Product product = orderItem.getProduct();
-            Integer quantity = orderItem.getQuantity();
-
-            // 주문하는 사이에 다른 구매자에 의해 재고가 줄어들어 구매수량 만큼의 주문이 불가능한 상황
-
-            product.removeStock(quantity);
-//            redissonRemoveStock(product.getId(), quantity);
-//            if(!redissonRemoveStock(product.getId(), quantity)){
+//    @Transactional
+//    public void decreaseStock(Orders orderSheet){
+//        List<OrderItem> orderItemList  = orderSheet.getOrderItemList();
+//        for(OrderItem orderItem : orderItemList){
+//            Product product = orderItem.getProduct();
+//            Integer quantity = orderItem.getQuantity();
+//
+//            // 주문하는 사이에 다른 구매자에 의해 재고가 줄어들어 구매수량 만큼의 주문이 불가능한 상황
+//
+//            product.decreaseStock(quantity);
+////            redissonRemoveStock(product.getId(), quantity);
+////            if(!redissonRemoveStock(product.getId(), quantity)){
+////                throw new OrderException(OrderErrorCode.OUT_OF_STOCK);
+////            }
+//            if (!product.removeStock(quantity)){
 //                throw new OrderException(OrderErrorCode.OUT_OF_STOCK);
 //            }
-            if (!product.removeStock(quantity)){
-                throw new OrderException(OrderErrorCode.OUT_OF_STOCK);
-            }
-        }
-
-        // (테스트용) 주문결제 완료
-        orderSheet.updateIsPaid(true);
-    }
+//        }
+//
+//        // (테스트용) 주문결제 완료
+//        orderSheet.updateIsPaid(true);
+//    }
 
     // 분산락으로 재고 감소
 //    @Transactional // !트랜잭션 걸면 안됨
+    // 트랜잭션 시작하고 락을 획득하면 안된다.
+    // 트랜잭션 정합성에 의해 커밋 이전의 데이터(수량)를 참조하므로 다른 사용자가 변경한 수량이 반영 안되기 때문이다.
     public void redissonDecreaseStock(Long productId, Integer quantity){
-        // Redis 분산 락 키 생성
-        String lockKey = "lock" + productId;
-        // RLock 객체 생성
-        RLock lock = redissonClient.getLock(lockKey);
-
+        String lockKey = "lock" + productId; // 분산 락 키 생성
+        RLock lock = redissonClient.getLock(lockKey); // RLock 객체 생성
         try {
-            // 락 획득 시도 (최대 대기 시간, 락 획득시 유지 시간)
-            if (lock.tryLock(5, 3, TimeUnit.SECONDS)) {
-                try {
-                    // 동기화된 작업 수행
-                    Product product = productRepository.findById(productId).orElseThrow();
-                    product.removeStock(quantity);
-                    productRepository.save(product);
-                } finally {
-                    // 락 해제
-                    if (lock.isHeldByCurrentThread()) {
-                        lock.unlock();
-                    }
-                }
-            } else {
-                log.warn("락 획득 실패 productId: {}", productId);
+            // 락 획득 시도
+            if (lock.tryLock(5, 3, TimeUnit.SECONDS)) { // 최대 대기 시간 5초, 락 유지(TTL) 3초
+                // 상품 재고 감소
+                Product product = productRepository.findById(productId).orElseThrow();
+//                Hibernate.initialize(product); // 필요한 시점에 명시적으로 로드
+                product.decreaseStock(quantity);
+                productRepository.save(product);
+                log.info("if 실행: {}", Thread.currentThread().getName());
             }
-        } catch (InterruptedException e) {
-            log.error("락 획득에서 에러 발생 productId: {}", productId, e);
-            Thread.currentThread().interrupt(); // 현재 스레드의 인터럽트 상태를 복원
+        } catch (Exception e) {
+            log.error("락 획득에서 에러 발생 : ", e);
+        }finally {
+            if (lock.isHeldByCurrentThread()) { // 현재 스레드가 락을 소유하고 있으면 락 해제
+                lock.unlock();
+            }
         }
-
-
     }
 
     // 주문완료 후 처리: 장바구니에서 상품 삭제, 적립금 업데이트, 알림 전송
