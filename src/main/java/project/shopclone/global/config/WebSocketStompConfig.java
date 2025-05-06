@@ -13,9 +13,9 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // 클라이언트에서 stomp 접속 주소는 url = ws://백엔드주소/ws (http 아님)
-//        registry.addEndpoint("/ws") // 처음 웹소켓 핸드쉐이크 연결 수립을 위한 경로
-        registry.addEndpoint("/wss") // SSL은 wss로 설정
-                .setAllowedOriginPatterns("*");
+        registry.addEndpoint("/ws") // 처음 웹소켓 핸드쉐이크 연결 수립을 위한 경로
+                .setAllowedOriginPatterns("*")
+                .withSockJS();
 //                .setAllowedOrigins("*")
     }
     // STOMP를 사용하면 웹소켓만 사용할 때와 다르게 하나의 연결주소마다 핸들러 클래스를 따로 구현할 필요없이

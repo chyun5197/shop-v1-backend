@@ -30,9 +30,9 @@ public class ChatService {
     public List<ChatHistoryResponse> getChatHistory(Long chatroomId) {
 //        List<ChatMessage> chatMessageHistory = chatMessageRepository.findAllByChatRoomIdOrderByTimestampAsc(chatroomId);
         List<ChatMessage> chatMessageHistory = chatMessageRepository.findAllByChatRoomId(chatroomId);
-        if (chatMessageHistory.isEmpty()) {
-            System.out.println("비어있음");
-        }
+//        if (chatMessageHistory.isEmpty()) {
+//            System.out.println("비어있음");
+//        }
         return chatMessageHistory.stream().map(ChatHistoryResponse::from).toList();
     }
 

@@ -23,7 +23,6 @@ public class ChatHistoryResponse {
         chatHistoryResponse.memberId = chatMessage.getMemberId();
         chatHistoryResponse.role = chatMessage.getRole();
         chatHistoryResponse.message = chatMessage.getMessage();
-        log.info("memberId = {}, message = {}", chatMessage.getMemberId(), chatMessage.getMessage());
         return chatHistoryResponse;
     }
 
