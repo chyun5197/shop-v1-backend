@@ -12,9 +12,9 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
     // Stomp에서 사용하는 메시지 브로커를 설정
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        // stomp 접속 주소는 url = ws://백엔드주소/ws
-        // http 프로토콜이 아님
-        registry.addEndpoint("/ws") // 처음 웹소켓 핸드쉐이크 연결 수립을 위한 경로
+        // 클라이언트에서 stomp 접속 주소는 url = ws://백엔드주소/ws (http 아님)
+//        registry.addEndpoint("/ws") // 처음 웹소켓 핸드쉐이크 연결 수립을 위한 경로
+        registry.addEndpoint("/wss") // SSL은 wss로 설정
                 .setAllowedOriginPatterns("*");
 //                .setAllowedOrigins("*")
     }
