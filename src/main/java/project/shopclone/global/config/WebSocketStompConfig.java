@@ -13,8 +13,10 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // 클라이언트에서 stomp 접속 주소는 url = ws://백엔드주소/ws (http 아님)
+        // 현재 nginx에서 /ws/ -> 백엔드주소로 리버스 프록시 후 여기서 -> /ws 엔드포인트
         registry.addEndpoint("/ws") // 처음 웹소켓 핸드쉐이크 연결 수립을 위한 경로
-                .setAllowedOriginPatterns("*")
+                .setAllowedOrigins("https://www.hyun-clone.shop")
+//                .setAllowedOriginPatterns("*")
                 .withSockJS();
 //                .setAllowedOrigins("*")
     }
