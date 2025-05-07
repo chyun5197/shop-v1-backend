@@ -30,6 +30,7 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
         /topic prefix는 메시지가 1대다로 브로드캐스팅될때 사용
         */
 
+        // 카프카로 대체 예정
         registry.enableSimpleBroker("/sub");
 //        registry.enableSimpleBroker("/queue","/topic");
 

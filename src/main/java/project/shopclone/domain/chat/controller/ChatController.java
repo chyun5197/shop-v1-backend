@@ -1,5 +1,7 @@
 package project.shopclone.domain.chat.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,6 +20,7 @@ import project.shopclone.domain.member.service.MemberService;
 
 import java.util.List;
 
+@Tag(name = "채팅 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/chat")
@@ -26,7 +29,7 @@ public class ChatController {
     private final MemberService memberService;
     private final ChatRoomRepository chatRoomRepository;
 
-    // 채팅방 정보 조회
+    @Operation(summary="채팅방 정보 조회")
     @GetMapping("")
     public ResponseEntity<ChatRoomResponse> getChatRoomInfo(@RequestHeader("Authorization") String token) {
         Member member = memberService.getMember(token);
@@ -46,21 +49,21 @@ public class ChatController {
         return ResponseEntity.ok(chatService.getChatRoomInfo(member));
     }
 
-    // 채팅방 생성
+    @Operation(summary="채팅방 생성")
     @PostMapping("")
     public ResponseEntity<ChatRoomResponse> createChatRoom(@RequestHeader("Authorization") String token){
         Member member = memberService.getMember(token);
         return ResponseEntity.ok(chatService.createChatRoom(member));
     }
 
-    // 채팅 내역 조회
+    @Operation(summary="채팅 내역 조회")
     @GetMapping("/{chatRoomId}")
     public ResponseEntity<List<ChatHistoryResponse>> getChatMessages(@PathVariable Long chatRoomId) {
 //        ChatHistoryResponse test = new ChatHistoryResponse(1L, 5L, "상담사", "무엇을 도와드릴까요?");
         return ResponseEntity.ok().body(chatService.getChatHistory(chatRoomId));
     }
 
-    // 상담사의 채팅방 목록 조회
+    @Operation(summary="상담사의 채팅방 목록 조회")
     @GetMapping("/list")
     public ResponseEntity<List<ChatRoomIdResponse>> getChatRoomList(@RequestHeader("Authorization") String token) {
         Member member = memberService.getMember(token);

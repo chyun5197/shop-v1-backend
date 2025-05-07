@@ -11,7 +11,7 @@ import org.springframework.retry.annotation.EnableRetry;
 
 import java.util.TimeZone;
 
-@EnableMongoAuditing // 몽고DB @CreateDate
+@EnableMongoAuditing
 @EnableMongoRepositories
 @EnableRetry
 @EnableJpaAuditing
