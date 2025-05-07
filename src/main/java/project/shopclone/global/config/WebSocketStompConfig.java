@@ -17,8 +17,6 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws") // 처음 웹소켓 핸드쉐이크 연결 수립을 위한 경로
 //                .setAllowedOrigins("https://www.hyun-clone.shop")
                 .setAllowedOriginPatterns("*");
-//                .withSockJS();
-//                .setAllowedOrigins("*")
     }
     // STOMP를 사용하면 웹소켓만 사용할 때와 다르게 하나의 연결주소마다 핸들러 클래스를 따로 구현할 필요없이
     // 컨트롤러 방식으로 간편하게 사용할 수 있다.

@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChatRoomIdResponse {
     Long chatRoomId;
+    Long customerId;
 }

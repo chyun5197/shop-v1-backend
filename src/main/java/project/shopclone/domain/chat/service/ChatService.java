@@ -96,7 +96,7 @@ public class ChatService {
         List<ChatRoom> chatRoomList = chatRoomRepository.findAll();
 
         return chatRoomList.stream()
-                .map(chatRoom -> new ChatRoomIdResponse(chatRoom.getChatRoomId()))
+                .map(chatRoom -> new ChatRoomIdResponse(chatRoom.getChatRoomId(), chatRoom.getCustomerId()))
                 .toList();
     }
 }
