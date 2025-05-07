@@ -11,6 +11,10 @@
 
 
 <img width="1772" alt="결제시스템" src="https://github.com/user-attachments/assets/d28f1a1a-a284-4198-bb09-acd09371fe61" />
+<br>
+<br>
+
+<img width="1626" alt="상담사와 고객 채팅" src="https://github.com/user-attachments/assets/fbe4d6f6-b4b2-44e6-b232-f1cacfbc9e47" />
 
 ---
 
@@ -55,6 +59,7 @@
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
 
+
 ### Infrastructure
 ![Amazon AWS](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
@@ -79,23 +84,23 @@
 ---
 ## 📑 Information Architecture
 <p align="center">
-<img width="80%" alt="IA" src="https://github.com/user-attachments/assets/3018cea0-014b-4dfe-b954-2401da11bcce" />
+<img width="80%" alt="IA" src="https://github.com/user-attachments/assets/7da26701-bbe9-468d-bb21-425dc6c7d9f8" />
 </p>
 
 ## 🔨 Server Architecture
-<img width="1433" alt="SA" src="https://github.com/user-attachments/assets/e9735f02-6f6f-4d4e-9928-51b76265e7b9" />
+<img width="1430" alt="SA" src="https://github.com/user-attachments/assets/66c9126f-21c1-4e24-a753-ae0145823380" />
 
 ## 📊 ERD 
 <p align="center">
-<img width="70%" alt="ERD" src="https://github.com/user-attachments/assets/ada0dc59-c813-4f94-b0d5-5805a51ac2db" />
+<img width="70%" alt="ERD" src="https://github.com/user-attachments/assets/10a40526-2ad2-4625-b7d6-4996ea7d7420" />
 </p>
 
 ## ⚙ Sequence Diagram
 ### 결제시스템
-<img width="70%" alt="결제시스템 플로우" src="https://github.com/user-attachments/assets/2f20c939-286f-462b-8d5c-2d45059887c3" />
+<img width="70%" alt="결제시스템" src="https://github.com/user-attachments/assets/e55931e3-b753-423f-8cd7-4b7451039ba5" />
 
 ### 소셜로그인
-<img width="1390" alt="소셜로그인 플로우" src="https://github.com/user-attachments/assets/27ba70ac-6cd6-41db-871f-74aa883b3fb3" />
+<img width="1306" alt="소셜로그인" src="https://github.com/user-attachments/assets/b9c2d945-a4e7-4acf-8b20-439acc9ca985" />
 
 ## 📋 API 명세서
 [Swagger 바로가기](https://api.hyun-clone.shop/swagger-ui/index.html)
