@@ -52,12 +52,12 @@
 ### Frontend
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
 
 ### Database
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
 
 ### Infrastructure
@@ -117,15 +117,13 @@
 
 ## :link: 트러블 슈팅
 - 동시성 이슈 해결하기 - 낙관적 락, 분산 락
-- 낙관적 락 구현중에 발생한 데드락 문제
-- 분산 락 구현중에 즉시로딩으로 인해 발생한 동시성 문제
+- 낙관적 락 구현중에 발생한 데드락 문제 - S-Lock, X-Lock
+- 즉시로딩으로 인해 발생한 추가 동시성 문제 - OSIV, 영속성 컨텍스트, 프록시 객체
 - [스프링에서 리다이렉트 했을때 CORS가 발생하는 문제](https://github.com/chyun5197/shop-clone-backend/issues/4)
 
 ---
 ## ETC
 프론트엔드 레파지토리: [https://github.com/chyun5197/shop-clone-frontend](https://github.com/chyun5197/shop-clone-frontend)
-
-개발 예정: 상담원과 실시간 채팅(WebSocket, Kafka) -> 검색 성능 개선(ElasticSearch) -> MSA로 전환(v2)
 
 
 
