@@ -17,7 +17,7 @@ import java.util.TimeZone;
 @EnableJpaAuditing
 @EnableCaching
 @SpringBootApplication // (exclude = SecurityAutoConfiguration.class)
-public class ShopCloneApplication {
+public class ShopCloneApplication {//
 
     @PostConstruct
     void started() { // 스프링 타임존 설정
