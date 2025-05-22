@@ -19,7 +19,7 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
-    @Operation(summary = "주문서 불러오기")
+    @Operation(summary = "주문서 만들기")
     @PostMapping("/sheet")
     public ResponseEntity<OrderSheetResponse> createOrderSheet(@RequestHeader("Authorization") String token,
                                                                @RequestBody List<OrderItemRequest> orderItemRequestList
