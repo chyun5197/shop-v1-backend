@@ -1,4 +1,4 @@
-# 쇼핑몰 개인 프로젝트
+# 쇼핑몰 개인 프로젝트 v1
 [프로젝트 바로가기](http://hyun-clone.shop) (구글 크롬 권장)
 
 <img width="1531" alt="원본과 비교" src="https://github.com/user-attachments/assets/08849b18-0918-4906-89c7-10c276883458" />
@@ -112,7 +112,7 @@
 - [부하 테스트를 통한 병목 지점과 최대 TPS 확인하기](https://github.com/chyun5197/shop-clone-backend/issues/1)
 
 ### 성능 개선
-- [커버링 인덱스를 활용한 DB 조회 성능 개선](https://github.com/chyun5197/shop-clone-backend/issues/2) <br>
+- [커버링 인덱스를 활용한 DB 조회 성능 개선](https://velog.io/@julta6h/커버링-인덱스를-활용하여-DB-조회-성능-개선하기) <br>
 - [Redis를 도입하여 캐싱 및 DB 부하 분산](https://github.com/chyun5197/shop-clone-backend/issues/3) <br>
 
 ## :link: 트러블 슈팅
